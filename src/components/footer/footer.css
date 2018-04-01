@@ -1,0 +1,22 @@
+
+
+.footer-container{
+  margin: 0;
+  padding:0;
+  position: fixed;
+  bottom:0;
+  background: #7acc8f;
+  width: 100vw;
+  height: 10vh;
+  text-align: center;
+}
+
+.footer-item{
+  width:25%;
+  float: left;
+  height: 100%;
+}
+
+.footer-item-icon{
+  height: inherit;
+}
