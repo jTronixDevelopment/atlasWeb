@@ -9,7 +9,7 @@ import Places from './components/places/places';
 
 import Header from './components/header/header';
 import Header0 from './components/header0/header';
-import Footer from './components/footer/footer';
+import Navigation from './components/navigation/navigation';
 
 import FeedItem from './components/places/places'
 
@@ -44,7 +44,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/places' component={ FeedItem }/>
         </Switch>
-        <Footer/>
+        <Navigation/>
       </div>
     );
   }
