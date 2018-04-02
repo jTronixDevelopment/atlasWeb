@@ -6,6 +6,7 @@ import SignUpWidget from './components/signUpWidget/signUpWidget';
 
 import Profile from './components/profile/profile';
 import Places from './components/places/places';
+import Search from './components/search/search';
 
 import Header from './components/header/header';
 import Header0 from './components/header0/header';
@@ -26,11 +27,7 @@ class App extends Component {
     return (
       <div>
         <Switch>
-            <Route exact path='/profile' component={ Header }/>
-            <Route exact path='/' component={ Header0 }/>
-            <Route path='/signup' component={ Header }/>
-            <Route path='/signin' component={ Header }/>
-            <Route path='/places' component={ Header }/>
+            <Route path='*' component={ Header }/>
         </Switch>
         <Switch>
             <Route exact path='/' component={ SignInWidget }/>
@@ -39,6 +36,7 @@ class App extends Component {
             <Route path='/home' component={ SignInWidget }/>
             <Route path='/places' component={ Places }/>
             <Route path='/people' component={ SignInWidget }/>
+            <Route path='/search' component={ Search }/>
             <Route path='/profile' component={ Profile }/>
         </Switch>
         <Switch>
