@@ -7,72 +7,143 @@ export default class App extends Component {
   constructor(auth){
     super(auth);
     this.auth = this.props.auth;
-    console.log(this.auth)
   }
 
   createUser() {
-    var {email} = this.getCreateUserInfo();
-    if(this.isValidEmail(email)){
-      document.getElementById('signUpEmail').classList.remove('is-invalid')
-      document.getElementById('signUpEmail').classList.add('is-valid')
-      if(this.isValidPassword()){
-        this.auth.signUp(this.getCreateUserInfo())
-      } else {
-        // show bad passwords
-      }
+    var { email , password, passwordConfirm } = this.getUserInfo();
+
+    if(this.isValidEmail(email)&&this.isValidPassword(password,passwordConfirm)){
+      console.log("Valid Sign Up")
+      this.auth.signUp(this.getUserInfo())
     } else {
-      document.getElementById('signUpEmail').classList.add('is-invalid')
-      document.getElementById('signUpEmail').classList.remove('is-valid')
+      // Check Email
+      this.checkEmail(email)
+      // Check Password
+      this.checkPassWord(password,passwordConfirm)
     }
-      console.log(`Email is Valid : ${ this.isValidEmail(email) }, Password is Valid ${ this.isValidPassword() }`);
   }
 
-  getCreateUserInfo(){
+  getUserInfo(){
     return {
-      email : document.getElementById('signUpEmail').value,
-      password : document.getElementById('signUpPassword').value,
-      errorHandler : this.errorHandler.bind(this)
+      email : this.signUpEmail.value,
+      password : this.signUpPassword.value,
+      passwordConfirm : this.signUpPassword.value,
+      errorHandler : this.errorHandler.bind(this),
+      successHandler : this.successHandler.bind(this)
+    }
+  }
+  // Email verification
+
+  checkEmail(email){
+    if(!this.isValidEmail(email)){
+      this.showEmailErrors()
+    } else {
+      this.showEmailSucess()
     }
   }
 
-  errorHandler(error){
-    console.log(error)
+  showEmailErrors(){
+    this.signUpEmail.classList.remove('is-valid')
+    this.signUpEmail.classList.remove('is-invalid')
+    this.signUpEmail.classList.add('is-invalid')
+  }
+
+  showEmailSucess(){
+    this.signUpEmail.classList.remove('is-valid')
+    this.signUpEmail.classList.remove('is-invalid')
+    this.signUpEmail.classList.add('is-valid')
   }
 
   isValidEmail(email){
-    return /^\w+([-+.']\ w+)*@\w+([-. ]\w+)*\.\w+([-. ]\w+)*$/.test(email)?true:false;
+    return /^\w+([-+.']\ w+)*@\w+([-. ]\w+)*\.\w+([-. ]\w+)*$/.test(email)?true:false
   }
 
-  isValidPassword(){
-    var signUpPassword = document.getElementById('signUpPassword')
-    var signUpPasswordConfirm = document.getElementById('signUpPasswordConfirm')
-    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    if(signUpPassword.value===signUpPasswordConfirm.value){
-      if(strongRegex.test(signUpPassword.value)){
-          signUpPassword.classList.remove('is-invalid')
-          signUpPasswordConfirm.classList.remove('is-invalid')
-          signUpPassword.classList.add('is-valid')
-          signUpPasswordConfirm.classList.add('in-valid')
-          return true;
-      } else {
-        return false;
-      }
-    } else{
-      signUpPassword.classList.remove('is-valid')
-      signUpPasswordConfirm.classList.remove('is-valid')
-      signUpPassword.classList.add('is-invalid')
-      signUpPasswordConfirm.classList.add('is-invalid')
-      return false;
+  // Password verification
+
+  checkPassWord(p1,p2){
+    if((p1 === p2)&&(p1!== '')){
+      this.showPasswordEqual()
+    } else {
+      this.showPasswordNotEqual()
     }
+
+    if(this.passWordRegex.test(p1)){
+      this.showPasswordStrongEnough()
+    } else {
+      this.showPasswordNotStrongEnough();
+    }
+
+  }
+
+  showPasswordNotEqual(){
+    this.signUpPasswordConfirm.classList.remove('is-valid')
+    this.signUpPasswordConfirm.classList.remove('is-invalid')
+    this.signUpPasswordConfirm.classList.add('is-invalid')
+  }
+
+  showPasswordEqual(){
+    this.signUpPasswordConfirm.classList.remove('is-valid')
+    this.signUpPasswordConfirm.classList.remove('is-invalid')
+    this.signUpPasswordConfirm.classList.add('is-valid')
+  }
+
+  showPasswordNotStrongEnough(){
+    this.signUpPassword.classList.remove('is-valid')
+    this.signUpPassword.classList.remove('is-invalid')
+    this.signUpPassword.classList.add('is-invalid')
+  }
+
+  showPasswordStrongEnough(){
+    this.signUpPassword.classList.remove('is-valid')
+    this.signUpPassword.classList.remove('is-invalid')
+    this.signUpPassword.classList.add('is-valid')
+  }
+
+  isValidPassword(p1,p2){
+    console.log(p1)
+    console.log(p1 !=="")
+    return (p1 === p2)&&(p1!== '')&&this.passWordRegex.test(p1)
+  }
+
+  // Server Errors
+
+  showServerEmailError(){
+
+  }
+
+  showPasswordEmailError(){
+
+  }
+
+  errorHandler(error){
+    switch (error) {
+      case "expression":
+        console.log("Doing Something");
+        break;
+      default:
+
+    }
+  }
+
+  successHandler(){
+    console.log('good')
+  }
+
+  // Life Cycle Events
+
+  componentDidMount(){
+    this.signUpPassword = document.getElementById('signUpPassword');
+    this.signUpPasswordConfirm = document.getElementById('signUpPasswordConfirm');
+    this.signUpEmail = document.getElementById('signUpEmail');
+    this.passWordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
   }
 
   render() {
     return (
       <Container>
         <Card>
-          <CardHeader>Logo</CardHeader>
+          <CardHeader>Sign Up</CardHeader>
           <CardBody>
-            <CardTitle>Sign Up</CardTitle>
             <Form>
               <FormGroup>
                 <Label for="email">Email</Label>
@@ -80,18 +151,19 @@ export default class App extends Component {
                 <FormFeedback invalid=''>Please check you email.</FormFeedback>
                 <FormFeedback valid>Everything looks good.</FormFeedback>
               </FormGroup>
+
               <FormGroup>
                 <Label for="password1">Password</Label>
-                <FormText>Password should be at least 7 letters, contain one special character, and atleast one upper and lower case letter.</FormText>
                 <Input id='signUpPassword' autoComplete='on' type="password" name="password1" placeholder="Enter password" />
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-                <FormFeedback invalid=''>Passwords Do Not Match</FormFeedback>
+                <FormFeedback valid>Password fits criteria.</FormFeedback>
+                <FormFeedback invalid=''>Password should be at least 7 letters, contain one special character, and atleast one upper and lower case letter.</FormFeedback>
               </FormGroup>
+
               <FormGroup>
                 <Label for="password2">Confirm Password</Label>
                 <Input id='signUpPasswordConfirm' autoComplete='on' type="password" name="password2" placeholder="Confirm Password" />
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-                <FormFeedback invalid=''>Sweet! that name is available</FormFeedback>
+                <FormFeedback valid>Passwords are equal.</FormFeedback>
+                <FormFeedback invalid=''>Passwords Do Not Match</FormFeedback>
               </FormGroup>
               <Button color='success' onClick = { this.createUser.bind(this) }>Submit</Button>
             </Form>

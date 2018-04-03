@@ -23,18 +23,18 @@ export default class Auth{
     this.firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch(function(error) {
         errorHandler(error)
-      }).then(()=>{
-        console.log("Success sign up")
       });
   }
 
-  signIn({email,password,errorHandler}) {
+  signIn({email,password,errorHandler,successHandler}) {
     this.firebase.auth().signInWithEmailAndPassword(email, password)
     .catch(function(error) {
-      errorHandler(error)
-    }).then(()=>{
-      console.log("Success sign inn")
-    });
+      if(error){
+        errorHandler(error)
+      } else {
+        successHandler()
+      }
+    })
   }
 
   signOut({sucessHandler , erroHandler}) {

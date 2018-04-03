@@ -20,12 +20,10 @@ class App extends Component {
     super();
     this.db = new DB(Firebase);
     this.auth = new Auth(Firebase);
-    this.test;
-  }
-  getSignUpPage(){
   }
 
-  componentWillMount(){
+  saveFireBase(firebase){
+    console.log("Saving");
   }
 
   render() {
@@ -35,12 +33,12 @@ class App extends Component {
             <Route path='*' component={ Header }/>
         </Switch>
         <Switch>
-            <Route exact path='/' component={ SignInWidget }/>
-            <Route path='/signup' render={ props => ( <SignUpWidget auth={this.auth} /> )} />
-            <Route path='/signin' component={ SignInWidget }/>
+            <Route exact path='/' render={ props => ( <SignInWidget auth={ this.auth } saveFireBase={this.saveFireBase.bind(this)}/> )}/>
+            <Route path='/signup' render={ props => ( <SignUpWidget auth={ this.auth } saveFireBase={this.saveFireBase.bind(this)}/> )} />
+            <Route path='/signin' render={ props => ( <SignInWidget auth={ this.auth } saveFireBase={this.saveFireBase.bind(this)}/> )} />
             <Route path='/places' component={ Places }/>
             <Route path='/search' component={ Search }/>
-            <Route path='/profile' component={ Profile }/>
+            <Route path='/profile' render={ props => ( <Profile auth={ this.auth } saveFireBase={this.saveFireBase.bind(this)} /> )}/>
         </Switch>
         <Switch>
           <Route exact path='/places' component={ FeedItem }/>
