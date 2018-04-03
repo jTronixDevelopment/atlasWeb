@@ -23,7 +23,8 @@ class App extends Component {
   }
 
   saveFireBase(firebase){
-    console.log("Saving");
+    this.db.firebase = firebase;
+    this.auth.firebase = firebase;
   }
 
   render() {
