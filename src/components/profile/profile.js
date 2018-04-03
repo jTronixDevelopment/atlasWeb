@@ -3,13 +3,17 @@ import React, { Component } from 'react'
 import Map from './profilecomponents/map/map'
 import UserInfo from './profilecomponents/userinfo/userinfo'
 
-import { Container , Button, Input , Card, CardBody} from 'reactstrap';
+export default class App extends Component {
 
-class App extends Component {
-  constructor(){
-    super();
+  componentDidMount(){
+    fetch("https://randomuser.me/api/")
+    .then(res => res.json())
+    .then((data)=>{
+      console.log(data)
+    }).catch((err)=>{
+      console.log(err)
+    })
   }
-
   render() {
     return (
       <div>
@@ -17,7 +21,5 @@ class App extends Component {
         <Map/>
       </div>
     );
-  }ac
+  }
 }
-
-export default App;

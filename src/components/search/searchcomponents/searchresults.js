@@ -1,8 +1,7 @@
 //Search SearchResults
 import React, { Component } from 'react'
 
-import SearchIcon from './../../icons/search.png';
-import { Container, Button, Input } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 class App extends Component {
   constructor(){

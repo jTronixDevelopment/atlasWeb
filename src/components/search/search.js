@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 
-import { FormGroup, Form, Button, Input } from 'reactstrap';
-
 import SearchBar from './searchcomponents/searchbar';
 import SearchResults from './searchcomponents/searchresults';
 
-class App extends Component {
-  constructor(){
-    super();
-  }
-
+export default class App extends Component {
   render() {
     return (
       <div>
@@ -17,7 +11,5 @@ class App extends Component {
         <SearchResults/>
       </div>
     );
-  }ac
+  }
 }
-
-export default App;

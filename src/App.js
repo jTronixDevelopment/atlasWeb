@@ -9,7 +9,6 @@ import Places from './components/places/places';
 import Search from './components/search/search';
 
 import Header from './components/header/header';
-import Header0 from './components/header0/header';
 import Navigation from './components/navigation/navigation';
 
 import FeedItem from './components/places/places'
@@ -20,7 +19,13 @@ class App extends Component {
   constructor(){
     super();
     this.db = new DB(Firebase);
-    this.auth = new Auth(Firebase)
+    this.auth = new Auth(Firebase);
+    this.test;
+  }
+  getSignUpPage(){
+  }
+
+  componentWillMount(){
   }
 
   render() {
@@ -31,18 +36,20 @@ class App extends Component {
         </Switch>
         <Switch>
             <Route exact path='/' component={ SignInWidget }/>
-            <Route path='/signup' component={ SignUpWidget }/>
+            <Route path='/signup' render={ props => ( <SignUpWidget auth={this.auth} /> )} />
             <Route path='/signin' component={ SignInWidget }/>
-            <Route path='/home' component={ SignInWidget }/>
             <Route path='/places' component={ Places }/>
-            <Route path='/people' component={ SignInWidget }/>
             <Route path='/search' component={ Search }/>
             <Route path='/profile' component={ Profile }/>
         </Switch>
         <Switch>
           <Route exact path='/places' component={ FeedItem }/>
         </Switch>
-        <Navigation/>
+        <Switch>
+          <Route path='/places' component={ Navigation }/>
+          <Route path='/search' component={ Navigation }/>
+          <Route path='/profile' component={ Navigation }/>
+        </Switch>
       </div>
     );
   }

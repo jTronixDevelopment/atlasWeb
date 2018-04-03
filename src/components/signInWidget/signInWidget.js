@@ -39,18 +39,18 @@ class App extends Component {
             <Form>
               <FormGroup>
                 <Label for="exampleEmail">Email</Label>
-                <Input id='signInEmail' type="email" name="email" id="exampleEmail" placeholder="Email" />
+                <Input id='signInEmail' autoComplete='on' type="email" name="email" placeholder="Email" />
                 <FormFeedback valid>Sweet! that name is available</FormFeedback>
               </FormGroup>
               <FormGroup>
                 <Label for="examplePassword">Password</Label>
-                <Input id='signInPassword' type="password" name="password" id="examplePassword" placeholder="Password" />
+                <Input id='signInPassword' autoComplete='on' type="password" name="password" placeholder="Password" />
                 <FormFeedback valid>Sweet! that name is available</FormFeedback>
               </FormGroup>
               <Button color='success' onClick = { this.signInUser.bind(this) }>Submit</Button>
             </Form>
             <br/>
-            <p>Not a member?<a href='/'>Click here!</a></p>
+            <p>Not a member?<a href='/signup'>Click here!</a></p>
           </CardBody>
         </Card>
       </Container>

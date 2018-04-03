@@ -1,6 +1,7 @@
 export default class Auth{
   constructor(firebase) {
     this.firebase = firebase;
+    console.log(firebase)
     this.actionCodeSettings = {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be whitelisted in the Firebase Console.
@@ -38,7 +39,7 @@ export default class Auth{
 
   signOut({sucessHandler , erroHandler}) {
     this.firebase.auth().signOut().then(function() {
-      // Sign-out successful.
+      //Do signout stuff
     }).catch(function(error) {
       // An error happened.
     });

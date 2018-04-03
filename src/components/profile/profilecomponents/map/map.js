@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
+import { Jumbotron } from 'reactstrap';
 
-import { Jumbotron , Container } from 'reactstrap';
-
-class App extends Component {
-  constructor(){
-    super();
-  }
-
+export default class App extends Component {
   render() {
     return (
-      <div>
-      </div>
+      <Jumbotron>
+      </Jumbotron>
     );
   }
 }
-
-export default App;

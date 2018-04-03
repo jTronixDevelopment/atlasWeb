@@ -22,16 +22,16 @@ class Footer extends Component {
     return (
       <div className="nav-container">
         <Link to='./places' className="nav-item">
-          <img className='nav-img' src={FeedIcon}/>
+          <img className='nav-img' src={FeedIcon} alt='places'/>
         </Link>
         <Link to='./' className="nav-item">
-          <img className='nav-img' src={MessageIcon}/>
+          <img className='nav-img' src={MessageIcon} alt='messages'/>
         </Link>
         <Link to='./search' className="nav-item">
-          <img className='nav-img' src={SearcIcon}/>
+          <img className='nav-img' src={SearcIcon} alt='search'/>
         </Link>
         <Link to='./profile' className="nav-item">
-          <img className='nav-img' src={PersonIcon}/>
+          <img className='nav-img' src={PersonIcon} alt='profile'/>
         </Link>
       </div>
     );

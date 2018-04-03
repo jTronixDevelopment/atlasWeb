@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input ,Label ,Container, Card, Button, CardHeader, CardBody,
+import {  Card, Button, CardHeader, CardBody,
   CardTitle, CardImg  } from 'reactstrap';
 import './styles.css';
 
@@ -8,23 +8,17 @@ import Like from './like.png';
 import Dislike from './dislike.png';
 class App extends Component {
 
-  constructor(){
-    super();
-  }
-
-
-
   render() {
     return (
         <Card>
           <CardHeader>{ this.props.userName }</CardHeader>
-          <CardImg style={{"border-radius":0}} src={Image}/>
+          <CardImg style={{"borderRadius":0}} src={Image}/>
           <CardBody>
             <CardTitle></CardTitle>
               <p>{ this.props.caption }</p>
               <p>
-                <button className='blank-button'><img className='icon' src = {Like}/></button>{ this.props.likes }
-                <button className='blank-button'><img className='icon' src = {Dislike}/></button>{ this.props.likes }
+                <button className='blank-button'><img alt='img' className='icon' src = {Like}/></button>{ this.props.likes }
+                <button className='blank-button'><img alt='img' className='icon' src = {Dislike}/></button>{ this.props.likes }
               </p>
               <textarea placeholder="Comment"></textarea>
               <Button>Comment</Button>

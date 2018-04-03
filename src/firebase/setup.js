@@ -17,5 +17,4 @@ var firBaseConfig = {
 
 Firebase.initializeApp(firBaseConfig);
 
-// var database = Firebase.database();
 export { Auth , DB, Firebase };

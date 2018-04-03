@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import {Container} from 'reactstrap';
+import { Container } from 'reactstrap';
 import FeedItem from './placescomponents/placesItem'
 
-class App extends Component {
-  constructor(){
-    super();
-  }
+export default class App extends Component {
 
   render() {
     return (
@@ -21,5 +18,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
