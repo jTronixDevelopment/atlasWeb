@@ -1,39 +1,28 @@
 export default class Auth{
   constructor(firebase) {
     this.firebase = firebase;
-    console.log(firebase)
-    this.actionCodeSettings = {
-      // URL you want to redirect back to. The domain (www.example.com) for this
-      // URL must be whitelisted in the Firebase Console.
-      url: 'https://www.example.com/finishSignUp?cartId=1234',
-      // This must be true.
-      handleCodeInApp: true,
-      iOS: {
-        bundleId: 'com.example.ios'
-      },
-      android: {
-        packageName: 'com.example.android',
-        installApp: false,
-        minimumVersion: '12'
-      }
-    };
   }
 
-  signUp({ email,password,errorHandler }) {
+  signUp({ email,password,errorHandler,successHandler }) {
     this.firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(function(){
+        successHandler();
+        console.log("cool");
+      })
       .catch(function(error) {
-        errorHandler(error)
+        if(error)
+          errorHandler(error)
       });
   }
 
   signIn({email,password,errorHandler,successHandler}) {
     this.firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(()=>{
+      successHandler();
+    })
     .catch(function(error) {
-      if(error){
+      if(error)
         errorHandler(error)
-      } else {
-        successHandler()
-      }
     })
   }
 
