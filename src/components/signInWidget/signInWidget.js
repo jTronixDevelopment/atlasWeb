@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, FormFeedback, Input ,Label ,Container, Card, Button, CardHeader, CardBody,
   CardTitle } from 'reactstrap';
+import { connect } from 'react-redux'
+
+import FBLogin from './../icons/facebook.png';
+import './signin.css'
 
 import { Link, Redirect } from 'react-router-dom';
 
@@ -12,7 +16,6 @@ export default class App extends Component {
     this.saveFireBase = this.props.saveFireBase;
     this.state = {
       emailError : "Check Email",
-      auth : this.props.auth,
       loggedIn : false
     }
   }
@@ -73,7 +76,7 @@ export default class App extends Component {
     }
     return (
       <Container>
-        <Card>
+        <Card className='sign-in-card' >
           <CardHeader>Logo</CardHeader>
           <CardBody>
             <CardTitle>Sign in</CardTitle>
@@ -91,6 +94,11 @@ export default class App extends Component {
               <Button color='success' onClick = { this.signInUser.bind(this) }>Submit</Button>
             </Form>
             <br/>
+            <p className='text-center'>
+            -or-
+            </p>
+            <Button block className='fb-icon text-center'><img className='icon' src={ FBLogin }/> Login With Facebook</Button>
+            <hr/>
             <p>Not a member?<Link to={'/signup'}>Click here!</Link></p>
           </CardBody>
         </Card>
