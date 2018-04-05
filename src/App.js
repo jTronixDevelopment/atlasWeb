@@ -11,11 +11,14 @@ import Search from './components/search/search';
 import Header from './components/header/header';
 import Navigation from './components/navigation/navigation';
 
-import FeedItem from './components/places/places'
+import FeedItem from './components/places/places';
 
 import { DB , Auth, Firebase } from './firebase/setup';
 
-class App extends Component {
+
+import { LOG_IN } from './redux/actions/authactions'
+
+export default class App extends Component {
   constructor(){
     super();
     this.db = new DB(Firebase);
@@ -23,7 +26,11 @@ class App extends Component {
   }
 
   saveFireBase(firebase){
-    console.log("Saving");
+    this.db.firebase = firebase;
+    this.auth.firebase = firebase;
+  }
+
+  componentDidMount(){
   }
 
   render() {
@@ -52,5 +59,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

@@ -3,10 +3,15 @@ import React, { Component } from 'react';
 import { FormGroup, Form, Input ,Label ,Container, Card, Button, CardHeader, CardBody,
   CardTitle, FormFeedback, FormText } from 'reactstrap';
 
+import { Link, Redirect } from 'react-router-dom';
+
 export default class App extends Component {
   constructor(auth){
     super(auth);
     this.auth = this.props.auth;
+    this.state={
+      signedUp : false
+    }
   }
 
   createUser() {
@@ -126,7 +131,9 @@ export default class App extends Component {
   }
 
   successHandler(){
-    console.log('good')
+    this.saveFireBase(this.auth.firebase);
+    console.log("cool")
+    this.setState({ signedUp : true })
   }
 
   // Life Cycle Events
@@ -139,6 +146,10 @@ export default class App extends Component {
   }
 
   render() {
+    if (this.state.signedUp === true) {
+      console.log('in render')
+      return ( <Redirect to='/signin' push/> )
+    }
     return (
       <Container>
         <Card>
@@ -168,7 +179,7 @@ export default class App extends Component {
               <Button color='success' onClick = { this.createUser.bind(this) }>Submit</Button>
             </Form>
             <br/>
-            <p>Already a member?<a href="/"> Click here!</a></p>
+            <p>Already a member?<Link to={'/signin'}>Click here!</Link></p>
           </CardBody>
         </Card>
       </Container>

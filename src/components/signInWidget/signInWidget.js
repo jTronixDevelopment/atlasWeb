@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, FormFeedback, Input ,Label ,Container, Card, Button, CardHeader, CardBody,
   CardTitle } from 'reactstrap';
+import { connect } from 'react-redux'
 
-import { Link } from 'react-router-dom';
+import FBLogin from './../icons/facebook.png';
+import './signin.css'
 
-class App extends Component {
+import { Link, Redirect } from 'react-router-dom';
+
+export default class App extends Component {
 
   constructor(auth){
     super(auth);
     this.auth = this.props.auth;
+    this.saveFireBase = this.props.saveFireBase;
     this.state = {
       emailError : "Check Email",
-      auth : this.props.auth
+      loggedIn : false
     }
   }
-
 
   isValidEmail(email){
     return /^\w+([-+.']\ w+)*@\w+([-. ]\w+)*\.\w+([-. ]\w+)*$/.test(email)?true:false;
@@ -24,7 +28,6 @@ class App extends Component {
     if(this.isValidEmail(this.signInEmail.value)){
       console.log('is Valid')
       this.showEmailSucess();
-      console.log(this.auth)
       this.auth.signIn(this.getSignInInfo())
     } else {
       this.showEmailErrors("Badly Formated Email.")
@@ -58,7 +61,9 @@ class App extends Component {
   }
 
   successHandler(){
-    console.log("sucess")
+    this.saveFireBase(this.auth.firebase);
+    console.log("cool")
+    this.setState({ loggedIn:true })
   }
 
   componentDidMount(){
@@ -66,17 +71,20 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.loggedIn === true) {
+      return ( <Redirect to='/profile' push/> )
+    }
     return (
       <Container>
-        <Card>
+        <Card className='sign-in-card' >
           <CardHeader>Logo</CardHeader>
           <CardBody>
             <CardTitle>Sign in</CardTitle>
             <Form>
               <FormGroup>
+                <FormFeedback invalid=''>{ this.state.emailError }</FormFeedback>
                 <Label for="exampleEmail">Email</Label>
                 <Input id='signInEmail' autoComplete='on' type="email" name="email" placeholder="Email" />
-                <FormFeedback invalid=''>{ this.state.emailError }</FormFeedback>
               </FormGroup>
               <FormGroup>
                 <Label for="examplePassword">Password</Label>
@@ -86,6 +94,11 @@ class App extends Component {
               <Button color='success' onClick = { this.signInUser.bind(this) }>Submit</Button>
             </Form>
             <br/>
+            <p className='text-center'>
+            -or-
+            </p>
+            <Button block className='fb-icon text-center'><img className='icon' src={ FBLogin }/> Login With Facebook</Button>
+            <hr/>
             <p>Not a member?<Link to={'/signup'}>Click here!</Link></p>
           </CardBody>
         </Card>
@@ -93,5 +106,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
