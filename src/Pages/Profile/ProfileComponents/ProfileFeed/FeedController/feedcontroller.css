@@ -1,0 +1,17 @@
+ul.flex-grid {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #7acc8f;
+}
+li.col {
+  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+li>img.feed-controller-icon{
+  height: 50px;
+  width: 50px;
+}

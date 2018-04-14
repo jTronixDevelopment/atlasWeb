@@ -1,0 +1,7 @@
+.message-thumbnail-container{
+  border-bottom: 1px solid black;
+}
+
+.center-height{
+  transform: translateY(calc(50% - 1em ));
+}
