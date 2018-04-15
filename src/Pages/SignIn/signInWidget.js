@@ -85,18 +85,6 @@ export default class App extends Component {
     this.signInEmail = document.getElementById('signInEmail');
     console.log('in')
     this.checkAuthStatus.bind(this)
-    this.props.firebase.auth().getRedirectResult().then(function(result) {
-      if (result.credential) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
-        // ...
-      }
-      // The signed-in user info.
-      var user = result.user;
-    }).catch(function(error) {
-        // ...
-        console.log(error)
-    });
   }
 
   render() {

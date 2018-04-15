@@ -2,8 +2,10 @@ export default class Auth{
 
   signUp({ email, password, errorHandler, successHandler,firebase }) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(function(){
-        successHandler();
+      .then((success)=>{
+        successHandler(success)
+      }).then(()=>{
+        console.log("successfully added users")
       })
       .catch(function(error) {
         if(error)

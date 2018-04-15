@@ -26,6 +26,7 @@ import LogOutBlack from './icons/logOutBlack.png';
 import LogOutWhite from './icons/logOutWhite.png';
 import CloseBlack from './icons/closeBlack.png';
 import GlobeIcon from './icons/globe.png';
+import SettingsIcon from './icons/settings.png';
 
 import BeerBottleBlack from './icons/beerBottleBlack.png';
 import BeerBottleWhite from './icons/beerBottleWhite.png';
@@ -44,5 +45,5 @@ export {
   Settings, BeerBottleBlack ,BeerBottleWhite, BeerCanWhite, BeerCanBlack,
   CloseBlack, LogOutBlack, LogOutWhite, MovieBlack, MusicBlack,
   MusicWhite, ShareWhite, ShareBlack, WhaleBlack, WhaleWhite,
-  WhalesTaleBlack, WhalesTaleWhite
+  WhalesTaleBlack, WhalesTaleWhite , SettingsIcon
 };

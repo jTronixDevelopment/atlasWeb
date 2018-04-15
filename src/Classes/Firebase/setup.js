@@ -10,7 +10,7 @@ Firebase.initializeApp({
   authDomain: "platrom-7b0e2.firebaseapp.com",
   databaseURL: "https://platrom-7b0e2.firebaseio.com",
   projectId: "platrom-7b0e2",
-  storageBucket: "",
+  storageBucket: "platrom-7b0e2.appspot.com",
   messagingSenderId: "459800981318"
 });
 

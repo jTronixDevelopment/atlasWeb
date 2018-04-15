@@ -7,12 +7,22 @@ import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';
 //=== Components ===============================================================
 import UserInfo from './ProfileComponents/UserInfo/UserInfo';
 import ProfileFeed from './ProfileComponents/ProfileFeed/ProfileFeed';
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
+
+const MyMapComponent = props =>{
+  return (
+  <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }} >
+    <Marker position={{ lat: -34.397, lng: 150.644 }} />
+  </GoogleMap>
+)
+}
 
 //=== Classes ==================================================================
 export default class ProfilePage extends Component {
   constructor(props){
     super(props);
     this.firebase = this.props.firebase;
+    this.currentUser = this.firebase.auth().currentUser
   }
 
   sendFile(){
@@ -23,20 +33,40 @@ export default class ProfilePage extends Component {
     })
   }
 
+  componentWillMount(){
+    // this.db.query(
+    //
+    // )
+  }
+
   render() {
+    const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+      <GoogleMap
+        defaultZoom={8}
+        defaultCenter={{ lat: -34.397, lng: 150.644 }}
+      >
+        {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+      </GoogleMap>
+    ))
+
     return (
       <div>
         <UserInfo/>
         <div className='profile-bio'>
           <h5>Bio</h5>
-          I am so cool I love to eat poops all the time, This is my bio blah blah bla
         </div>
-        <iframe className='profile-map' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52797.17603966931!2d-118.61200586666747!3d34.20198572602608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c29c13d8d4bc85%3A0x99e61fc843e046d9!2sExpress+Smog+Test+Only!5e0!3m2!1sen!2sus!4v1523687272064"></iframe>
+        <MyMapComponent
+          isMarkerShown
+          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
         <div className="upload-btn-wrapper">
           <button className="btn">Upload a file</button>
           <input id='photo' type="file" name="myfile" />
         </div>
       </div>
-    );
+    )
   }
 }

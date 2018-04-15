@@ -6,11 +6,13 @@ import { FormGroup, Form, Input ,Label ,Container, Card,
 import { Link, Redirect } from 'react-router-dom';
 
 import Auth from './../../Classes/Firebase/Auth/Auth';
+import DB from './../../Classes/Firebase/Database/Database';
 
 export default class App extends Component {
   constructor(auth){
     super(auth);
     this.auth = new Auth();
+    this.db = new DB();
     this.state={
       signedUp : false
     }
@@ -35,7 +37,10 @@ export default class App extends Component {
       passwordConfirm : this.signUpPassword.value,
       errorHandler : this.errorHandler.bind(this),
       successHandler : this.successHandler.bind(this),
-      firebase: this.props.firebase
+      firebase: this.props.firebase,
+      birthday: this.signUpBirthday.value,
+      firstName: this.signUpLastName.value,
+      lastName: this.signUpFirstName.value
     }
   }
   // Email verification
@@ -131,10 +136,30 @@ export default class App extends Component {
     }
   }
 
-  successHandler(){
-    this.saveFireBase(this.auth.firebase);
-    console.log("cool")
+  successHandler(success){
+    console.log('in successHandler')
+    var { firstName, lastName, birthday, email }= {...this.getUserInfo()}
+    this.db.add({
+      successHandler : ()=>{ console.log('Good') },
+      errorHandler : ()=>{ console.log("error") },
+      firebase : this.props.firebase,
+      data : {
+        id : success.uid,
+        firstName : firstName,
+        lastName : lastName,
+        homeTown : 'Everytown, USA',
+        bio : 'Express youself!',
+        profilePic : 'none',
+        places : 'none',
+        email : email,
+        birthday : birthday
+      },
+      collection: 'users'
+    });
+    console.log(this.state)
+    this.props.saveFireBase(this.props.firebase);
     this.setState({ signedUp : true })
+    console.log(this.state)
   }
 
   // Life Cycle Events
@@ -143,46 +168,72 @@ export default class App extends Component {
     this.signUpPassword = document.getElementById('signUpPassword');
     this.signUpPasswordConfirm = document.getElementById('signUpPasswordConfirm');
     this.signUpEmail = document.getElementById('signUpEmail');
+    this.signUpFirstName = document.getElementById('signUpFirstName');
+    this.signUpLastName = document.getElementById('signUpLastName');
+    this.signUpBirthday = document.getElementById('signUpBirthday');
     this.passWordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
   }
 
   render() {
+    console.log(this.state.signedUp)
     if (this.state.signedUp === true) {
       return ( <Redirect to='/signin' push/> )
+    } else {
+      return (
+        <Container>
+          <Card>
+            <CardHeader>Sign Up</CardHeader>
+            <CardBody>
+              <Form>
+                <FormGroup>
+                  <Label for="email">Email</Label>
+                  <Input id='signUpEmail' type="email" autoComplete='on' name="email" placeholder="Email Address" />
+                  <FormFeedback invalid=''>Please check you email.</FormFeedback>
+                  <FormFeedback valid>Everything looks good.</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="firstName">FirstName</Label>
+                  <Input id='signUpFirstName' type="text" autoComplete='on' name="firstName" placeholder="First Name" />
+                  <FormFeedback invalid=''>Please check you email.</FormFeedback>
+                  <FormFeedback valid>Everything looks good.</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="lastName">Last Last Name</Label>
+                  <Input id='signUpLastName' type="text" autoComplete='on' name="lastName" placeholder="Last Name" />
+                  <FormFeedback invalid=''>Please check you email.</FormFeedback>
+                  <FormFeedback valid>Everything looks good.</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="birthday">Birthday</Label>
+                  <Input id='signUpBirthday' type="email" autoComplete='on' name="birthday" placeholder="Birthday" />
+                  <FormFeedback invalid=''>Please check you email.</FormFeedback>
+                  <FormFeedback valid>Everything looks good.</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="password1">Password</Label>
+                  <Input id='signUpPassword' autoComplete='on' type="password" name="password1" placeholder="Enter password" />
+                  <FormFeedback valid>Password fits criteria.</FormFeedback>
+                  <FormFeedback invalid=''>Password should be at least 7 letters, contain one special character, and atleast one upper and lower case letter.</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="password2">Confirm Password</Label>
+                  <Input id='signUpPasswordConfirm' autoComplete='on' type="password" name="password2" placeholder="Confirm Password" />
+                  <FormFeedback valid>Passwords are equal.</FormFeedback>
+                  <FormFeedback invalid=''>Passwords Do Not Match</FormFeedback>
+                </FormGroup>
+                <Button color='success' onClick = { this.createUser.bind(this) }>Submit</Button>
+              </Form>
+              <br/>
+              <p>Already a member?<Link to={'/signin'}>Click here!</Link></p>
+            </CardBody>
+          </Card>
+        </Container>
+      )
     }
-    return (
-      <Container>
-        <Card>
-          <CardHeader>Sign Up</CardHeader>
-          <CardBody>
-            <Form>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input id='signUpEmail' type="email" autoComplete='on' name="email" placeholder="Email Address" />
-                <FormFeedback invalid=''>Please check you email.</FormFeedback>
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-              </FormGroup>
-
-              <FormGroup>
-                <Label for="password1">Password</Label>
-                <Input id='signUpPassword' autoComplete='on' type="password" name="password1" placeholder="Enter password" />
-                <FormFeedback valid>Password fits criteria.</FormFeedback>
-                <FormFeedback invalid=''>Password should be at least 7 letters, contain one special character, and atleast one upper and lower case letter.</FormFeedback>
-              </FormGroup>
-
-              <FormGroup>
-                <Label for="password2">Confirm Password</Label>
-                <Input id='signUpPasswordConfirm' autoComplete='on' type="password" name="password2" placeholder="Confirm Password" />
-                <FormFeedback valid>Passwords are equal.</FormFeedback>
-                <FormFeedback invalid=''>Passwords Do Not Match</FormFeedback>
-              </FormGroup>
-              <Button color='success' onClick = { this.createUser.bind(this) }>Submit</Button>
-            </Form>
-            <br/>
-            <p>Already a member?<Link to={'/signin'}>Click here!</Link></p>
-          </CardBody>
-        </Card>
-      </Container>
-    );
   }
 }

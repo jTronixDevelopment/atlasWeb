@@ -27,6 +27,7 @@ export default class App extends Component {
   }
 
   saveFireBase(firebase){
+    console.log(firebase)
     this.firebase = firebase;
   }
 
@@ -47,7 +48,11 @@ export default class App extends Component {
           <Route path='/messages' component={ Messages }/>
         </Switch>
         <Switch>
-          <Route path='*' component={ Navigation }/>
+          <Route path='/profile' component={ Navigation }/>
+          <Route path='/testing' component={ Navigation }/>
+          <Route path='/places' component={ Navigation }/>
+          <Route path='/search' component={ Navigation }/>
+          <Route path='/messages' component={ Navigation }/>
         </Switch>
       </div>
     );
