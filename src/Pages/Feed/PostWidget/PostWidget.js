@@ -32,7 +32,7 @@ export default class PostWidget extends Component{
     //if(isValidPost()) else { do something }
     this.db.add({
       successHandler: this.postSuccessHandler.bind(this),
-      errorHandler : this.PostErrorHandler.bind(this),
+      errorHandler : this.postErrorHandler.bind(this),
       data : this.getPostInfo(),
       collection : 'posts',
       firebase : this.firebase,
@@ -44,7 +44,7 @@ export default class PostWidget extends Component{
     console.log('good')
   }
 
-  PostErrorHandler(err){
+  postErrorHandler(err){
     console.log(err)
   }
 
@@ -83,7 +83,7 @@ export default class PostWidget extends Component{
   }
 
   checkPostItems(){
-
+    console.log('testing')
   }
 
   getPostInfo(){
