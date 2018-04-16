@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 
-import FeedItem from './placescomponents/placesItem';
+import FeedItem from './FeedItem/FeedItem';
 import PostWidget from './PostWidget/PostWidget';
 
 import './Feed.css'
