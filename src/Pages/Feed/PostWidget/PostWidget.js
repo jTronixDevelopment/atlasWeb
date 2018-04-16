@@ -12,9 +12,9 @@ export default class PostWidget extends Component{
 
   constructor(props){
     super(props);
-    this.firebase = this.props.firebase;
-    this.db = new DB();
-    this.storage = new Storage();
+    this.firebase = this.props.firebase
+    this.db = new DB()
+    this.storage = new Storage()
     this.state = {
       postWidgetIsHidden : 'none'
     }
@@ -29,10 +29,10 @@ export default class PostWidget extends Component{
   }
 
   postItem(){
-    console.log(this.getPostInfo())
+    //if(isValidPost()) else { do something }
     this.db.add({
-      successHandler: this.successHandler.bind(this),
-      errorHandler : this.errorHandler.bind(this),
+      successHandler: this.postSuccessHandler.bind(this),
+      errorHandler : this.PostErrorHandler.bind(this),
       data : this.getPostInfo(),
       collection : 'posts',
       firebase : this.firebase,
@@ -40,12 +40,50 @@ export default class PostWidget extends Component{
     })
   }
 
-  successHandler(){
+  postSuccessHandler(){
     console.log('good')
   }
 
-  errorHandler(err){
+  PostErrorHandler(err){
     console.log(err)
+  }
+
+  //=== Checking for valid Inputs ==============================================
+
+  checkPostImage(){
+    if(this.postImageInput){
+      if(this.postImageInput.files[0]){
+        return true;
+      } else {
+        console.log("Post image exists but not image.")
+        return false;
+      }
+    } else{
+      console.log("Post image does not exist.")
+      return false;
+    }
+  }
+
+  checkPostContent(){
+    if(this.postContent){
+      if(this.postContent.value && this.postContent.value !== 0){
+        return true;
+      } else {
+        console.log("Post content exists but not image.")
+        return false;
+      }
+    } else{
+      console.log("Post content does not exist.")
+      return false;
+    }
+  }
+
+  checkPostUserIsAuthorized(){
+    return this.firebase.auth().currentUser?true:false;
+  }
+
+  checkPostItems(){
+
   }
 
   getPostInfo(){
@@ -56,6 +94,11 @@ export default class PostWidget extends Component{
       imageURL : "none",
       location : { test : 'test'},
     }
+  }
+
+  componentDidMount(){
+    this.postContent = document.getElementById('postContent')
+    this.postImageInput = document.getElementById('postPhoto')
   }
 
   render(){
