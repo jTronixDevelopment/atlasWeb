@@ -15,8 +15,7 @@ import MessageIcon from './icons/message.png';
 import SearchIcon from './icons/search.png';
 import MailIcon from './icons/mail.png';
 import Settings from './icons/settings.png';
-import Person from './icons/person.png';
-import Map from './icons/map.png';
+import MapIcon from './icons/map.png';
 import ShareBlack from './icons/shareBlack.png';
 import ShareWhite from './icons/shareWhite.png';
 import MovieBlack from './icons/moveiBlack.png';
@@ -27,6 +26,8 @@ import LogOutWhite from './icons/logOutWhite.png';
 import CloseBlack from './icons/closeBlack.png';
 import GlobeIcon from './icons/globe.png';
 import SettingsIcon from './icons/settings.png';
+import DislikeIcon from './icons/dislike.png'
+import LikeIcon from './icons/like.png'
 
 import BeerBottleBlack from './icons/beerBottleBlack.png';
 import BeerBottleWhite from './icons/beerBottleWhite.png';
@@ -45,5 +46,5 @@ export {
   Settings, BeerBottleBlack ,BeerBottleWhite, BeerCanWhite, BeerCanBlack,
   CloseBlack, LogOutBlack, LogOutWhite, MovieBlack, MusicBlack,
   MusicWhite, ShareWhite, ShareBlack, WhaleBlack, WhaleWhite,
-  WhalesTaleBlack, WhalesTaleWhite , SettingsIcon
+  WhalesTaleBlack, WhalesTaleWhite , SettingsIcon, MapIcon, DislikeIcon, LikeIcon
 };

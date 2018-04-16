@@ -11,7 +11,7 @@ export default class App extends Component {
   render() {
     return (
       <Container className='feed-container'>
-        <PostWidget />
+        <PostWidget firebase={ this.props.firebase } />
         <FeedItem/>
       </Container>
     );
