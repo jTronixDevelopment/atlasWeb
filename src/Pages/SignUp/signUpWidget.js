@@ -154,7 +154,8 @@ export default class App extends Component {
         email : email,
         birthday : birthday
       },
-      collection: 'users'
+      collection: 'users',
+      docId : success.uid
     });
     console.log(this.state)
     this.props.saveFireBase(this.props.firebase);

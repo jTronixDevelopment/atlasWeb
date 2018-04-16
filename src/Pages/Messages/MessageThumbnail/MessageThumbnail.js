@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 import Thumbnail from './../../../Components/Thumbnail/Thumbnail'
 

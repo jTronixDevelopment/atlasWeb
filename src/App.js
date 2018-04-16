@@ -27,7 +27,7 @@ export default class App extends Component {
   }
 
   saveFireBase(firebase){
-    console.log(firebase)
+    console.log('Firebase was saved with : ', firebase)
     this.firebase = firebase;
   }
 
@@ -43,9 +43,9 @@ export default class App extends Component {
           <Route path='/signin' render={ props => ( <SignInWidget firebase={this.firebase}  saveFireBase={this.saveFireBase.bind(this)}/> )} />
           <Route path='/profile' render={ props => ( <Profile firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
           <Route path='/testing' render={ props => ( <Testing firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
-          <Route path='/places' component={ Feed }/>
-          <Route path='/search' component={ Search }/>
-          <Route path='/messages' component={ Messages }/>
+          <Route path='/places' render={ props => ( <Feed firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
+          <Route path='/search' render={ props => ( <Search firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
+          <Route path='/messages' render={ props => ( <Messages firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
         </Switch>
         <Switch>
           <Route path='/profile' component={ Navigation }/>

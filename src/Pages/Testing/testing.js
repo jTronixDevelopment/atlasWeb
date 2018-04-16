@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import { FormGroup, Form, Input ,Label ,Container, Card,
-  Button, CardHeader, CardBody, FormFeedback } from 'reactstrap';
+import { Input ,Container, Button } from 'reactstrap';
 
 import Auth from './../../Classes/Firebase/Auth/Auth';
 import DB from './../../Classes/Firebase/Database/Database';

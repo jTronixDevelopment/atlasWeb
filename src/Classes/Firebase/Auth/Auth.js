@@ -22,6 +22,7 @@ export default class Auth{
       if(error)
         errorHandler(error)
     })
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
   }
 
   signOut({sucessHandler , erroHandler, firebase}) {
@@ -45,15 +46,10 @@ export default class Auth{
 
   signInWithFacebook({ firebase , successHandler, errorHandler }){
     var provider = new firebase.auth.FacebookAuthProvider();
-    alert('in')
     firebase.auth().signInWithRedirect(provider).then(function() {
-      console.log("cool")
       firebase.auth().getRedirectResult().then(function(result) {
-      var token = result.credential.accessToken;
-      var user = result.user;
       }).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        errorHandler(error)
       });
     });
   }
