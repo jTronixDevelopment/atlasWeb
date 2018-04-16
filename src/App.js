@@ -17,6 +17,7 @@ import Header from './Components/header/header';
 import Navigation from './Components/navigation/navigation';
 
 import { Firebase } from './Classes/Firebase/setup';
+import './App.css'
 
 // import { LOG_IN } from './redux/actions/authactions'
 
