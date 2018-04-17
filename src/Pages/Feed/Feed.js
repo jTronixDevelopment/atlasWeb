@@ -8,6 +8,20 @@ import './Feed.css'
 
 export default class App extends Component {
 
+  componentWillMount(){
+
+  }
+
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+          }, function() {
+          });
+  }
+
   render() {
     return (
       <Container className='feed-container'>

@@ -28,6 +28,8 @@ import GlobeIcon from './icons/globe.png';
 import SettingsIcon from './icons/settings.png';
 import DislikeIcon from './icons/dislike.png'
 import LikeIcon from './icons/like.png'
+import PostIcon from './icons/postItem.png'
+import AtlasIcon from './icons/Atlas.png'
 
 import BeerBottleBlack from './icons/beerBottleBlack.png';
 import BeerBottleWhite from './icons/beerBottleWhite.png';
@@ -46,5 +48,6 @@ export {
   Settings, BeerBottleBlack ,BeerBottleWhite, BeerCanWhite, BeerCanBlack,
   CloseBlack, LogOutBlack, LogOutWhite, MovieBlack, MusicBlack,
   MusicWhite, ShareWhite, ShareBlack, WhaleBlack, WhaleWhite,
-  WhalesTaleBlack, WhalesTaleWhite , SettingsIcon, MapIcon, DislikeIcon, LikeIcon
+  WhalesTaleBlack, WhalesTaleWhite , SettingsIcon, MapIcon, DislikeIcon,
+  LikeIcon ,PostIcon, AtlasIcon
 };

@@ -24,3 +24,20 @@ textarea{
 .btn{
   font-size: 12px !important;
 }
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-item {
+  text-align: center;
+}
+
+.clear-style{
+  margin: 0 !important;
+  padding: 0 !important;
+}
