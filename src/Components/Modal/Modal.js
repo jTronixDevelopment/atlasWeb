@@ -11,19 +11,16 @@ export default class App extends Component {
     super(props);
     this.state = { modal: this.props.modalShown };
     this.reset = this.props.reset.bind(this);
-    this.action = this.props.modalAction.bind(this);
-    this.ModalBody = this.props.ModalBody
+    this.modalBody = this.props.modalBody;
+    console.log(this.props.modalTitle)
   }
   render() {
     return (
       <Modal isOpen={this.props.modalShown} toggle={this.reset} className={this.props.className}>
+        <ModalHeader toggle={this.reset}>{(this.props.modalTitle)?this.props.modalTitle:(<div>Poo</div>)}</ModalHeader>
         <ModalBody>
-          { this.props.ModalBody }
+          { this.props.modalBody }
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={this.action}>Save</Button>
-          <Button color="secondary" onClick={this.reset}>Cancel</Button>
-        </ModalFooter>
       </Modal>
     );
   }

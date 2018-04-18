@@ -112,28 +112,24 @@ export default class PostWidget extends Component{
 
   render(){
     return(
-      <div className='post-widget-container' >
-        <div className='post-widget' >
-          <h2>Post</h2>
+      <div className='post-widget-container'>
+        <div className='post-widget'>
           <Thumbnail src = "https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-1/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=0&oh=d130135c52915fd36bd4d7db5dbed825&oe=5B685759" title="test"/>
-          <img id='postWidgetProfilePicturePreview' />
+          <img id='postWidgetProfilePicturePreview'/>
           <InputGroup>
-            <textarea id='postContent' placeholder='Share' />
+            <textarea id='postContent' placeholder='Share'/>
             <Row className='post-widget-options full-width'>
-              <Col xs='6' sm='6' >
+              <Col xs='6' sm='6'>
                 <div className="upload-btn-wrapper">
                   <button className="btn">Add Photo</button>
-                  <input id='postWidgetProfilePhotoInput' type="file" name="myfile" onChange={this.showImgPreview.bind(this)} />
+                  <input id='postWidgetProfilePhotoInput' type="file" name="myfile" onChange={this.showImgPreview.bind(this)}/>
                   </div>
               </Col>
-              <Col xs='6' sm='6' >
-                <div className="upload-btn-wrapper">
+              <Col xs='6' sm='6'>
                   <button className="btn">Pin Location</button>
-                  <input id='postLocation' type="file" name="myfile" />
-                </div>
               </Col>
             </Row>
-            <Button className='post-widget-button' onClick={ this.postItem.bind(this) } block>Post</Button>
+            <Button  onClick={ this.postItem.bind(this) }>Post</Button>
           </InputGroup>
         </div>
       </div>

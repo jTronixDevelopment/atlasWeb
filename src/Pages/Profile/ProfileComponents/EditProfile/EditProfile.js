@@ -7,7 +7,6 @@ export default class ProfileFeed extends Component{
 
   constructor(props){
     super(props)
-    console.log(this.props.profileData)
   }
 
   showImgPreview(){
@@ -24,7 +23,6 @@ export default class ProfileFeed extends Component{
   render(){
     return(
         <div>
-          <h3>Edit Profile</h3>
           <img id='editProfilePicture' src={this.props.profileData.profilePic}/>
           <div className='upload-btn-wrapper full-width'>
             <Button block>Change Profile Picture</Button>

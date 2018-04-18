@@ -17,11 +17,13 @@ export default class ProfileControl extends Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props.profileData)
     this.state = {
-      modalShown : false,
-      modalBody : <PostWidget firebase={this.props.firebase}/>
+      modalShown: false,
+      modalBody: <PostWidget ref={this.test} firebase={this.props.firebase}/>,
+      modalTitle: 'Post'
     };
+    console.log(this.refs)
+    this.test = React.createRef()
   }
 
   toggleModal(){
@@ -30,33 +32,35 @@ export default class ProfileControl extends Component {
 
   showPostComponent(){
     this.setState({
-      modalShown : true,
-      modalBody : <PostWidget firebase={this.props.firebase} profileData={this.props.profileData}/>
+      modalShown: true,
+      modalBody: <PostWidget firebase={this.props.firebase} profileData={this.props.profileData}/>,
+      modalTitle: "Post"
     })
-  }
-
-  postNewItem(){
-    
   }
 
   showEditComponent(){
     this.setState({
-      modalShown : true,
-      modalBody : <EditProfile firebase={this.props.firebase} profileData={this.props.profileData}/>
-      modalAction : this.editUserInfo.bind(this)
+      modalShown: true,
+      modalBody: <EditProfile ref={this.test} firebase={this.props.firebase} profileData={this.props.profileData}/>,
+      modalTitle: "Edit Profile"
     })
-  }
-
-  editUserInfo(){
-
   }
 
   //=== Component Lifecycle ====================================================
 
+  componentDidMount(){
+  }
+
   render(){
     return (
       <div>
-        <ModalComponent modalShown ={ this.state.modalShown } modalAction = { ()=>{}} ModalBody={ this.state.modalBody } reset={this.toggleModal.bind(this)}/>
+        <ModalComponent
+          ref={ this.test }
+          modalShown ={ this.state.modalShown }
+          modalBody={ this.state.modalBody }
+          modalTitle={ this.state.modalTitle }
+          reset={ this.toggleModal.bind(this) }
+        />
         <ul className="flex-container profile-control-container" >
           <li className="flex-item profile-control-item" onClick={this.showPostComponent.bind(this)}>
             <p className='clear-style'>Post New</p>

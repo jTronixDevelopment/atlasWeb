@@ -32,20 +32,20 @@ export default class ProfilePage extends Component {
 
   savePhoto(){
     var photo = document.getElementById('profilePic').files[0]; // add checks
-    this.props.firebase.storage().ref('profilePics/'+this.state.profileData.id + "profilePic")
+    this.firebase.storage().ref('profilePics/'+this.state.profileData.id + "profilePic")
       .put(photo)
       .then((snapshot)=>{
-      this.db.edit({
-        collection: "users",
-        data: {
-          profilePic : snapshot.metadata.downloadURLs[0],
-          bio : document.getElementById('profile-bio').value
-        },
-        doc: this.state.profileData.id,
-        successHandler: (data)=>{ console.log("the data is",data) },
-        errorHandler: ( err )=>{ console.log(err) },
-        firebase: this.props.firebase
-      })
+        this.db.edit({
+          collection: "users",
+          data: {
+            profilePic : snapshot.metadata.downloadURLs[0],
+            bio : document.getElementById('profile-bio').value
+          },
+          doc: this.state.profileData.id,
+          successHandler: (data)=>{ console.log("the data is",data) },
+          errorHandler: ( err )=>{ console.log(err) },
+          firebase: this.firebase
+        })
     })
   }
 
@@ -68,8 +68,7 @@ export default class ProfilePage extends Component {
 
   getUserCurrentLocation(){
     var setMap = (position)=>{
-      this.setState({ usersCurrentLocaion : { lat: position.coords.latitude, lng: position.coords.longitude
-      }})
+      this.setState({ usersCurrentLocaion : { lat: position.coords.latitude, lng: position.coords.longitude }})
       console.log('cool')
     }
     navigator.geolocation.getCurrentPosition(setMap.bind(this),(error)=>{console.log(error)});
