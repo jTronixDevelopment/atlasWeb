@@ -35,7 +35,9 @@ export default class App extends Component {
       successHandler : this.successHandler.bind(this),
       birthday: this.signUpBirthday.value,
       firstName: this.signUpLastName.value,
-      lastName: this.signUpFirstName.value
+      lastName: this.signUpFirstName.value,
+      friends: null,
+      places: null
     }
   }
   // Email verification
