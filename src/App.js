@@ -28,7 +28,6 @@ export default class App extends Component {
   }
 
   saveFireBase(firebase){
-    console.log('Firebase was saved with : ', firebase)
     this.firebase = firebase;
   }
 
@@ -39,14 +38,14 @@ export default class App extends Component {
             <Route path='*' component={ Header }/>
         </Switch>
         <Switch>
-          <Route exact path='/' render={ props => ( <SignInWidget firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)}/> )}/>
-          <Route path='/signup' render={ props => ( <SignUpWidget firebase={this.firebase}  saveFireBase={this.saveFireBase.bind(this)}/> )} />
-          <Route path='/signin' render={ props => ( <SignInWidget firebase={this.firebase}  saveFireBase={this.saveFireBase.bind(this)}/> )} />
-          <Route path='/profile' render={ props => ( <Profile firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
-          <Route path='/testing' render={ props => ( <Testing firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
-          <Route path='/places' render={ props => ( <Feed firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
-          <Route path='/search' render={ props => ( <Search firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
-          <Route path='/messages' render={ props => ( <Messages firebase={this.firebase} saveFireBase={this.saveFireBase.bind(this)} /> )}/>
+          <Route exact path='/' render={ props => ( <SignInWidget firebase={this.firebase} > )}/>
+          <Route path='/signup' render={ props => ( <SignUpWidget firebase={this.firebase}  > )} />
+          <Route path='/signin' render={ props => ( <SignInWidget firebase={this.firebase}  > )} />
+          <Route path='/profile' render={ props => ( <Profile firebase={this.firebase} /> )}/>
+          <Route path='/testing' render={ props => ( <Testing firebase={this.firebase} /> )}/>
+          <Route path='/places' render={ props => ( <Feed firebase={this.firebase} /> )}/>
+          <Route path='/search' render={ props => ( <Search firebase={this.firebase} /> )}/>
+          <Route path='/messages' render={ props => ( <Messages firebase={this.firebase} /> )}/>
         </Switch>
         <Switch>
           <Route path='/profile' component={ Navigation }/>
