@@ -38,14 +38,14 @@ export default class App extends Component {
             <Route path='*' component={ Header }/>
         </Switch>
         <Switch>
-          <Route exact path='/' render={ props => ( <SignInWidget firebase={this.firebase} > )}/>
-          <Route path='/signup' render={ props => ( <SignUpWidget firebase={this.firebase}  > )} />
-          <Route path='/signin' render={ props => ( <SignInWidget firebase={this.firebase}  > )} />
-          <Route path='/profile' render={ props => ( <Profile firebase={this.firebase} /> )}/>
-          <Route path='/testing' render={ props => ( <Testing firebase={this.firebase} /> )}/>
-          <Route path='/places' render={ props => ( <Feed firebase={this.firebase} /> )}/>
-          <Route path='/search' render={ props => ( <Search firebase={this.firebase} /> )}/>
-          <Route path='/messages' render={ props => ( <Messages firebase={this.firebase} /> )}/>
+          <Route exact path='/' render={ props => ( <SignInWidget firebase={this.firebase}/> )}/>
+          <Route path='/signup' render={ props => ( <SignUpWidget firebase={this.firebase}/> )} />
+          <Route path='/signin' render={ props => ( <SignInWidget firebase={this.firebase}/> )} />
+          <Route path='/profile' render={ props => ( <Profile firebase={this.firebase}/> )}/>
+          <Route path='/testing' render={ props => ( <Testing firebase={this.firebase}/> )}/>
+          <Route path='/places' render={ props => ( <Feed firebase={this.firebase}/> )}/>
+          <Route path='/search' render={ props => ( <Search firebase={this.firebase}/> )}/>
+          <Route path='/messages' render={ props => ( <Messages firebase={this.firebase}/> )}/>
         </Switch>
         <Switch>
           <Route path='/profile' component={ Navigation }/>
