@@ -1,9 +1,9 @@
 export default class DB{
 
   add({ collection, data, successHandler, errorHandler, firebase, docId }){
-    firebase.firestore().collection(collection).doc(docId).set(data)
+    firebase.firestore().collection(collection).add(data)
       .then((doc)=>{
-        successHandler();
+        successHandler(doc);
       })
       .catch((error)=>{
         console.log(error)

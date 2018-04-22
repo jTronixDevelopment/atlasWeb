@@ -99,9 +99,9 @@ export default class App extends Component {
             <CardTitle>Sign in</CardTitle>
             <Form>
               <FormGroup>
-                <FormFeedback invalid=''>{ this.state.emailError }</FormFeedback>
                 <Label for="exampleEmail">Email</Label>
                 <Input id='signInEmail' autoComplete='on' type="email" name="email" placeholder="Email" />
+                <FormFeedback invalid=''>{ this.state.emailError }</FormFeedback>
               </FormGroup>
               <FormGroup>
                 <Label for="examplePassword">Password</Label>

@@ -1,0 +1,12 @@
+.profile-control-icon{
+  width: 25px;
+}
+
+.profile-control-item{
+  width: auto;
+  margin: 5px 0 5px 0;
+}
+
+.profile-control-container{
+  border-top: 1px solid rgba(0,0,0,.125);
+}

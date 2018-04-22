@@ -78,7 +78,7 @@ export default class App extends Component {
       this.showPasswordNotEqual()
     }
 
-    if(this.passWordRegex.test(p1)){
+    if(this.passwordRegex.test(p1)){
       this.showPasswordStrongEnough()
     } else {
       this.showPasswordNotStrongEnough();
@@ -113,7 +113,7 @@ export default class App extends Component {
   isValidPassword(p1,p2){
     console.log(p1)
     console.log(p1 !=="")
-    return (p1 === p2)&&(p1!== '')&&this.passWordRegex.test(p1)
+    return (p1 === p2)&&(p1!== '')&&this.passwordRegex.test(p1)
   }
 
   // Server Errors
@@ -152,15 +152,15 @@ export default class App extends Component {
         profilePic : 'none',
         places : 'none',
         email : email,
-        birthday : birthday
+        birthday : birthday,
+        friends : null,
+        places: null
       },
       collection: 'users',
       docId : success.uid
     });
-    console.log(this.state)
     this.props.saveFireBase(this.props.firebase);
     this.setState({ signedUp : true })
-    console.log(this.state)
   }
 
   // Life Cycle Events
@@ -172,12 +172,11 @@ export default class App extends Component {
     this.signUpFirstName = document.getElementById('signUpFirstName');
     this.signUpLastName = document.getElementById('signUpLastName');
     this.signUpBirthday = document.getElementById('signUpBirthday');
-    this.passWordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
+    this.passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
   }
 
   render() {
-    console.log(this.state.signedUp)
-    if (this.state.signedUp === true) {
+    if (this.state.signedUp) {
       return ( <Redirect to='/signin' push/> )
     } else {
       return (

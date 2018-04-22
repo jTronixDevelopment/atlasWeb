@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {  Card, Button, CardBody,
-  CardTitle, CardImg  } from 'reactstrap';
-import './styles.css';
+import {  Card, Button, CardBody, CardImg  } from 'reactstrap';
+import './FeedItem.css';
 
 import { ImageIcon , LikeIcon , DislikeIcon } from './../../../imgs/icons'
 
@@ -11,14 +10,19 @@ class App extends Component {
   render() {
     return (
         <Card className='feed-item'>
-          <Thumbnail src = "https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-1/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=0&oh=d130135c52915fd36bd4d7db5dbed825&oe=5B685759" title="User"/>
-          <CardImg style={{"borderRadius":0}} src={ImageIcon}/>
+          <Thumbnail src = {ImageIcon}/>
+          <CardImg src={ImageIcon}/>
           <CardBody>
-            <CardTitle></CardTitle>
               <p>{ this.props.caption }</p>
               <p>
-                <button className='blank-button'><img alt='img' className='icon' src = {LikeIcon}/></button>{ this.props.likes }
-                <button className='blank-button'><img alt='img' className='icon' src = {DislikeIcon}/></button>{ this.props.likes }
+                <button className='blank-button'>
+                  <img className='icon' src={ LikeIcon } alt='img'/>
+                </button>
+                  { this.props.likes }
+                <button className='blank-button'>
+                  <img className='icon' src={ DislikeIcon } alt='img'/>
+                </button>
+                  { this.props.likes }
               </p>
               <textarea placeholder="Comment"></textarea>
               <Button>Comment</Button>
