@@ -41,3 +41,13 @@ textarea{
   margin: 0 !important;
   padding: 0 !important;
 }
+.tab{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top: 1px solid rgba(0,0,0,.125);
+  border-right: 1px solid rgba(0,0,0,.125);
+  border-left: 1px solid rgba(0,0,0,.125);
+  padding: 10px 10px 0 10px;
+  width: 100%;
+  margin:5px;
+}
