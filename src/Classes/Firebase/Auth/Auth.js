@@ -1,7 +1,10 @@
 export default class Auth{
+  constructor(firebase){
+    this.firebase = firebase;
+  }
 
-  signUp({ email, password, errorHandler, successHandler,firebase }) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+  signUp({ email, password, errorHandler, successHandler }) {
+    this.firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((success)=>{
         successHandler(success)
       }).then(()=>{
@@ -13,8 +16,8 @@ export default class Auth{
       });
   }
 
-  signIn({email, password, errorHandler, successHandler, firebase}) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
+  signIn({email, password, errorHandler, successHandler }) {
+    this.firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
       successHandler();
     })
@@ -22,19 +25,19 @@ export default class Auth{
       if(error)
         errorHandler(error)
     })
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    this.firebase.auth().setPersistence(this.firebase.auth.Auth.Persistence.LOCAL)
   }
 
-  signOut({sucessHandler , erroHandler, firebase}) {
-    firebase.auth().signOut()
+  signOut({sucessHandler , erroHandler}) {
+    this.firebase.auth().signOut()
     .then(()=>{
     })
     .catch((error)=>{
     });
   }
 
-  forgotPassword({ email, firebase }){
-    firebase.auth().sendPasswordResetEmail(
+  forgotPassword({ email }){
+    this.firebase.auth().sendPasswordResetEmail(
     email, this.actionCodeSettings)
     .then(function() {
       // Password reset email sent.
@@ -44,10 +47,10 @@ export default class Auth{
     });
   }
 
-  signInWithFacebook({ firebase , successHandler, errorHandler }){
-    var provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithRedirect(provider).then(function() {
-      firebase.auth().getRedirectResult().then(function(result) {
+  signInWithFacebook({ successHandler, errorHandler }){
+    var provider = new this.firebase.auth.FacebookAuthProvider();
+    this.firebase.auth().signInWithRedirect(provider).then(function() {
+      this.firebase.auth().getRedirectResult().then(function(result) {
       }).catch(function(error) {
         errorHandler(error)
       });

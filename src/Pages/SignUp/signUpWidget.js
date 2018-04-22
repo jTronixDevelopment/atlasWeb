@@ -11,18 +11,14 @@ import DB from './../../Classes/Firebase/Database/Database';
 export default class App extends Component {
   constructor(auth){
     super(auth);
-    this.auth = new Auth();
+    this.auth = new Auth(this.props.firebase);
     this.db = new DB();
-    this.state={
-      signedUp : false
-    }
+    this.state={ signedUp : false }
   }
 
   createUser() {
     var { email , password, passwordConfirm } = this.getUserInfo();
-    console.log(this.isValidEmail(email),this.isValidPassword(password,passwordConfirm))
     if(this.isValidEmail(email)&&this.isValidPassword(password,passwordConfirm)){
-      console.log("Valid Sign Up")
       this.auth.signUp(this.getUserInfo())
     } else {
       this.checkEmail(email)
@@ -37,10 +33,11 @@ export default class App extends Component {
       passwordConfirm : this.signUpPassword.value,
       errorHandler : this.errorHandler.bind(this),
       successHandler : this.successHandler.bind(this),
-      firebase: this.props.firebase,
       birthday: this.signUpBirthday.value,
       firstName: this.signUpLastName.value,
-      lastName: this.signUpFirstName.value
+      lastName: this.signUpFirstName.value,
+      friends: null,
+      places: null
     }
   }
   // Email verification
@@ -111,9 +108,7 @@ export default class App extends Component {
   }
 
   isValidPassword(p1,p2){
-    console.log(p1)
-    console.log(p1 !=="")
-    return (p1 === p2)&&(p1!== '')&&this.passwordRegex.test(p1)
+    return (p1 === p2)&&(p1!== '')&&this.passWordRegex.test(p1)
   }
 
   // Server Errors
@@ -132,17 +127,14 @@ export default class App extends Component {
         console.log("Doing Something");
         break;
       default:
-
     }
   }
 
   successHandler(success){
-    console.log('in successHandler')
     var { firstName, lastName, birthday, email }= {...this.getUserInfo()}
     this.db.add({
       successHandler : ()=>{ console.log('Good') },
       errorHandler : ()=>{ console.log("error") },
-      firebase : this.props.firebase,
       data : {
         id : success.uid,
         firstName : firstName,
@@ -158,8 +150,6 @@ export default class App extends Component {
       },
       collection: 'users',
       docId : success.uid
-    });
-    this.props.saveFireBase(this.props.firebase);
     this.setState({ signedUp : true })
   }
 
