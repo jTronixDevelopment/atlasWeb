@@ -22,7 +22,6 @@ export default class ProfileControl extends Component {
       modalBody: <PostWidget ref={this.test} firebase={this.props.firebase}/>,
       modalTitle: 'Post'
     };
-    console.log(this.refs)
     this.test = React.createRef()
   }
 

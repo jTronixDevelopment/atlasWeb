@@ -1,14 +1,17 @@
 
 export default class Storgage{
-  upload({ file, path, firebase }){
-    firebase.storage().ref(path).put(file).then(()=>{
+  constructor(firebase){
+    this.firebase = firebase;
+  }
+  upload({ file, path }){
+    this.firebase.storage().ref(path).put(file).then(()=>{
       console.log('Uploaded a blob or file!');
     })
   }
 
-  bulkUpload({ files, path, firebase }){
+  bulkUpload({ files, path }){
     files.forEach((file)=>{
-      firebase.storage().ref(path).put(file).then(()=>{
+      this.firebase.storage().ref(path).put(file).then(()=>{
         console.log('Uploaded a blob or file!');
       })
     })

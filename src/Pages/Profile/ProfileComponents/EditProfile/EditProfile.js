@@ -10,7 +10,6 @@ export default class ProfileFeed extends Component{
   }
 
   showImgPreview(){
-    console.log("change")
     var input = document.getElementById('editProfilePictureInput');
     var profilePicturePreview = document.getElementById('editProfilePicture');
     var reader = new FileReader();

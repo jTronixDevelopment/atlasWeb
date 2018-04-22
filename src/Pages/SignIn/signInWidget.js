@@ -15,8 +15,7 @@ export default class App extends Component {
 
   constructor(props){
     super(props);
-    this.auth = new Auth();
-    this.saveFireBase = this.props.saveFireBase;
+    this.auth = new Auth(this.props.firebase);
     this.state = {
       emailError : "Check Email",
       loggedIn : false
@@ -65,7 +64,6 @@ export default class App extends Component {
   }
 
   successHandler(){
-    this.saveFireBase(this.props.firebase);
     this.setState({ loggedIn:true })
   }
 

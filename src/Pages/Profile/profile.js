@@ -15,25 +15,21 @@ export default class ProfilePage extends Component {
   constructor(props){
     super(props);
     this.firebase = this.props.firebase;
-    this.cloudStorage = new Storage();
-    this.db = new DB();
+    this.cloudStorage = new Storage(this.firebase);
+    this.db = new DB(this.firebase);
     this.state = {
       profileData : {
         bio : "Loading",
         profilePics : "https://firebasestorage.googleapis.com/v0/b/platrom-7b0e2.appspot.com/o/profilePics%2FB1TbUTfSbSNr05UAO9NgZlOYPnt2profilePic?alt=media&token=53e20dd2-095a-4963-9a12-77ae5822d9bd"
       },
-      usersCurrentLocaion : {
-        lat : 0,
-        lng : 0
-      }
+      curPOS : { lat : 0, lng : 0 }
     }
     this.getUserCurrentLocation()
   }
 
   savePhoto(){
-    var photo = document.getElementById('profilePic').files[0]; // add checks
     this.firebase.storage().ref('profilePics/'+this.state.profileData.id + "profilePic")
-      .put(photo)
+      .put(document.getElementById('profilePic').files[0])
       .then((snapshot)=>{
         this.db.edit({
           collection: "users",
@@ -43,56 +39,46 @@ export default class ProfilePage extends Component {
           },
           doc: this.state.profileData.id,
           successHandler: (data)=>{ console.log("the data is",data) },
-          errorHandler: ( err )=>{ console.log(err) },
-          firebase: this.firebase
+          errorHandler: ( err )=>{ console.log(err) }
         })
     })
   }
 
   setUserData(data){
-    this.profileData = data;
-    this.setState({ profileData : this.profileData })
+    this.setState({ profileData : data })
   }
 
   setUserPhoto(data){
     this.setUserData(data)
     this.firebase.storage().ref('profilePics/' + data.id + "profilePic")
     .getDownloadURL()
-    .then(function(url){
-      console.log('SetUserPhotoWorked')
-    })
-    .catch((error)=>{
-      console.log("Photo Was not Added",error)
-    })
+    .then((url)=>{ console.log('Set User Photo Worked') })
+    .catch((error)=>{ console.log("Photo Was not Added",error) })
   }
 
   getUserCurrentLocation(){
     var setMap = (position)=>{
-      this.setState({ usersCurrentLocaion : { lat: position.coords.latitude, lng: position.coords.longitude }})
-      console.log('cool')
+      this.setState({ curPOS : { lat: position.coords.latitude, lng: position.coords.longitude }})
     }
     navigator.geolocation.getCurrentPosition(setMap.bind(this),(error)=>{console.log(error)});
   }
 
   componentDidMount(){
-    if(this.firebase){
-      if(this.firebase.auth().currentUser){
-        this.db.getDoc({
-          errorHandler : (err)=>{ console.log(err) },
-          successHandler: this.setUserPhoto.bind(this),
-          firebase : this.props.firebase,
-          collection : "users",
-          doc : this.firebase.auth().currentUser.uid
-        })
-      }
+    if(this.firebase&&this.firebase.auth().currentUser){
+      this.db.getDoc({
+        errorHandler : (err)=>{ console.log(err) },
+        successHandler: this.setUserPhoto.bind(this),
+        collection : "users",
+        doc : this.firebase.auth().currentUser.uid
+      })
     }
     this.getUserCurrentLocation()
   }
 
   render() {
     const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-      <GoogleMap defaultZoom={10} defaultCenter={{ lat: this.state.usersCurrentLocaion.lat, lng: this.state.usersCurrentLocaion.lng }}>
-        { props.isMarkerShown && <Marker position={{ lat: this.state.usersCurrentLocaion.lat, lng:this.state.usersCurrentLocaion.lng }} />}
+      <GoogleMap defaultZoom={10} defaultCenter={{ lat: this.state.curPOS.lat, lng: this.state.curPOS.lng }}>
+        { props.isMarkerShown && <Marker position={{ lat: this.state.curPOS.lat, lng:this.state.curPOS.lng }} />}
       </GoogleMap>
     ))
     return (
