@@ -75,7 +75,7 @@ export default class App extends Component {
       this.showPasswordNotEqual()
     }
 
-    if(this.passWordRegex.test(p1)){
+    if(this.passwordRegex.test(p1)){
       this.showPasswordStrongEnough()
     } else {
       this.showPasswordNotStrongEnough();
@@ -144,11 +144,12 @@ export default class App extends Component {
         profilePic : 'none',
         places : 'none',
         email : email,
-        birthday : birthday
+        birthday : birthday,
+        friends : null,
+        places: null
       },
       collection: 'users',
       docId : success.uid
-    })
     this.setState({ signedUp : true })
   }
 
@@ -161,11 +162,11 @@ export default class App extends Component {
     this.signUpFirstName = document.getElementById('signUpFirstName');
     this.signUpLastName = document.getElementById('signUpLastName');
     this.signUpBirthday = document.getElementById('signUpBirthday');
-    this.passWordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
+    this.passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
   }
 
   render() {
-    if (this.state.signedUp === true) {
+    if (this.state.signedUp) {
       return ( <Redirect to='/signin' push/> )
     } else {
       return (

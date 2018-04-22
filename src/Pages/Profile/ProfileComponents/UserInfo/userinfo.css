@@ -3,14 +3,26 @@
 }
 
 .profile-container{
-  height: 35%;
+  height: auto;
 }
 
 .profile-jumbotron{
   background-repeat: no-repeat;
   background-size: contain;
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
 }
 
 .profile-jumbotron{
-  
+  height: auto;
+  background-color: white !important;
+}
+
+.profile-pic{
+  width: 100px;
+  border-radius: 100%;
+}
+
+div.profile-bio>p{
+  margin-bottom: 0 !important;
 }
