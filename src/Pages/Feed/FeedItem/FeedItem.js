@@ -7,7 +7,7 @@ import { LikeIcon , DislikeIcon } from './../../../imgs/icons'
 import Storage from './../../../Classes/Firebase/CloudStorage/CloudStorage'
 
 import Thumbnail from './../../../Components/Thumbnail/Thumbnail'
-class App extends Component {
+export default class App extends Component {
   constructor(props){
     super(props);
     this.storage = new Storage(this.props.firebase);
@@ -19,14 +19,15 @@ class App extends Component {
       likes : 0,
       dislikes : 0
     }
+    console.log(this.props.post.data().imageURL)
   }
 
   getThumbnail(){
     this.storage.getImgURL({
       successHandler : this.showThumbnail.bind(this),
       errorHandler : (err)=>{console.log(err)},
-      path : "postImages",
-      id : this.props.post.imgUrl
+      path : "profilePics",
+      id : this.props.post.data().ownerId
     })
   }
 
@@ -35,7 +36,16 @@ class App extends Component {
   }
 
   getPostImage(){
+    this.storage.getImgURL({
+      successHandler : this.showPostImg.bind(this),
+      errorHandler : (err)=>{console.log(err)},
+      path : "postImages",
+      id : this.props.post.data().ownerId
+    })
+  }
 
+  showPostImg(url){
+    this.setState({ postImg: url })
   }
 
   getComments(){
@@ -70,9 +80,3 @@ class App extends Component {
     );
   }
 }
-App.defaultProps = {
-    userName : "Username",
-    content : "Text",
-    caption : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-}
-export default App;

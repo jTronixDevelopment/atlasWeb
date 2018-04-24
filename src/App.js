@@ -16,10 +16,11 @@ import Testing from './Pages/Testing/testing';
 import Header from './Components/header/header';
 import Navigation from './Components/navigation/navigation';
 
+//=== Database =================================================================
 import { Firebase } from './Classes/Firebase/setup';
-import './App.css'
 
-// import { LOG_IN } from './redux/actions/authactions'
+//=== Styles ===================================================================
+import './App.css'
 
 export default class App extends Component {
   constructor(){
