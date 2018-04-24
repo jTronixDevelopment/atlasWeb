@@ -16,7 +16,8 @@ export default class DB{
   edit({ collection, data, doc, successHandler, errorHandler }){
     this.firebase.firestore().collection(collection).doc(doc).update(data)
     .then(function() {
-        console.log("Document successfully updated!");
+      console.log(doc)
+        successHandler(doc)
     })
     .catch(function(error) {
         console.error("Error updating document: ", error);

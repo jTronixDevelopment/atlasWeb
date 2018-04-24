@@ -33,6 +33,7 @@ export default class PostWidget extends Component{
   }
 
   postSuccessHandler(data){
+    console.log('Data', data.id)
     this.storage.upload({
       file: document.getElementById('postWidgetProfilePhotoInput').files[0],
       path: 'postImages/' +  data.id,
@@ -43,8 +44,18 @@ export default class PostWidget extends Component{
     })
   }
 
-  updatePostAfterImageUpload(){
+  updatePostAfterImageUpload(data){
     // set the post : postImg to the correct thing corresponding imgUrl
+    console.log(data)
+    this.db.edit({
+      collection: 'posts',
+      doc: data.id,
+      successHandler:()=>{console.log("Good")},
+      errorHandler: ()=>{console.log("Bad");},
+      data : {
+        imageURL: data.id
+      }
+    })
   }
 
   postErrorHandler(err){

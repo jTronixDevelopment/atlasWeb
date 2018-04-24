@@ -44,11 +44,12 @@ export default class App extends Component {
       successHandler : this.showPostImg.bind(this),
       errorHandler : (err)=>{console.log(err)},
       path : "postImages",
-      id : this.props.post.data().ownerId
+      id : this.props.post.data().imageURL
     })
   }
 
   showPostImg(url){
+    console.log(url)
     this.setState({ postImg: url })
   }
 
@@ -62,6 +63,7 @@ export default class App extends Component {
 
   componentDidMount(){
     this.getThumbnail()
+    this.getPostImage()
   }
 
   render() {
