@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import {  Card, Button, CardBody, CardImg  } from 'reactstrap';
+import { Card, Button, CardBody, CardImg  } from 'reactstrap';
 import './FeedItem.css';
 
-import { LikeIcon , DislikeIcon } from './../../../imgs/icons'
+import { LikeIcon , DislikeIcon } from './../../../imgs/icons';
 
-import Storage from './../../../Classes/Firebase/CloudStorage/CloudStorage'
+import Storage from './../../../Classes/Firebase/CloudStorage/CloudStorage';
 
-import Thumbnail from './../../../Components/Thumbnail/Thumbnail'
+import Thumbnail from './../../../Components/Thumbnail/Thumbnail';
+
 export default class App extends Component {
+
   constructor(props){
     super(props);
     this.storage = new Storage(this.props.firebase);
@@ -19,9 +21,9 @@ export default class App extends Component {
       likes : 0,
       dislikes : 0
     }
-    console.log(this.props.post.data().imageURL)
   }
 
+  // Thumbnail
   getThumbnail(){
     this.storage.getImgURL({
       successHandler : this.showThumbnail.bind(this),
@@ -34,6 +36,8 @@ export default class App extends Component {
   showThumbnail(url){
     this.setState({ thumbnailImg: url })
   }
+
+  // Post Image
 
   getPostImage(){
     this.storage.getImgURL({
@@ -48,9 +52,13 @@ export default class App extends Component {
     this.setState({ postImg: url })
   }
 
+  // Comments
+
   getComments(){
 
   }
+
+  // Component Lifecycle
 
   componentDidMount(){
     this.getThumbnail()
@@ -58,25 +66,25 @@ export default class App extends Component {
 
   render() {
     return (
-        <Card className='feed-item'>
-          <Thumbnail src ={ this.state.thumbnailImg }/>
-          <CardImg src={ this.state.postImg }/>
-          <CardBody>
-              <p>{ this.state.content }</p>
-              <p>
-                <button className='blank-button'>
-                  <img className='icon' src={ LikeIcon } alt='img'/>
-                </button>
-                  { this.state.likes }
-                <button className='blank-button'>
-                  <img className='icon' src={ DislikeIcon } alt='imgIcon'/>
-                </button>
-                  { this.state.likes }
-              </p>
-              <textarea placeholder="Comment"></textarea>
-              <Button>Comment</Button>
-          </CardBody>
-        </Card>
+      <Card className='feed-item'>
+        <Thumbnail src ={ this.state.thumbnailImg }/>
+        <CardImg src={ this.state.postImg }/>
+        <CardBody>
+            <p>{ this.state.content }</p>
+            <p>
+              <button className='blank-button'>
+                <img className='icon' src={ LikeIcon } alt='img'/>
+              </button>
+                { this.state.likes }
+              <button className='blank-button'>
+                <img className='icon' src={ DislikeIcon } alt='imgIcon'/>
+              </button>
+                { this.state.likes }
+            </p>
+            <textarea placeholder="Comment"></textarea>
+            <Button>Comment</Button>
+        </CardBody>
+      </Card>
     );
   }
 }
