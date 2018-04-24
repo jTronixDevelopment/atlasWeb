@@ -3,9 +3,12 @@ export default class Storgage{
   constructor(firebase){
     this.firebase = firebase;
   }
-  upload({ file, path }){
+  upload({ file, path, successHandler, errorHandler, data }){
     this.firebase.storage().ref(path).put(file).then(()=>{
-      console.log('Uploaded a blob or file!');
+      successHandler()
+    })
+    .catch((err)=>{
+      errorHandler(err)
     })
   }
 
@@ -16,6 +19,14 @@ export default class Storgage{
       })
     })
   }
+
+  getImgURL({ path, successHandler, errorHandler, id }){
+    this.firebase.storage().ref(path + '/' + id)
+    .getDownloadURL()
+    .then((url)=>{ successHandler(url)})
+    .catch((error)=>{ console.log("Photo Was not Added",error) })
+  }
+
   errorHandler(error){
     switch (error) {
       case 'storage/unknown' :

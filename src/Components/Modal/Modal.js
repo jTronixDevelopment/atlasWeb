@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 import './Modal.css';
 
-import { Jumbotron , Modal, ModalBody, ModalFooter, Button,
-   ModalHeader , InputGroup } from 'reactstrap'
+import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 
 export default class App extends Component {
 

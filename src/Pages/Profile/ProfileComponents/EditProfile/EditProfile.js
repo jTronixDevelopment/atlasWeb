@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 
-import { Button, InputGroup, Input } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 
 import './EditProfile.css'
 export default class ProfileFeed extends Component{
-
-  constructor(props){
-    super(props)
-  }
 
   showImgPreview(){
     var input = document.getElementById('editProfilePictureInput');
@@ -19,10 +15,12 @@ export default class ProfileFeed extends Component{
     reader.readAsDataURL(input.files[0]);
   }
 
+  //=== Component Life Cycle ===================================================
+
   render(){
     return(
         <div>
-          <img id='editProfilePicture' src={this.props.profileData.profilePic}/>
+          <img id='editProfilePicture' alt='profileComp' src={this.props.profileData.profilePic}/>
           <div className='upload-btn-wrapper full-width'>
             <Button block>Change Profile Picture</Button>
             <input id="editProfilePictureInput" type='file' onChange={ this.showImgPreview.bind(this) }/>

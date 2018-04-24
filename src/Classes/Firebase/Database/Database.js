@@ -37,7 +37,8 @@ export default class DB{
   }
 
   query({ query, erroHandler, successHandler }){
-    this.firebase.firestore().collection('posts').where(query.feild, query.operator , query.value ).get().then((querySnapshot)=>{
+    this.firebase.firestore().collection('posts').where(query.feild, query.operator , query.value ).get()
+    .then((querySnapshot)=>{
       querySnapshot.forEach(function(doc) {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());

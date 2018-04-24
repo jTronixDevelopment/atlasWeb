@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import { Jumbotron , Modal, ModalBody, ModalFooter,
-  ModalHeader, InputGroup, Button, Row, Col } from 'reactstrap';
-
 import { SettingsIcon, PostIcon } from './../../../../imgs/icons';
 
 //=== Component ================================================================
@@ -48,6 +45,10 @@ export default class ProfileControl extends Component {
   //=== Component Lifecycle ====================================================
 
   componentDidMount(){
+  }
+
+  componentWillMount(){
+
   }
 
   render(){

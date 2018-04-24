@@ -150,7 +150,6 @@ export default class App extends Component {
         homeTown : 'Everytown, USA',
         bio : 'Express youself!',
         profilePic : 'none',
-        places : 'none',
         email : email,
         birthday : birthday,
         friends : null,

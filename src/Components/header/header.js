@@ -7,7 +7,7 @@ export default class Header extends Component {
     return (
       <div className='header-container text-center'>
         <b>Atlas</b>
-        <img className='icon' src={ AtlasIcon }/>
+        <img className='icon' alt='icon' src={ AtlasIcon }/>
       </div>
     );
   }

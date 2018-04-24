@@ -2,15 +2,9 @@ import React, { Component } from 'react'
 
 import { Jumbotron } from 'reactstrap';
 
-import { SettingsIcon } from './../../../../imgs/icons';
-
 import './userinfo.css'
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
         <Jumbotron fluid className='profile-jumbotron text-center'>
