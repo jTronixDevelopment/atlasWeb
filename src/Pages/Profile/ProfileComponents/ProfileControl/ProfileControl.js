@@ -44,12 +44,9 @@ export default class ProfileControl extends Component {
 
   //=== Component Lifecycle ====================================================
 
-  componentDidMount(){
-  }
+  componentDidMount(){}
 
-  componentWillMount(){
-
-  }
+  componentWillMount(){}
 
   render(){
     return (

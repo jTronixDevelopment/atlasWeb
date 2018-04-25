@@ -5,6 +5,11 @@ import { Button, Input } from 'reactstrap';
 import './EditProfile.css'
 export default class ProfileFeed extends Component{
 
+  constructor(){
+    super();
+    console.log(this.props)
+  }
+
   showImgPreview(){
     var input = document.getElementById('editProfilePictureInput');
     var profilePicturePreview = document.getElementById('editProfilePicture');
@@ -29,6 +34,8 @@ export default class ProfileFeed extends Component{
             <textarea id='editProfileBio' placeholder={this.props.profileData.bio}/>
             <p>Hometown</p>
             <Input id='editProfileHomeTown' placeholder={this.props.profileData.homeTown}/>
+            <p>Birthday</p>
+            <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
             <p>Birthday</p>
             <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
         </div>

@@ -111,7 +111,6 @@ export default class PostWidget extends Component{
   }
 
   showImgPreview(){
-    console.log("change")
     var input = document.getElementById('postWidgetProfilePhotoInput');
     var profilePicturePreview = document.getElementById('postWidgetProfilePicturePreview');
     var reader = new FileReader();
@@ -132,7 +131,6 @@ export default class PostWidget extends Component{
     return(
       <div className='post-widget-container'>
         <div className='post-widget'>
-          <Thumbnail src = "https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-1/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=0&oh=d130135c52915fd36bd4d7db5dbed825&oe=5B685759" title="test"/>
           <img alt='preview' id='postWidgetProfilePicturePreview'/>
           <InputGroup>
             <textarea id='postContent' placeholder='Share'/>
