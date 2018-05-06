@@ -2,7 +2,15 @@
   background-color:#4267b2 !important;
   background-size:cover;
   border: none !important;
+  max-height: 50px !important;
 }
  .sign-in-card{
    min-width: 200px !important;
+   /* max-width: 200px !important; */
  }
+
+@@media min-width(960px) {
+    .sign-in-card{
+
+    }
+}

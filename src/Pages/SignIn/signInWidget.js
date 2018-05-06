@@ -88,41 +88,42 @@ export default class App extends Component {
   render() {
     if (this.state.loggedIn === true) {
       return ( <Redirect to='/profile' push/> )
+    } else {
+      return (
+        <Container>
+          <Card className='sign-in-card' >
+            <CardHeader>Logo</CardHeader>
+            <CardBody>
+              <CardTitle>Sign in</CardTitle>
+              <Form>
+                <FormGroup>
+                  <Label for="exampleEmail">Email</Label>
+                  <Input id='signInEmail' autoComplete='on' type="email" name="email" placeholder="Email" />
+                  <FormFeedback invalid=''>{ this.state.emailError }</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="examplePassword">Password</Label>
+                  <Input id='signInPassword' autoComplete='on' type="password" name="password" placeholder="Password" />
+                  <FormFeedback invalid=''>Sweet! that name is available</FormFeedback>
+                </FormGroup>
+                <Button color='success' onClick = { this.signInUser.bind(this) }>Submit</Button>
+              </Form>
+              <br/>
+              <p className='text-center'>
+              -or-
+              </p>
+              <div className='text-center'>
+                <Button className='fb-icon' onClick={this.signInWithFacebook.bind(this)}>
+                  <img alt='fbLogIn' className='icon' src={ FacebookIcon }/>
+                  <b> Login With Facebook</b>
+                </Button>
+              </div>
+              <hr/>
+              <p>Not a member?<Link to={'/signup'}>Click here!</Link></p>
+            </CardBody>
+          </Card>
+        </Container>
+      );
     }
-    return (
-      <Container>
-        <Card className='sign-in-card' >
-          <CardHeader>Logo</CardHeader>
-          <CardBody>
-            <CardTitle>Sign in</CardTitle>
-            <Form>
-              <FormGroup>
-                <Label for="exampleEmail">Email</Label>
-                <Input id='signInEmail' autoComplete='on' type="email" name="email" placeholder="Email" />
-                <FormFeedback invalid=''>{ this.state.emailError }</FormFeedback>
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input id='signInPassword' autoComplete='on' type="password" name="password" placeholder="Password" />
-                <FormFeedback invalid=''>Sweet! that name is available</FormFeedback>
-              </FormGroup>
-              <Button color='success' onClick = { this.signInUser.bind(this) }>Submit</Button>
-            </Form>
-            <br/>
-            <p className='text-center'>
-            -or-
-            </p>
-            <div className='text-center'>
-              <Button className='fb-icon' onClick={this.signInWithFacebook.bind(this)}>
-                <img alt='fbLogIn' className='icon' src={ FacebookIcon }/>
-                <b> Login With Facebook</b>
-              </Button>
-            </div>
-            <hr/>
-            <p>Not a member?<Link to={'/signup'}>Click here!</Link></p>
-          </CardBody>
-        </Card>
-      </Container>
-    );
   }
 }
