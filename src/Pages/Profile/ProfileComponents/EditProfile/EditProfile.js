@@ -2,12 +2,23 @@ import React, { Component } from 'react';
 
 import { Button, Input } from 'reactstrap';
 
+import DB from '../../../../Classes/Firebase/Database/Database';
+import CloudStorage from '../../../../Classes/Firebase/CloudStorage/CloudStorage';
+
 import './EditProfile.css'
 export default class ProfileFeed extends Component{
 
-  constructor(){
-    super();
-    console.log(this.props)
+  constructor(props){
+    super(props);
+    this.db = new DB(this.props.firebase);
+    this.storage = new CloudStorage(this.props.firebase);
+    this.state = {
+      profilePicChanged: false,
+      bioChanged: false,
+      nameChanged: false,
+      hometownChanged: false,
+      birthdayChanged: false
+    }
   }
 
   showImgPreview(){
@@ -18,6 +29,10 @@ export default class ProfileFeed extends Component{
       profilePicturePreview.src = e.target.result
     }
     reader.readAsDataURL(input.files[0]);
+  }
+
+  saveProfileData(){
+
   }
 
   //=== Component Life Cycle ===================================================
@@ -38,6 +53,7 @@ export default class ProfileFeed extends Component{
             <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
             <p>Birthday</p>
             <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
+            <Button onClick={this.saveProfileData.bind(this)}></Button>
         </div>
     )
   }

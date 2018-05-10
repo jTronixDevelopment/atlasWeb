@@ -57,6 +57,7 @@ export default class ProfileControl extends Component {
           modalBody={ this.state.modalBody }
           modalTitle={ this.state.modalTitle }
           reset={ this.toggleModal.bind(this) }
+          firebase={this.props.firebase}
         />
         <ul className="flex-container profile-control-container" >
           <li className="flex-item profile-control-item" onClick={this.showPostComponent.bind(this)}>
