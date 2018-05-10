@@ -28,6 +28,7 @@ export default class App extends Component {
         var posts = querySnapshot.docs;
         posts.postId = querySnapshot.id;
         this.setState({ posts : posts})
+        console.log(posts)
       })
       .catch((error)=>{
         console.log('error')

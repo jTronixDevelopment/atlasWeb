@@ -34,9 +34,8 @@ export default class Post extends Component{
   }
 
   postSuccessHandler(data){
-    console.log('Data', data.id)
     this.storage.upload({
-      file: document.getElementById('postWidgetProfilePhotoInput').files[0],
+      file: document.getElementById('postImageInput').files[0],
       path: 'postImages/' +  data.id,
       data: data,
       firebase : this.props.firebase,
@@ -112,13 +111,15 @@ export default class Post extends Component{
   }
 
   showImgPreview(){
-    var input = document.getElementById('postWidgetProfilePhotoInput');
-    var profilePicturePreview = document.getElementById('postWidgetProfilePicturePreview');
+    var input = document.getElementById('postImageInput');
+    var profilePicturePreview = document.getElementById('postImagePreview');
     var reader = new FileReader();
     reader.onload = function (e) {
       profilePicturePreview.src = e.target.result
     }
+    console.log(typeof input.files[0]);
     reader.readAsDataURL(input.files[0]);
+    profilePicturePreview.style.display = 'block'
   }
 
   //=== Component Lifecycle ====================================================
@@ -126,22 +127,22 @@ export default class Post extends Component{
   componentDidMount(){
     this.postContent = document.getElementById('postContent')
     this.postImageInput = document.getElementById('postPhoto')
+    document.getElementById('postImagePreview').style.display='none'
   }
-
 
   render(){
     return(
       <div className='post-widget-container'>
         <h4 className='text-center'>Post New Item</h4>
         <div className='post-widget'>
-          <img alt='preview' id='postWidgetProfilePicturePreview'/>
+          <img alt='preview' id='postImagePreview'/>
           <InputGroup>
             <textarea id='postContent' placeholder='Share'/>
             <Row className='post-widget-options full-width'>
               <Col xs='6' sm='6'>
                 <div className="upload-btn-wrapper">
                   <button className="btn">Add Photo</button>
-                  <input id='postWidgetProfilePhotoInput' type="file" name="myfile" onChange={this.showImgPreview.bind(this)}/>
+                  <input id='postImageInput' type="file" name="myfile" onChange={this.showImgPreview.bind(this)}/>
                 </div>
               </Col>
               <Col xs='6' sm='6'>

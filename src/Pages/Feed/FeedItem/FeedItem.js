@@ -21,6 +21,7 @@ export default class App extends Component {
       likes : 0,
       dislikes : 0
     }
+    console.log(this.props.post.data())
   }
 
   // Thumbnail
@@ -64,6 +65,9 @@ export default class App extends Component {
   componentDidMount(){
     this.getThumbnail()
     this.getPostImage()
+    this.setState({
+      content : this.props.post.data().content
+    })
   }
 
   render() {

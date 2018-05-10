@@ -32,7 +32,12 @@ export default class ProfileFeed extends Component{
   }
 
   saveProfileData(){
+    let changedData = this.getChangedProfileData.bind(this);
 
+  }
+
+  getChangedProfileData(){
+    
   }
 
   //=== Component Life Cycle ===================================================
@@ -51,9 +56,7 @@ export default class ProfileFeed extends Component{
             <Input id='editProfileHomeTown' placeholder={this.props.profileData.homeTown}/>
             <p>Birthday</p>
             <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
-            <p>Birthday</p>
-            <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
-            <Button onClick={this.saveProfileData.bind(this)}></Button>
+            <Button onClick={this.saveProfileData.bind(this)}>Save</Button>
         </div>
     )
   }
