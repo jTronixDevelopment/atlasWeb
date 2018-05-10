@@ -11,6 +11,8 @@ import Feed from './Pages/Feed/Feed';
 import Search from './Pages/Search/Search';
 import Messages from './Pages/Messages/Messages';
 import Testing from './Pages/Testing/testing';
+import People from './Pages/People/People';
+import Post from './Pages/Post/Post';
 
 //=== Components ===============================================================
 import Header from './Components/header/header';
@@ -47,6 +49,8 @@ export default class App extends Component {
           <Route path='/places' render={ props => ( <Feed firebase={this.firebase}/> )}/>
           <Route path='/search' render={ props => ( <Search firebase={this.firebase}/> )}/>
           <Route path='/messages' render={ props => ( <Messages firebase={this.firebase}/> )}/>
+          <Route path='/people' render={ props => ( <People firebase={this.firebase}/> )}/>
+          <Route path='/post' render={ props => ( <Post firebase={this.firebase}/> )}/>
         </Switch>
         <Switch>
           <Route path='/profile' component={ Navigation }/>
@@ -54,6 +58,8 @@ export default class App extends Component {
           <Route path='/places' component={ Navigation }/>
           <Route path='/search' component={ Navigation }/>
           <Route path='/messages' component={ Navigation }/>
+          <Route path='/post' component={ Navigation }/>
+          <Route path='/people' component={ Navigation }/>
         </Switch>
       </div>
     );

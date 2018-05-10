@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './profile.css';
+import './People.css';
 
 //=== Classes ==================================================================
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';
@@ -17,7 +17,7 @@ export default class ProfilePage extends Component {
   render() {
     return (
       <div>
-        
+
       </div>
     )
   }
