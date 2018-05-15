@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Card, Button, CardBody, CardImg  } from 'reactstrap';
 import './FeedItem.css';
 
-import { LikeIcon , DislikeIcon } from './../../../imgs/icons';
+import { LikeIcon , DislikeIcon } from './../../imgs/icons';
 
-import Storage from './../../../Classes/Firebase/CloudStorage/CloudStorage';
+import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';
 
-import Thumbnail from './../../../Components/Thumbnail/Thumbnail';
+import Thumbnail from './../../Components/Thumbnail/Thumbnail';
 
 export default class App extends Component {
 
