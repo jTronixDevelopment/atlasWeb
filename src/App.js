@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import SignInWidget from './Pages/SignIn/signInWidget';
 import SignUpWidget from './Pages/SignUp/signUpWidget';
 import Profile from './Pages/Profile/profile';
-import Feed from './Pages/Feed/Feed';
+import Places from './Pages/Places/Places';
 import Search from './Pages/Search/Search';
 import Messages from './Pages/Messages/Messages';
 import Testing from './Pages/Testing/testing';
@@ -46,7 +46,7 @@ export default class App extends Component {
           <Route path='/signin' render={ props => ( <SignInWidget firebase={this.firebase}/> )} />
           <Route path='/profile' render={ props => ( <Profile firebase={this.firebase}/> )}/>
           <Route path='/testing' render={ props => ( <Testing firebase={this.firebase}/> )}/>
-          <Route path='/places' render={ props => ( <Feed firebase={this.firebase}/> )}/>
+          <Route path='/places' render={ props => ( <Places firebase={this.firebase}/> )}/>
           <Route path='/search' render={ props => ( <Search firebase={this.firebase}/> )}/>
           <Route path='/messages' render={ props => ( <Messages firebase={this.firebase}/> )}/>
           <Route path='/people' render={ props => ( <People firebase={this.firebase}/> )}/>
