@@ -364,6 +364,7 @@ export default class ProfilePage extends Component {
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `350px`,marginBottom: '75px' }} />}
           mapElement={<div style={{ height: `100%` }} />}
+          
         />
       </div>
     )

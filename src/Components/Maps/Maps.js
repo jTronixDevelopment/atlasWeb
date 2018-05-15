@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
 //=== Style ====================================================================
 import './Maps'
 
@@ -65,6 +65,15 @@ export default class Maps extends Component{
         "stylers": [
           {
             "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.countries.egypt",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "black"
           }
         ]
       },
@@ -222,29 +231,46 @@ export default class Maps extends Component{
         ]
       }
     ]
+    this.state = {
+      profileData : {
+        bio : "Loading",
+        profilePics : "https://firebasestorage.googleapis.com/v0/b/platrom-7b0e2.appspot.com/o/profilePics%2FB1TbUTfSbSNr05UAO9NgZlOYPnt2profilePic?alt=media&token=53e20dd2-095a-4963-9a12-77ae5822d9bd"
+      },
+      curPOS : { lat : 0, lng : 0 },
+      isHidden : this.props.isHidden
+    }
+    console.log(this.props)
+  }
+
+  getUserCurrentLocation(){
+    var setMap = (position)=>{
+      this.setState({ curPOS : { lat: position.coords.latitude, lng: position.coords.longitude }})
+    }
+    navigator.geolocation.getCurrentPosition(setMap.bind(this),(error)=>{console.log(error)});
   }
 
   //=== Component Life Cycle ===================================================
 
-  componentWillMount(){}
-
-  componentWillUnmount() {}
-
-  componentWillReceiveProps(){}
-
-  componentWillUpdate(){}
-
-  componentShouldUpdate(){}
-
-  componentDidUpdate(){}
-
-  componentDidMount(){}
+  componentWillMount(){
+    this.getUserCurrentLocation()
+  }
 
   render(){
+
+    const MyMapComponent = withGoogleMap((props) =>
+      <GoogleMap defaultZoom={10} defaultCenter={{ lat: this.state.curPOS.lat, lng: this.state.curPOS.lng }} defaultOptions={{styles:this.mapStyle}}>
+        { props.isMarkerShown && <Marker position={{ lat: this.state.curPOS.lat, lng:this.state.curPOS.lng }} />}
+      </GoogleMap>
+    )
+
     return(
-        <div>
-          Maps
-        </div>
+          <MyMapComponent
+            isMarkerShown
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwojlX6Zlg8WX3RrJCijGPvHzDDciMoYk&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div id='mapContainer' style={{ height: `350px`, width:'100%', display:this.props.isHidden}} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          />
     )
   }
 }

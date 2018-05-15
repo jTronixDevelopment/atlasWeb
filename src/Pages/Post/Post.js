@@ -4,6 +4,8 @@ import { InputGroup, Button, Row, Col } from 'reactstrap';
 
 import Thumbnail from './../../Components/Thumbnail/Thumbnail';
 
+import MapComponent from './../../Components/Maps/Maps';
+
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage'
 import DB from './../../Classes/Firebase/Database/Database'
 
@@ -18,7 +20,8 @@ export default class Post extends Component{
     this.db = new DB(this.firebase)
     this.storage = new Storage(this.firebase)
     this.state = {
-      postWidgetIsHidden : 'none'
+      postWidgetIsHidden : 'none',
+      mapVisability : 'none'
     }
   }
 
@@ -35,7 +38,7 @@ export default class Post extends Component{
 
   postSuccessHandler(data){
     this.storage.upload({
-      file: document.getElementById('postImageInput').files[0],
+      file: this.postImageInput,
       path: 'postImages/' +  data.id,
       data: data,
       firebase : this.props.firebase,
@@ -46,15 +49,12 @@ export default class Post extends Component{
 
   updatePostAfterImageUpload(data){
     // set the post : postImg to the correct thing corresponding imgUrl
-    console.log(data)
     this.db.edit({
       collection: 'posts',
       doc: data.id,
-      successHandler:()=>{console.log("Good")},
-      errorHandler: ()=>{console.log("Bad");},
-      data : {
-        imageURL: data.id
-      }
+      successHandler:()=>{console.log("Image Successfully handaled.")},
+      errorHandler: ()=>{console.log("Image did not upload.");},
+      data : { imageURL: data.id }
     })
   }
 
@@ -104,30 +104,39 @@ export default class Post extends Component{
     return {
       ownerId : this.firebase.auth().currentUser.uid,
       data : new Date(),
-      content : document.getElementById('postContent').value,
+      content : this.postContent.value,
       imageURL : "none",
       location : { test : 'test'},
     }
   }
 
   showImgPreview(){
-    var input = document.getElementById('postImageInput');
-    var profilePicturePreview = document.getElementById('postImagePreview');
     var reader = new FileReader();
-    reader.onload = function (e) {
-      profilePicturePreview.src = e.target.result
-    }
-    console.log(typeof input.files[0]);
-    reader.readAsDataURL(input.files[0]);
-    profilePicturePreview.style.display = 'block'
+    reader.onload = (e)=>{ this.postImagePreview.src = e.target.result };
+    reader.readAsDataURL(this.postImageInput.files[0]);
+    this.postImagePreview.style.display = '';
+  }
+
+  pinLocation(){
+    this.showMapPreview()
+  }
+
+  showMapPreview(){
+    console.log(this.state.mapVisability)
+    this.setState({
+      mapVisability: this.state.mapVisability==='none'?'':'none'
+    })
   }
 
   //=== Component Lifecycle ====================================================
 
   componentDidMount(){
-    this.postContent = document.getElementById('postContent')
-    this.postImageInput = document.getElementById('postPhoto')
-    document.getElementById('postImagePreview').style.display='none'
+    this.postContent = document.getElementById('postContent');
+    this.postImageInput = document.getElementById('postImageInput');
+    this.postImagePreview = document.getElementById('postImagePreview');
+    this.mapPreview = document.getElementById('mapContainer')
+    this.postImagePreview.style.display = 'none';
+    this.mapPreview.style.display = 'none';
   }
 
   render(){
@@ -137,22 +146,24 @@ export default class Post extends Component{
         <div className='post-widget'>
           <img alt='preview' id='postImagePreview'/>
           <InputGroup>
-            <textarea id='postContent' placeholder='Share'/>
-            <Row className='post-widget-options full-width'>
+            <textarea id='postContent'  placeholder='Share'/>
+            <Row className='post-widget-options full-width text-center'>
               <Col xs='6' sm='6'>
                 <div className="upload-btn-wrapper">
-                  <button className="btn">Add Photo</button>
+                  <button className="btn post-widget-button">Add Photo</button>
                   <input id='postImageInput' type="file" name="myfile" onChange={this.showImgPreview.bind(this)}/>
                 </div>
               </Col>
               <Col xs='6' sm='6'>
-                  <button className="btn">Pin Location</button>
+                <button className="btn post-widget-button" onClick={ this.pinLocation.bind(this) }>Pin Location</button>
               </Col>
             </Row>
-            <Button  onClick={ this.postItem.bind(this) }>Post</Button>
           </InputGroup>
+          <MapComponent isHidden={this.state.mapVisability} />
+          <Button className='btn post-widget-button' onClick={ this.postItem.bind(this) }>Post</Button>
         </div>
       </div>
     )
   }
+
 }
