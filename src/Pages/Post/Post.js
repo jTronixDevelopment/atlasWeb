@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { InputGroup, Button, Row, Col } from 'reactstrap';
+import { InputGroup, Button, Row, Col, Container } from 'reactstrap';
 
 import Thumbnail from './../../Components/Thumbnail/Thumbnail';
 
@@ -10,7 +10,7 @@ import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage'
 import DB from './../../Classes/Firebase/Database/Database'
 
 //=== Style ====================================================================
-import './Post'
+import './Post.css'
 
 export default class Post extends Component{
 
@@ -141,13 +141,13 @@ export default class Post extends Component{
 
   render(){
     return(
-      <div className='post-widget-container'>
+      <Container>
         <h4 className='text-center'>Post New Item</h4>
         <div className='post-widget'>
           <img alt='preview' id='postImagePreview'/>
           <InputGroup>
             <textarea id='postContent'  placeholder='Share'/>
-            <Row className='post-widget-options full-width text-center'>
+            <Row className='full-width text-center'>
               <Col xs='6' sm='6'>
                 <div className="upload-btn-wrapper">
                   <button className="btn post-widget-button">Add Photo</button>
@@ -160,9 +160,9 @@ export default class Post extends Component{
             </Row>
           </InputGroup>
           <MapComponent isHidden={this.state.mapVisability} />
-          <Button className='btn post-widget-button' onClick={ this.postItem.bind(this) }>Post</Button>
+          <Button id='postButton' className='btn post-widget-button' onClick={ this.postItem.bind(this) }>Post</Button>
         </div>
-      </div>
+      </Container>
     )
   }
 
