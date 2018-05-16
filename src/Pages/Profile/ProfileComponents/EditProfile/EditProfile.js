@@ -32,12 +32,10 @@ export default class ProfileFeed extends Component{
   }
 
   saveProfileData(){
-    let changedData = this.getChangedProfileData.bind(this);
-
   }
 
   getChangedProfileData(){
-    
+
   }
 
   //=== Component Life Cycle ===================================================

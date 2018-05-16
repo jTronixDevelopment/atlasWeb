@@ -8,7 +8,7 @@ import DB from './../../Classes/Firebase/Database/Database';
 //=== Components ===============================================================
 import UserInfo from './ProfileComponents/UserInfo/UserInfo';
 import ProfileControl from './ProfileComponents/ProfileControl/ProfileControl';
-import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
+import { GoogleMap, Marker, withGoogleMap } from "react-google-maps"
 
 //=== Classes ==================================================================
 export default class ProfilePage extends Component {
@@ -297,10 +297,10 @@ export default class ProfilePage extends Component {
       })
     }
     this.getUserCurrentLocation()
-    var map = new window.google.maps.Map(this.refs.map,{
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
+      // var map = new window.google.maps.Map(this.refs.map,{
+      //       center: {lat: -34.397, lng: 150.644},
+      //       zoom: 8
+      //     });
 
         window.google.charts.load('current', {
             'packages': ['geochart'],

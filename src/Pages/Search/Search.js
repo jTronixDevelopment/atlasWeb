@@ -3,17 +3,18 @@ import React, { Component } from 'react'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Container } from 'reactstrap'
 
 import SearchBar from './searchcomponents/searchbar';
-import SearchResults from './searchcomponents/searchresults';
+
+import FeedItem from './../../Components/FeedItem/FeedItem';
+import PersonItem from './../../Components/PersonItem/PersonItem';
 
 export default class App extends Component {
     constructor(props) {
       super(props);
-
       this.toggle = this.toggle.bind(this);
       this.state = {
         activeTab: 'People',
-        peopleResults:"No Results Found",
-        placesResults: "No Results Found"
+        peopleResults:[],
+        placesResults: []
       };
     }
 
@@ -24,10 +25,18 @@ export default class App extends Component {
         });
       }
     }
+
+    addPosts(posts){
+      console.log(posts)
+      this.setState({
+        peopleResults : posts
+      })
+    }
+
   render() {
     return (
       <Container>
-        <SearchBar/>
+        <SearchBar firebase={this.props.firebase} showResults={this.addPosts.bind(this)}/>
         <Nav tabs>
           <NavItem>
             <NavLink className={ this.state.activeTab === 'People'?'active':'' } onClick={() => { this.toggle('People') }}>
@@ -43,12 +52,14 @@ export default class App extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="People">
             <Container>
-              { this.state.peopleResults }
+              {
+                this.state.peopleResults.map((post,i)=><PersonItem  key={i} userInfo={post}/>)
+              }
             </Container>
           </TabPane>
           <TabPane tabId="Places">
             <Container>
-              { this.state.placesResults }
+              { this.state.placesResults.map((post,i)=><FeedItem key={i} userInfo={post}/>) }
             </Container>
           </TabPane>
         </TabContent>

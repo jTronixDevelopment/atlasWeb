@@ -8,7 +8,7 @@ export default class App extends Component {
   render() {
     return (
         <Jumbotron fluid className='profile-jumbotron'>
-          <div className='flex-container'>
+          <div className='flex-container flex-center'>
             <img alt='profileIcon' className='profile-pic' src= { this.props.profileData.profilePic } />
             <div className='profile-bio'>
               <b>Bio</b>

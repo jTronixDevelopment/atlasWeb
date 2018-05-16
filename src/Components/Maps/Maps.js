@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
+import { GoogleMap, Marker, withGoogleMap } from "react-google-maps";
 //=== Style ====================================================================
 import './Maps'
 

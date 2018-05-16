@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import { InputGroup, Button, Row, Col } from 'reactstrap';
 
-import Thumbnail from './../Thumbnail/Thumbnail';
-
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage'
 import DB from './../../Classes/Firebase/Database/Database'
 

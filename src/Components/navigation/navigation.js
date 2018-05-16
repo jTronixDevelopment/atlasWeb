@@ -4,7 +4,7 @@ import './style.css';
 
 import { Link } from 'react-router-dom';
 
-import { SearchIcon, MessageIcon, PersonIcon, AtlasIcon,GlobeIcon,EditBlackIcon,PassportIcon } from './../../imgs/icons.js';
+import { SearchIcon, PersonIcon, GlobeIcon, EditBlackIcon, PassportIcon } from './../../imgs/icons.js';
 
 export default class Footer extends Component {
   constructor(props){
