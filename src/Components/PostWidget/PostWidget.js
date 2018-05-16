@@ -31,12 +31,11 @@ export default class PostWidget extends Component{
   }
 
   postSuccessHandler(data){
-    console.log('Data', data.id)
+    console.log('Post made!')
     this.storage.upload({
       file: document.getElementById('postWidgetProfilePhotoInput').files[0],
       path: 'postImages/' +  data.id,
       data: data,
-      firebase : this.props.firebase,
       successHandler : this.updatePostAfterImageUpload.bind(this),
       errorHandler: this.postErrorHandler.bind(this)
     })

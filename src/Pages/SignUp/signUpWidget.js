@@ -11,8 +11,8 @@ import DB from './../../Classes/Firebase/Database/Database';
 export default class App extends Component {
   constructor(auth){
     super(auth);
-    this.auth = new Auth();
-    this.db = new DB();
+    this.auth = new Auth(this.props.firebase);
+    this.db = new DB(this.props.firebase);
     this.state={
       signedUp : false
     }
@@ -20,9 +20,7 @@ export default class App extends Component {
 
   createUser() {
     var { email , password, passwordConfirm } = this.getUserInfo();
-    console.log(this.isValidEmail(email),this.isValidPassword(password,passwordConfirm))
     if(this.isValidEmail(email)&&this.isValidPassword(password,passwordConfirm)){
-      console.log("Valid Sign Up")
       this.auth.signUp(this.getUserInfo())
     } else {
       this.checkEmail(email)
@@ -111,8 +109,6 @@ export default class App extends Component {
   }
 
   isValidPassword(p1,p2){
-    console.log(p1)
-    console.log(p1 !=="")
     return (p1 === p2)&&(p1!== '')&&this.passwordRegex.test(p1)
   }
 
@@ -137,12 +133,11 @@ export default class App extends Component {
   }
 
   successHandler(success){
-    console.log('in successHandler')
+    console.log('in success')
     var { firstName, lastName, birthday, email }= {...this.getUserInfo()}
-    this.db.add({
+    this.db.addWithID({
       successHandler : ()=>{ console.log('Good') },
       errorHandler : ()=>{ console.log("error") },
-      firebase : this.props.firebase,
       data : {
         id : success.uid,
         firstName : firstName,
@@ -152,13 +147,12 @@ export default class App extends Component {
         profilePic : 'none',
         email : email,
         birthday : birthday,
-        friends : null,
-        places: null
+        friends : [],
+        places:[]
       },
       collection: 'users',
-      docId : success.uid
+      docId : this.props.firebase.auth().currentUser.uid
     });
-    this.props.saveFireBase(this.props.firebase);
     this.setState({ signedUp : true })
   }
 

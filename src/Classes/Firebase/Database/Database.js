@@ -13,6 +13,16 @@ export default class DB{
       })
   }
 
+  addWithID({collection, data, successHandler, errorHandler, docId}){
+    this.firebase.firestore().collection(collection).doc(docId).set(data)
+      .then((doc)=>{
+        successHandler(doc);
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+  }
+
   edit({ collection, data, doc, successHandler, errorHandler }){
     this.firebase.firestore().collection(collection).doc(doc).update(data)
     .then(function() {
@@ -41,7 +51,6 @@ export default class DB{
     this.firebase.firestore().collection('posts').where(query.feild, query.operator , query.value ).get()
     .then((querySnapshot)=>{
       querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
       });
     })

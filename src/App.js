@@ -30,10 +30,6 @@ export default class App extends Component {
     this.firebase = Firebase;
   }
 
-  saveFireBase(firebase){
-    this.firebase = firebase;
-  }
-
   render() {
     return (
       <div>

@@ -10,6 +10,7 @@ export default class ProfileFeed extends Component{
 
   constructor(props){
     super(props);
+    console.log(this.props.firebase)
     this.db = new DB(this.props.firebase);
     this.storage = new CloudStorage(this.props.firebase);
     this.state = {
@@ -22,8 +23,8 @@ export default class ProfileFeed extends Component{
   }
 
   showImgPreview(){
-    var input = document.getElementById('editProfilePictureInput');
-    var profilePicturePreview = document.getElementById('editProfilePicture');
+    var input = document.getElementById('profilePictureInput');
+    var profilePicturePreview = document.getElementById('profilePicturePreview');
     var reader = new FileReader();
     reader.onload = function (e) {
       profilePicturePreview.src = e.target.result
@@ -32,28 +33,94 @@ export default class ProfileFeed extends Component{
   }
 
   saveProfileData(){
+    this.db.edit({
+      successHandler : this.state.profilePicChanged?this.changeProfilePicture.bind(this):()=>{console.log("profile Data Changed")},
+      errorHandler : ()=>{ console.log('error') },
+      data : this.getChangedProfileData(),
+      doc : this.props.firebase.auth().currentUser.uid,
+      collection: 'users'
+    })
+  }
+
+  changeProfilePicture(data){
+    this.storage.upload({
+      file: this.profilePictureInput.files[0],
+      path: 'profilePics/' +  data.id,
+      data: data,
+      firebase : this.props.firebase,
+      successHandler : this.saveProfilePicURL.bind(this),
+      errorHandler: (err)=>{console.log(err)}
+    })
+  }
+
+  saveProfilePicURL(){
+    this.db.edit({
+      successHandler : this.state.profilePicChanged?this.changeProfilePicture.bind(this):()=>{console.log("profile Data Changed")},
+      errorHandler : ()=>{ console.log('error') },
+      data : { profilePic : this.props.firebase.auth.currentUser.uid },
+      doc : this.props.firebase.auth().currentUser.uid,
+      collection: 'users'
+    })
+  }
+
+  photoChanged(){
+    this.setState({profilePicChanged : true})
+    this.showImgPreview()
   }
 
   getChangedProfileData(){
+    var dataObj = {}
+    if(this.state.bioChanged){
+      dataObj.bioChanged = this.editProfileBio.value
+    }
+    if(this.state.birthdayChanged){
+      dataObj.birthday = this.editProfileBirthday.value
+    }
+    if(this.state.hometownChanged){
+      dataObj.homeTown = this.editProfileHomeTown.value
+    }
+    return dataObj
+  }
 
+  bioChanged(){
+    this.setState({ bioChanged: true })
+    console.log("bioChanged")
+  }
+
+  birthdayChanged(){
+    this.setState({ birthdayChanged: true })
+    console.log("BDAY CHANGED");
+  }
+
+  hometownChanged(){
+    this.setState({ hometownChanged: true })
+    console.log('hometownChanged')
   }
 
   //=== Component Life Cycle ===================================================
 
+  componentDidMount(){
+    this.profilePictureInput = document.getElementById('profilePictureInput');
+    this.profilePicturePreview = document.getElementById('profilePicturePreview');
+    this.editProfileBio = document.getElementById('editProfileBio');
+    this.editProfileHomeTown = document.getElementById('editProfileHomeTown');
+    this.editProfileBirthday = document.getElementById('editProfileBirthday');
+  }
+
   render(){
     return(
         <div>
-          <img id='editProfilePicture' alt='profileComp' src={this.props.profileData.profilePic}/>
+          <img id='profilePicturePreview' alt='profileComp' src={this.props.profileData.profilePic}/>
           <div className='upload-btn-wrapper full-width'>
             <Button block>Change Profile Picture</Button>
-            <input id="editProfilePictureInput" type='file' onChange={ this.showImgPreview.bind(this) }/>
+            <input id="profilePictureInput" type='file' onChange={ this.photoChanged.bind(this) }/>
           </div>
             <p>Bio</p>
-            <textarea id='editProfileBio' placeholder={this.props.profileData.bio}/>
+            <textarea id='editProfileBio' placeholder={this.props.profileData.bio} onChange={ this.bioChanged.bind(this) }/>
             <p>Hometown</p>
-            <Input id='editProfileHomeTown' placeholder={this.props.profileData.homeTown}/>
+            <Input id='editProfileHomeTown' placeholder={this.props.profileData.homeTown} onChange={ this.hometownChanged.bind(this) } />
             <p>Birthday</p>
-            <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday}/>
+            <Input id='editProfileBirthday'placeholder={this.props.profileData.birthday} onChange={ this.birthdayChanged.bind(this)}/>
             <Button onClick={this.saveProfileData.bind(this)}>Save</Button>
         </div>
     )
