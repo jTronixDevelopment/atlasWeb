@@ -1,6 +1,6 @@
 //Search SearchResults
 import React, { Component } from 'react'
-import './../search.css'
+import './../Search.css'
 
 import { SearchIcon } from './../../../imgs/icons.js';
 

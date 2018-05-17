@@ -4,20 +4,20 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 //=== Pages ====================================================================
-import SignInWidget from './Pages/SignIn/signInWidget';
-import SignUpWidget from './Pages/SignUp/signUpWidget';
-import Profile from './Pages/Profile/profile';
+import SignInWidget from './Pages/SignIn/SignIn';
+import SignUpWidget from './Pages/SignUp/SignUp';
+import Profile from './Pages/Profile/Profile';
 import Places from './Pages/Places/Places';
 import Search from './Pages/Search/Search';
 import Messages from './Pages/Messages/Messages';
-import Testing from './Pages/Testing/testing';
+import Testing from './Pages/Testing/Testing';
 import People from './Pages/People/People';
 import Post from './Pages/Post/Post';
 import Settings from './Pages/Settings/Settings';
 
 //=== Components ===============================================================
-import Header from './Components/header/header';
-import Navigation from './Components/navigation/navigation';
+import Header from './Components/Header/Header';
+import Navigation from './Components/Navigation/Navigation';
 
 //=== Database =================================================================
 import { Firebase } from './Classes/Firebase/setup';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './profile.css';
+import './Profile.css';
 
 //=== Classes ==================================================================
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';

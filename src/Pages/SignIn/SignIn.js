@@ -9,7 +9,7 @@ import Auth from './../../Classes/Firebase/Auth/Auth';
 
 import { Link, Redirect } from 'react-router-dom';
 
-import './signin.css'
+import './SignIn.css'
 
 export default class App extends Component {
 

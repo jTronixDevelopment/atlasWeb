@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Container } from 'reactstrap'
 
-import SearchBar from './searchcomponents/searchbar';
+import SearchBar from './SearchComponents/SearchBar';
 
 import FeedItem from './../../Components/FeedItem/FeedItem';
 import PersonItem from './../../Components/PersonItem/PersonItem';

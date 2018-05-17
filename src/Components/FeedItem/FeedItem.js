@@ -8,7 +8,7 @@ import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';
 
 import Thumbnail from './../../Components/Thumbnail/Thumbnail';
 
-export default class App extends Component {
+export default class FeedItem extends Component {
 
   constructor(props){
     super(props);
