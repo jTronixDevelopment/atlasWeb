@@ -23,19 +23,18 @@ export default class DB{
       })
   }
 
-  edit({ collection, data, doc, successHandler, errorHandler }){ 
-    this.firebase.firestore().collection(collection).doc(doc).update(data)
+  edit({ collection, data, docId, successHandler, errorHandler }){
+    this.firebase.firestore().collection(collection).doc(docId).update(data)
     .then(function() {
-        console.log(doc)
-        successHandler(doc)
+        successHandler(data)
     })
     .catch(function(error) {
         console.error("Error updating document: ", error);
     });
   }
 
-  getDoc({ collection, doc, data, successHandler, errorHandler }){
-    this.firebase.firestore().collection(collection).doc(doc)
+  getDoc({ collection, docId, data, successHandler, errorHandler }){
+    this.firebase.firestore().collection(collection).doc(docId)
     .get().then(function(doc) {
         if (doc.exists) {
             successHandler(doc.data())
@@ -55,4 +54,12 @@ export default class DB{
       });
     })
   }
+
+  //=== Specific ===============================================================
+  getUserData({ docId , successHandler}){
+    this.firebase.firestore().collection('users').doc(docId).get()
+      .then((data)=>{ successHandler(data) })
+      .catch((error)=>{ console.log(error) })
+  }
+
 }

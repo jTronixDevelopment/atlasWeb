@@ -9,6 +9,7 @@ export default class App extends Component {
     super(props);
     console.log(this.props)
   }
+
   render() {
     return (
         <Jumbotron fluid className='profile-jumbotron'>

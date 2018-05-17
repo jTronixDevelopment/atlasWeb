@@ -24,7 +24,13 @@ export default class Storgage{
     this.firebase.storage().ref(path + '/' + id)
     .getDownloadURL()
     .then((url)=>{ successHandler(url)})
-    .catch((error)=>{ console.log("Photo Was not Added",error) })
+    .catch((error)=>{ console.log("Photo Was not Added", error) })
+  }
+
+  getProfilePic({ successHandler, docId }){
+    this.firebase.storage().ref('profilePics/' + docId).getDownloadURL()
+      .then((url)=>{ successHandler(url) })
+      .catch((error)=>{ console.log("Photo Was not Added",error) })
   }
 
 }

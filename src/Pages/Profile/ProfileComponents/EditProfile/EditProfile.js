@@ -37,7 +37,7 @@ export default class ProfileFeed extends Component{
       successHandler : this.state.profilePicChanged?this.changeProfilePicture.bind(this):()=>{console.log("profile Data Changed")},
       errorHandler : ()=>{ console.log('error') },
       data : this.getChangedProfileData(),
-      doc : this.props.firebase.auth().currentUser.uid,
+      docId : this.props.firebase.auth().currentUser.uid,
       collection: 'users'
     })
   }
@@ -47,17 +47,25 @@ export default class ProfileFeed extends Component{
       file: this.profilePictureInput.files[0],
       path: 'profilePics/' +  this.props.firebase.auth().currentUser.uid,
       data: data,
-      successHandler : this.saveProfilePicURL.bind(this),
+      successHandler : this.getImageUrl.bind(this),
       errorHandler: (err)=>{console.log(err)}
     })
   }
 
-  saveProfilePicURL(){
+  getImageUrl(){
+    this.storage.getProfilePic({
+      successHandler : this.saveProfilePicURL.bind(this),
+      docId : this.props.firebase.auth().currentUser.uid
+    })
+  }
+
+  saveProfilePicURL(url){
+    console.log(url)
     this.db.edit({
       successHandler :(url)=>{console.log(url)},
       errorHandler : ()=>{ console.log('error') },
-      data : { profilePic : this.props.firebase.auth().currentUser.uid },
-      doc : this.props.firebase.auth().currentUser.uid,
+      data : { profilePic : url },
+      docId : this.props.firebase.auth().currentUser.uid,
       collection: 'users'
     })
   }
@@ -78,6 +86,7 @@ export default class ProfileFeed extends Component{
     if(this.state.hometownChanged){
       dataObj.homeTown = this.editProfileHomeTown.value
     }
+    console.log("Profile Data to be saved ", dataObj)
     return dataObj
   }
 

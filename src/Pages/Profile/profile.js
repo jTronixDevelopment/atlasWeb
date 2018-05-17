@@ -12,11 +12,12 @@ import { GoogleMap, Marker, withGoogleMap } from "react-google-maps"
 
 //=== Classes ==================================================================
 export default class ProfilePage extends Component {
+
   constructor(props){
     super(props);
-    this.firebase = this.props.firebase;
-    this.cloudStorage = new Storage(this.firebase);
-    this.db = new DB(this.firebase);
+    this.firebase = this.props.firebase
+    this.storage = new Storage(this.props.firebase);
+    this.db = new DB(this.props.firebase);
     this.mapStyle = [
       {
         "elementType": "geometry",
@@ -244,7 +245,7 @@ export default class ProfilePage extends Component {
     this.state = {
       profileData : {
         bio : "Loading",
-        profilePics : "https://firebasestorage.googleapis.com/v0/b/platrom-7b0e2.appspot.com/o/profilePics%2FB1TbUTfSbSNr05UAO9NgZlOYPnt2profilePic?alt=media&token=53e20dd2-095a-4963-9a12-77ae5822d9bd"
+        profilePic : ""
       },
       curPOS : { lat : 0, lng : 0 }
     }
@@ -268,16 +269,29 @@ export default class ProfilePage extends Component {
     })
   }
 
-  setUserData(data){
-    this.setState({ profileData : data })
+  getUserData(){
+    if(this.props.firebase&&this.props.firebase.auth().currentUser){
+      this.db.getUserData({
+        docId : this.firebase.auth().currentUser.uid,
+        successHandler: this.setUserData.bind(this)
+      })
+      this.storage.getProfilePic({
+        docId : this.firebase.auth().currentUser.uid,
+        successHandler: this.setUserPhoto.bind(this)
+      })
+    } else {
+      console.log("Firebase not defined or user not logged in.")
+    }
   }
 
-  setUserPhoto(data){
-    this.setUserData(data)
-    this.firebase.storage().ref('profilePics/' + data.id)
-    .getDownloadURL()
-    .then((url)=>{  })
-    .catch((error)=>{ console.log("Photo Was not Added",error) })
+  setUserData(data){
+    this.setState({ profileData : data.data() })
+  }
+
+  setUserPhoto(url){
+    let user = Object.assign({}, this.state.profileData);
+    user.profilePic = url;
+    this.setState({profileData : user});
   }
 
   getUserCurrentLocation(){
@@ -312,14 +326,7 @@ export default class ProfilePage extends Component {
   //=== Component Lifecycle ========================================================
 
   componentDidMount(){
-    if(this.firebase&&this.firebase.auth().currentUser){
-      this.db.getDoc({
-        errorHandler : (err)=>{ console.log(err) },
-        successHandler: this.setUserPhoto.bind(this),
-        collection : "users",
-        doc : this.firebase.auth().currentUser.uid
-      })
-    }
+    this.getUserData()
     this.getUserCurrentLocation()
     this.setUpGeoChart()
   }
@@ -339,7 +346,7 @@ export default class ProfilePage extends Component {
           isMarkerShown
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwojlX6Zlg8WX3RrJCijGPvHzDDciMoYk&v=3.exp&libraries=geometry,drawing,places"
           loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `350px`,marginBottom: '75px' }} />}
+          containerElement={<div style={{ height: `350px`, marginBottom: '75px' }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
       </div>

@@ -133,7 +133,6 @@ export default class App extends Component {
   }
 
   successHandler(success){
-    console.log('in success')
     var { firstName, lastName, birthday, email }= {...this.getUserInfo()}
     this.db.addWithID({
       successHandler : ()=>{ console.log('Good') },
