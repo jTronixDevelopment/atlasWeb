@@ -4,8 +4,8 @@ export default class Storgage{
     this.firebase = firebase;
   }
   upload({ file, path, successHandler, errorHandler, data }){
-    this.firebase.storage().ref(path).put(file).then(()=>{
-      successHandler(data)
+    this.firebase.storage().ref(path).put(file).then((id)=>{
+      successHandler(id)
     })
     .catch((err)=>{
       errorHandler(err)

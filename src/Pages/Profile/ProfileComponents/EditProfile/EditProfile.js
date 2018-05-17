@@ -45,9 +45,8 @@ export default class ProfileFeed extends Component{
   changeProfilePicture(data){
     this.storage.upload({
       file: this.profilePictureInput.files[0],
-      path: 'profilePics/' +  data.id,
+      path: 'profilePics/' +  this.props.firebase.auth().currentUser.uid,
       data: data,
-      firebase : this.props.firebase,
       successHandler : this.saveProfilePicURL.bind(this),
       errorHandler: (err)=>{console.log(err)}
     })
@@ -55,9 +54,9 @@ export default class ProfileFeed extends Component{
 
   saveProfilePicURL(){
     this.db.edit({
-      successHandler : this.state.profilePicChanged?this.changeProfilePicture.bind(this):()=>{console.log("profile Data Changed")},
+      successHandler :(url)=>{console.log(url)},
       errorHandler : ()=>{ console.log('error') },
-      data : { profilePic : this.props.firebase.auth.currentUser.uid },
+      data : { profilePic : this.props.firebase.auth().currentUser.uid },
       doc : this.props.firebase.auth().currentUser.uid,
       collection: 'users'
     })

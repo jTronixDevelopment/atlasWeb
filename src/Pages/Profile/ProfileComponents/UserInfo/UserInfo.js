@@ -5,6 +5,10 @@ import { Jumbotron } from 'reactstrap';
 import './userinfo.css'
 
 export default class App extends Component {
+  constructor(props){
+    super(props);
+    console.log(this.props)
+  }
   render() {
     return (
         <Jumbotron fluid className='profile-jumbotron'>

@@ -274,9 +274,9 @@ export default class ProfilePage extends Component {
 
   setUserPhoto(data){
     this.setUserData(data)
-    this.firebase.storage().ref('profilePics/' + data.id + "profilePic")
+    this.firebase.storage().ref('profilePics/' + data.id)
     .getDownloadURL()
-    .then((url)=>{ console.log('Set User Photo Worked') })
+    .then((url)=>{  })
     .catch((error)=>{ console.log("Photo Was not Added",error) })
   }
 
@@ -286,6 +286,30 @@ export default class ProfilePage extends Component {
     }
     navigator.geolocation.getCurrentPosition(setMap.bind(this),(error)=>{console.log(error)});
   }
+
+  //=== Geochart Setup =============================================================
+  setUpGeoChart(){
+    window.google.charts.load('current', {
+      'packages': ['geochart'],
+      'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+    });
+    window.google.charts.setOnLoadCallback(this.showCountryPosts.bind(this));
+  }
+
+  showCountryPosts(){
+    this.chart = new window.google.visualization.GeoChart(document.getElementById('map'));
+    var data = window.google.visualization.arrayToDataTable([['Country', 'Posts'],["USA",100]])
+    var options = {
+      region: 'world', // Africa
+      colorAxis: {colors: ['#fff','#e31b23']},
+      backgroundColor: '#81d4fa',
+      datalessRegionColor: '#fff',
+      defaultColor: '#f5f5f5'
+    };
+    this.chart.draw(data, options);
+  }
+
+  //=== Component Lifecycle ========================================================
 
   componentDidMount(){
     if(this.firebase&&this.firebase.auth().currentUser){
@@ -297,54 +321,7 @@ export default class ProfilePage extends Component {
       })
     }
     this.getUserCurrentLocation()
-      // var map = new window.google.maps.Map(this.refs.map,{
-      //       center: {lat: -34.397, lng: 150.644},
-      //       zoom: 8
-      //     });
-
-        window.google.charts.load('current', {
-            'packages': ['geochart'],
-            // Note: you will need to get a mapsApiKey for your project.
-            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
-          });
-          window.google.charts.setOnLoadCallback(drawMarkersMap);
-
-           function drawMarkersMap() {
-           var data = window.google.visualization.arrayToDataTable([
-              ['Country', 'Posts'],
-              ['Angola', 8], ['Benin', 6], ['Botswana', 1],
-              ['Burkina Faso', 12], ['Burundi', 3], ['Cameroon', 3],
-              ['Canary Islands', 28], ['Cape Verde', 15],
-              ['Central African Republic', 4], ['Ceuta', 35], ['Chad', 12],
-              ['Comoros', 12], ['Cote d\'Ivoire', 6],
-              ['Democratic Republic of the Congo', 3], ['Djibouti', 12],
-              ['Egypt', 26], ['Equatorial Guinea', 3], ['Eritrea', 15],
-              ['Ethiopia', 9], ['Gabon', 0], ['Gambia', 13], ['Ghana', 5],
-              ['Guinea', 10], ['Guinea-Bissau', 12], ['Kenya', 1],
-              ['Lesotho', 29], ['Liberia', 6], ['Libya', 32], ['Madagascar', null],
-              ['Madeira', 33], ['Malawi', 14], ['Mali', 12], ['Mauritania', 18],
-              ['Mauritius', 20], ['Mayotte', 13], ['Melilla', 35],
-              ['Morocco', 32], ['Mozambique', 25], ['Namibia', 22],
-              ['Niger', 14], ['Nigeria', 8], ['Republic of the Congo', 1],
-              ['Réunion', 21], ['Rwanda', 2], ['Saint Helena', 16],
-              ['São Tomé and Principe', 0], ['Senegal', 15],
-              ['Seychelles', 5], ['Sierra Leone', 8], ['Somalia', 2],
-              ['Sudan', 15], ['South Africa', 30], ['South Sudan', 5],
-              ['Swaziland', 26], ['Tanzania', 6], ['Togo', 6], ['Tunisia', 34],
-              ['Uganda', 1], ['Western Sahara', 25], ['Zambia', 15],["USA",100]])
-
-          var options = {
-            region: 'world', // Africa
-            colorAxis: {colors: ['#fff','#e31b23']},
-            backgroundColor: '#81d4fa',
-            datalessRegionColor: '#fff',
-            defaultColor: '#f5f5f5'
-          };
-
-           var chart = new window.google.visualization.GeoChart(document.getElementById('map'));
-           chart.draw(data, options);
-          };
+    this.setUpGeoChart()
   }
 
   render() {
