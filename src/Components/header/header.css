@@ -2,3 +2,20 @@
   background-color: #7acc8f;
   padding: 15px 0 15px 15px;
 }
+
+.flex-header{
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-center{
+  align-content: center;
+}
+
+.flex-left{
+  align-self: flex-start;
+}
+
+.flex-right{
+  align-self:flex-end;
+}

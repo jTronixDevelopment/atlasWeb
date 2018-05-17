@@ -110,6 +110,8 @@ export default class Post extends Component{
       content : this.postContent.value,
       imageURL : "none",
       location : { test : 'test'},
+      comments : [],
+      likes : 0
     }
   }
 
