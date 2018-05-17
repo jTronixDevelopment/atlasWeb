@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './style.css';
+import './Navigation.css';
 //import FooterLink from './footerIcon.js';
 
 import { Link } from 'react-router-dom';
 
 import { SearchIcon, PersonIcon, GlobeIcon, EditBlackIcon, PassportIcon } from './../../imgs/icons.js';
 
-export default class Footer extends Component {
+export default class Navigation extends Component {
   constructor(props){
     super(props);
     this.state = props;

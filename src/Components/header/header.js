@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './header.css';
+import './Header.css';
 import { AtlasIcon, SettingsIcon, MessageIcon } from './../../imgs/icons';
 
 import { withRouter } from 'react-router-dom'

@@ -4,20 +4,21 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 //=== Pages ====================================================================
-import SignInWidget from './Pages/SignIn/signInWidget';
-import SignUpWidget from './Pages/SignUp/signUpWidget';
-import Profile from './Pages/Profile/profile';
+import SignInWidget from './Pages/SignIn/SignIn';
+import SignUpWidget from './Pages/SignUp/SignUp';
+import Profile from './Pages/Profile/Profile';
 import Places from './Pages/Places/Places';
 import Search from './Pages/Search/Search';
 import Messages from './Pages/Messages/Messages';
-import Testing from './Pages/Testing/testing';
+import Testing from './Pages/Testing/Testing';
 import People from './Pages/People/People';
 import Post from './Pages/Post/Post';
 import Settings from './Pages/Settings/Settings';
+import ViewProfile from './Pages/ViewProfile/ViewProfile';
 
 //=== Components ===============================================================
-import Header from './Components/header/header';
-import Navigation from './Components/navigation/navigation';
+import Header from './Components/Header/Header';
+import Navigation from './Components/Navigation/Navigation';
 
 //=== Database =================================================================
 import { Firebase } from './Classes/Firebase/setup';
@@ -50,7 +51,8 @@ export default class App extends Component {
           <Route path='/messages' render={ props => ( <Messages firebase={this.firebase} saveData={this.saveData.bind(this)}/> )}/>
           <Route path='/people' render={ props => ( <People firebase={this.firebase} saveData={this.saveData.bind(this)}/> )}/>
           <Route path='/post' render={ props => ( <Post firebase={this.firebase} saveData={this.saveData.bind(this)}/> )}/>
-          <Route path='/post' render={ props => ( <Settings firebase={this.firebase} saveData={this.saveData.bind(this)}/> )}/>
+          <Route path='/setting' render={ props => ( <Settings firebase={this.firebase} saveData={this.saveData.bind(this)}/> )}/>
+          <Route path='/viewprofile' render={ props => ( <ViewProfile firebase={this.firebase} saveData={this.saveData.bind(this)}/> )}/>
         </Switch>
         <Switch>
           <Route path='/profile' component={ Navigation }/>
@@ -60,6 +62,7 @@ export default class App extends Component {
           <Route path='/messages' component={ Navigation }/>
           <Route path='/post' component={ Navigation }/>
           <Route path='/people' component={ Navigation }/>
+          <Route path='/viewprofile' component={ Navigation }/>
         </Switch>
       </div>
     );

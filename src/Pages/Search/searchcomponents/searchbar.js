@@ -1,12 +1,12 @@
 //Search SearchResults
 import React, { Component } from 'react'
-import './../search.css'
+import './../Search.css'
 
 import { SearchIcon } from './../../../imgs/icons.js';
 
 import DB from '../../../Classes/Firebase/Database/Database'
 
-import { FormGroup, Form, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { FormGroup, Form, Button, Input, InputGroup, InputGroupAddon, Badge } from 'reactstrap';
 
 class App extends Component {
 
@@ -52,6 +52,10 @@ class App extends Component {
               </Button>
             </InputGroupAddon>
           </InputGroup>
+          <div className='flex-container'>
+            <h4><Badge className='primary-background black-text'>Places</Badge></h4>
+            <h4><Badge className='primary-background black-text'>people</Badge></h4>
+          </div>
         </FormGroup>
       </Form>
     );
