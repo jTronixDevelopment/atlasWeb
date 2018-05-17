@@ -4,7 +4,7 @@ import './style.css';
 
 import { Link } from 'react-router-dom';
 
-import { SearchIcon, MessageIcon, FeedIcon, PersonIcon, AtlasIcon, PeopleIcon } from './../../imgs/icons.js';
+import { SearchIcon, PersonIcon, GlobeIcon, EditBlackIcon, PassportIcon } from './../../imgs/icons.js';
 
 export default class Footer extends Component {
   constructor(props){
@@ -15,17 +15,20 @@ export default class Footer extends Component {
   render() {
     return (
       <div className="nav-container">
-        <Link to='./places' className="nav-item">
-          <img className='nav-img' src={ AtlasIcon } alt='places'/>
+        <Link to='./people' className="nav-item">
+          <img className='nav-img' src={ PersonIcon } alt='people'/>
         </Link>
-        <Link to='./profile' className="nav-item">
-          <img className='nav-img' src={ PersonIcon } alt='profile'/>
+        <Link to='./places' className="nav-item">
+          <img className='nav-img' src={ GlobeIcon } alt='places'/>
+        </Link>
+        <Link to='./post' className="nav-item">
+          <img className='nav-img' src={ EditBlackIcon } alt='post'/>
         </Link>
         <Link to='./search' className="nav-item">
-          <img className='nav-img' src={ SearchIcon } alt='search'/>
+          <img className='nav-img' src={SearchIcon} alt='search'/>
         </Link>
-        <Link to='./messages' className="nav-item">
-          <img className='nav-img' src={MessageIcon} alt='messages'/>
+        <Link to='./profile' className="nav-item">
+          <img className='nav-img' src={PassportIcon} alt='profile'/>
         </Link>
       </div>
     );

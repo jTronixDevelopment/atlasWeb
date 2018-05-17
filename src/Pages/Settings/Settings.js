@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import { Button, Input } from 'reactstrap';
 
-import DB from '../../../../Classes/Firebase/Database/Database';
-import CloudStorage from '../../../../Classes/Firebase/CloudStorage/CloudStorage';
+import DB from '../../Classes/Firebase/Database/Database';
+import CloudStorage from '../../Classes/Firebase/CloudStorage/CloudStorage';
 
-import './EditProfile.css'
-export default class ProfileFeed extends Component{
+import './Settings.css'
+export default class Settings extends Component{
 
   constructor(props){
     super(props);

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import {  InputGroup, Button, Row, Col } from 'reactstrap';
+import { InputGroup, Button, Row, Col } from 'reactstrap';
 
-import Thumbnail from './../Thumbnail/Thumbnail';
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage'
 import DB from './../../Classes/Firebase/Database/Database'
 
@@ -13,15 +12,14 @@ export default class PostWidget extends Component{
   constructor(props){
     super(props);
     this.firebase = this.props.firebase
-    this.db = new DB()
-    this.storage = new Storage()
+    this.db = new DB(this.firebase)
+    this.storage = new Storage(this.firebase)
     this.state = {
       postWidgetIsHidden : 'none'
     }
   }
 
   postItem(){
-    //if(isValidPost()) else { do something }
     this.db.add({
       successHandler: this.postSuccessHandler.bind(this),
       errorHandler : this.postErrorHandler.bind(this),
@@ -33,10 +31,27 @@ export default class PostWidget extends Component{
   }
 
   postSuccessHandler(data){
+    console.log('Post made!')
     this.storage.upload({
       file: document.getElementById('postWidgetProfilePhotoInput').files[0],
       path: 'postImages/' +  data.id,
-      firebase : this.props.firebase
+      data: data,
+      successHandler : this.updatePostAfterImageUpload.bind(this),
+      errorHandler: this.postErrorHandler.bind(this)
+    })
+  }
+
+  updatePostAfterImageUpload(data){
+    // set the post : postImg to the correct thing corresponding imgUrl
+    console.log(data)
+    this.db.edit({
+      collection: 'posts',
+      doc: data.id,
+      successHandler:()=>{console.log("Good")},
+      errorHandler: ()=>{console.log("Bad");},
+      data : {
+        imageURL: data.id
+      }
     })
   }
 
@@ -93,7 +108,6 @@ export default class PostWidget extends Component{
   }
 
   showImgPreview(){
-    console.log("change")
     var input = document.getElementById('postWidgetProfilePhotoInput');
     var profilePicturePreview = document.getElementById('postWidgetProfilePicturePreview');
     var reader = new FileReader();
@@ -114,8 +128,7 @@ export default class PostWidget extends Component{
     return(
       <div className='post-widget-container'>
         <div className='post-widget'>
-          <Thumbnail src = "https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-1/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=0&oh=d130135c52915fd36bd4d7db5dbed825&oe=5B685759" title="test"/>
-          <img id='postWidgetProfilePicturePreview'/>
+          <img alt='preview' id='postWidgetProfilePicturePreview'/>
           <InputGroup>
             <textarea id='postContent' placeholder='Share'/>
             <Row className='post-widget-options full-width'>
@@ -123,7 +136,7 @@ export default class PostWidget extends Component{
                 <div className="upload-btn-wrapper">
                   <button className="btn">Add Photo</button>
                   <input id='postWidgetProfilePhotoInput' type="file" name="myfile" onChange={this.showImgPreview.bind(this)}/>
-                  </div>
+                </div>
               </Col>
               <Col xs='6' sm='6'>
                   <button className="btn">Pin Location</button>

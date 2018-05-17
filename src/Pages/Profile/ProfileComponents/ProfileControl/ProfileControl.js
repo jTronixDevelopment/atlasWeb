@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import { Jumbotron , Modal, ModalBody, ModalFooter,
-  ModalHeader, InputGroup, Button, Row, Col } from 'reactstrap';
-
 import { SettingsIcon, PostIcon } from './../../../../imgs/icons';
 
 //=== Component ================================================================
@@ -22,7 +19,6 @@ export default class ProfileControl extends Component {
       modalBody: <PostWidget ref={this.test} firebase={this.props.firebase}/>,
       modalTitle: 'Post'
     };
-    console.log(this.refs)
     this.test = React.createRef()
   }
 
@@ -48,8 +44,9 @@ export default class ProfileControl extends Component {
 
   //=== Component Lifecycle ====================================================
 
-  componentDidMount(){
-  }
+  componentDidMount(){}
+
+  componentWillMount(){}
 
   render(){
     return (
@@ -60,6 +57,7 @@ export default class ProfileControl extends Component {
           modalBody={ this.state.modalBody }
           modalTitle={ this.state.modalTitle }
           reset={ this.toggleModal.bind(this) }
+          firebase={this.props.firebase}
         />
         <ul className="flex-container profile-control-container" >
           <li className="flex-item profile-control-item" onClick={this.showPostComponent.bind(this)}>

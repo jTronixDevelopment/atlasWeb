@@ -6,9 +6,9 @@ import FeedItem from './../../Components/FeedItem/FeedItem';
 //== Classes ===================================================================
 import DB from './../../Classes/Firebase/Database/Database';
 
-import './People.css'
+import './Places.css'
 
-export default class App extends Component {
+export default class Places extends Component {
 
   constructor(props){
     super(props);
@@ -28,9 +28,10 @@ export default class App extends Component {
         var posts = querySnapshot.docs;
         posts.postId = querySnapshot.id;
         this.setState({ posts : posts})
+        console.log(posts)
       })
       .catch((error)=>{
-        console.log(error)
+        console.log('error')
       })
   }
 
@@ -44,9 +45,11 @@ export default class App extends Component {
   render() {
     return (
       <Container className='feed-container'>
-        {
-          this.state.posts.map(post=> <FeedItem key={post.id} firebase={this.props.firebase} post={post}/> ) 
-        }
+        { this.state.posts.map((post)=>{
+          return (
+            <FeedItem key={post.id} firebase={this.props.firebase} post={post}/>
+          )
+        }) }
       </Container>
     );
   }

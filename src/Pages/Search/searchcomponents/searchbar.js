@@ -4,29 +4,56 @@ import './../search.css'
 
 import { SearchIcon } from './../../../imgs/icons.js';
 
-import { Container, FormGroup, Form, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import DB from '../../../Classes/Firebase/Database/Database'
+
+import { FormGroup, Form, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      searchInput : ""
+    }
+    this.db = new DB(this.props.firebase);
+  }
+
+  searchPeople(){
+    this.setState({
+      searchInput: this.searchInput.value
+    })
+    this.getSearchResults()
+  }
+
+  getSearchResults(){
+    console.log('cool')
+    this.props.firebase.firestore().collection('users')
+      .where("firstName", '==' , this.searchInput.value ).get()
+      .then((querySnapshot)=>{
+        this.props.showResults(querySnapshot.docs.map(doc=>doc.data()))
+      }).catch((err)=>{
+        console.log(err)
+      })
+  }
+
+  componentDidMount(){
+    this.searchInput = document.getElementById('searchInput')
+  }
+
   render() {
     return (
-      <Container>
-        <Form>
-          <FormGroup>
-            <InputGroup className='search-bar'>
-              <Input/>
-              <InputGroupAddon addonType="append">
-                <Button>
-                  <img alt='searchIcon' className='search-bar-icon' src={ SearchIcon }/>
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </FormGroup>
-          <div className='flex-container'>
-            <div className='flex-item tab'>People</div>
-            <div className='flex-item tab'>Places</div>
-          </div>
-        </Form>
-      </Container>
+      <Form>
+        <FormGroup>
+          <InputGroup className='search-bar'>
+            <Input id='searchInput' />
+            <InputGroupAddon addonType="append">
+              <Button onClick={ this.searchPeople.bind(this) }>
+                <img alt='searchIcon' className='search-bar-icon' src={ SearchIcon }/>
+              </Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </FormGroup>
+      </Form>
     );
   }
 }

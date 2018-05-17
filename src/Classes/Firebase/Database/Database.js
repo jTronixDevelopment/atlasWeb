@@ -1,7 +1,10 @@
 export default class DB{
+  constructor(firebase){
+    this.firebase = firebase;
+  }
 
-  add({ collection, data, successHandler, errorHandler, firebase, docId }){
-    firebase.firestore().collection(collection).add(data)
+  add({ collection, data, successHandler, errorHandler, docId}){
+    this.firebase.firestore().collection(collection).add(data)
       .then((doc)=>{
         successHandler(doc);
       })
@@ -10,18 +13,28 @@ export default class DB{
       })
   }
 
-  edit({ collection, data, doc, successHandler, errorHandler, firebase }){
-    firebase.firestore().collection(collection).doc(doc).update(data)
+  addWithID({collection, data, successHandler, errorHandler, docId}){
+    this.firebase.firestore().collection(collection).doc(docId).set(data)
+      .then((doc)=>{
+        successHandler(doc);
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+  }
+
+  edit({ collection, data, docId, successHandler, errorHandler }){
+    this.firebase.firestore().collection(collection).doc(docId).update(data)
     .then(function() {
-        console.log("Document successfully updated!");
+        successHandler(data)
     })
     .catch(function(error) {
         console.error("Error updating document: ", error);
     });
   }
 
-  getDoc({ collection, doc, data, successHandler, errorHandler, firebase }){
-    firebase.firestore().collection(collection).doc(doc)
+  getDoc({ collection, docId, data, successHandler, errorHandler }){
+    this.firebase.firestore().collection(collection).doc(docId)
     .get().then(function(doc) {
         if (doc.exists) {
             successHandler(doc.data())
@@ -33,12 +46,20 @@ export default class DB{
     });
   }
 
-  query({ query, erroHandler, successHandler ,firebase }){
-    firebase.firestore().collection('posts').where(query.feild, query.operator , query.value ).get().then((querySnapshot)=>{
+  query({ query, erroHandler, successHandler }){
+    this.firebase.firestore().collection('posts').where(query.feild, query.operator , query.value ).get()
+    .then((querySnapshot)=>{
       querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
       });
     })
   }
+
+  //=== Specific ===============================================================
+  getUserData({ docId , successHandler}){
+    this.firebase.firestore().collection('users').doc(docId).get()
+      .then((data)=>{ successHandler(data) })
+      .catch((error)=>{ console.log(error) })
+  }
+
 }

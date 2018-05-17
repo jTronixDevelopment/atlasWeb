@@ -1,5 +1,7 @@
 body{
-  font-size: .75em !important
+  font-size: .75em !important;
+  /* color: #A0522D !important;
+  background: #F5F5DC !important; */
 }
 
 textarea{
@@ -36,18 +38,19 @@ textarea{
 .flex-item {
   text-align: center;
 }
+.flex-center{
+  align-items: center;
+}
+
+.flex-left{
+  justify-content: flex-start !important;
+}
 
 .clear-style{
   margin: 0 !important;
   padding: 0 !important;
 }
-.tab{
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-top: 1px solid rgba(0,0,0,.125);
-  border-right: 1px solid rgba(0,0,0,.125);
-  border-left: 1px solid rgba(0,0,0,.125);
-  padding: 10px 10px 0 10px;
-  width: 100%;
-  margin:5px;
+
+textarea{
+  resize: none !important;
 }

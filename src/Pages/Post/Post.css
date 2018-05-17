@@ -1,0 +1,13 @@
+.post-widget{
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 100px;
+}
+
+.post-widget-button{
+  background-color: #7acc8f !important;
+  border-color: #7acc8f !important;
+  margin-top: 10px !important;
+}
