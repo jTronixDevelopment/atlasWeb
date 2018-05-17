@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleMap, Marker, withGoogleMap } from "react-google-maps";
 //=== Style ====================================================================
-import './Maps'
+import './Map'
 
 export default class Maps extends Component{
 

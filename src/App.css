@@ -54,3 +54,11 @@ textarea{
 textarea{
   resize: none !important;
 }
+
+.primary-background{
+  background: #7acc8f !important;
+}
+
+.black-text{
+  color: black !important;
+}

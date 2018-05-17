@@ -8,6 +8,7 @@ import DB from './../../Classes/Firebase/Database/Database';
 //=== Components ===============================================================
 import UserInfo from './ProfileComponents/UserInfo/UserInfo';
 import ProfileControl from './ProfileComponents/ProfileControl/ProfileControl';
+import GeoChart from './../../Components/Maps/GeoChart/GeoChart';
 import { GoogleMap, Marker, withGoogleMap } from "react-google-maps"
 
 //=== Classes ==================================================================
@@ -301,34 +302,11 @@ export default class ProfilePage extends Component {
     navigator.geolocation.getCurrentPosition(setMap.bind(this),(error)=>{console.log(error)});
   }
 
-  //=== Geochart Setup =============================================================
-  setUpGeoChart(){
-    window.google.charts.load('current', {
-      'packages': ['geochart'],
-      'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
-    });
-    window.google.charts.setOnLoadCallback(this.showCountryPosts.bind(this));
-  }
-
-  showCountryPosts(){
-    this.chart = new window.google.visualization.GeoChart(document.getElementById('map'));
-    var data = window.google.visualization.arrayToDataTable([['Country', 'Posts'],["USA",100]])
-    var options = {
-      region: 'world', // Africa
-      colorAxis: {colors: ['#fff','#e31b23']},
-      backgroundColor: '#81d4fa',
-      datalessRegionColor: '#fff',
-      defaultColor: '#f5f5f5'
-    };
-    this.chart.draw(data, options);
-  }
-
   //=== Component Lifecycle ========================================================
 
   componentDidMount(){
     this.getUserData()
     this.getUserCurrentLocation()
-    this.setUpGeoChart()
   }
 
   render() {
@@ -341,7 +319,7 @@ export default class ProfilePage extends Component {
       <div>
         <UserInfo profileData={ this.state.profileData } savePhoto={ this.savePhoto.bind(this) } />
         <ProfileControl firebase={ this.props.firebase } profileData={ this.state.profileData } savePhoto = { this.savePhoto.bind(this) } />
-        <div ref='map'  id='map' style ={{height:"auto",width:'100%'}}></div>
+        <GeoChart/>
         <MyMapComponent
           isMarkerShown
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwojlX6Zlg8WX3RrJCijGPvHzDDciMoYk&v=3.exp&libraries=geometry,drawing,places"

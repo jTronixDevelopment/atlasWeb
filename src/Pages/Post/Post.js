@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { InputGroup, Button, Row, Col, Container } from 'reactstrap';
 
-import MapComponent from './../../Components/Maps/Maps';
+import MapComponent from './../../Components/Maps/Map/Map';
 
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage'
 import DB from './../../Classes/Firebase/Database/Database'

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Card, Button, CardBody, CardImg  } from 'reactstrap';
+
 import './FeedItem.css';
 
-import { LikeIcon , DislikeIcon } from './../../imgs/icons';
+import { LikeIcon } from './../../imgs/icons';
 
 import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';
 
@@ -19,9 +20,9 @@ export default class FeedItem extends Component {
       ownerUser : "...Loading",
       postImg : 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
       likes : 0,
-      dislikes : 0
+      dislikes : 0,
+      comments : []
     }
-    console.log(this.props.post.data().imageURL)
   }
 
   // Thumbnail
@@ -75,19 +76,16 @@ export default class FeedItem extends Component {
         <Thumbnail src ={ this.state.thumbnailImg }/>
         <CardImg src={ this.state.postImg }/>
         <CardBody>
-            <p>{ this.state.content }</p>
-            <p>
-              <button className='blank-button'>
-                <img className='icon' src={ LikeIcon } alt='img'/>
-              </button>
-                { this.state.likes }
-              <button className='blank-button'>
-                <img className='icon' src={ DislikeIcon } alt='imgIcon'/>
-              </button>
-                { this.state.likes }
-            </p>
-            <textarea placeholder="Comment"></textarea>
-            <Button>Comment</Button>
+          <p>{ this.state.content }</p>
+          <p>
+            <button className='blank-button'>
+              <img className='icon' src={ LikeIcon } alt='img'/>
+            </button>
+              { this.state.likes }
+          </p>
+          <p>There are { this.state.comments.length } comments</p>
+          <textarea placeholder="Comment"></textarea>
+          <Button>Comment</Button>
         </CardBody>
       </Card>
     );
