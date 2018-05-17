@@ -78,7 +78,7 @@ export default class ProfileFeed extends Component{
   getChangedProfileData(){
     var dataObj = {}
     if(this.state.bioChanged){
-      dataObj.bioChanged = this.editProfileBio.value
+      dataObj.bio = this.editProfileBio.value
     }
     if(this.state.birthdayChanged){
       dataObj.birthday = this.editProfileBirthday.value

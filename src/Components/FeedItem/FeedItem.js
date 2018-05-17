@@ -17,11 +17,11 @@ export default class App extends Component {
       thumbnailImg : 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
       content : "...Loading",
       ownerUser : "...Loading",
-      postImg : 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg', 
+      postImg : 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
       likes : 0,
       dislikes : 0
     }
-    console.log(this.props.post.data())
+    console.log(this.props.post.data().imageURL)
   }
 
   // Thumbnail
@@ -43,14 +43,13 @@ export default class App extends Component {
   getPostImage(){
     this.storage.getImgURL({
       successHandler : this.showPostImg.bind(this),
-      errorHandler : (err)=>{console.log(err)},
+      errorHandler : (err)=>{ console.log(err) },
       path : "postImages",
       id : this.props.post.data().imageURL
     })
   }
 
   showPostImg(url){
-    console.log(url)
     this.setState({ postImg: url })
   }
 

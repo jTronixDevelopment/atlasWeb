@@ -28,20 +28,25 @@ export default class Post extends Component{
       successHandler: this.postSuccessHandler.bind(this),
       errorHandler : this.postErrorHandler.bind(this),
       data : this.getPostInfo(),
-      collection : 'posts',
-      firebase : this.firebase,
-      docId : 'testin'
+      collection : 'posts'
     })
   }
 
   postSuccessHandler(data){
     this.storage.upload({
-      file: this.postImageInput,
-      path: 'postImages/' +  data.id,
+      file: this.postImageInput.files[0],
+      path: '/postImages/' + data.id,
       data: data,
-      firebase : this.props.firebase,
-      successHandler : this.updatePostAfterImageUpload.bind(this),
+      successHandler : ()=>{console.log("workign")},
       errorHandler: this.postErrorHandler.bind(this)
+    })
+
+    this.db.edit({
+      collection: 'posts',
+      docId: data.id,
+      successHandler:()=>{console.log("Image Successfully handaled.")},
+      errorHandler: ()=>{console.log("Image did not upload.")},
+      data : { imageURL:  data.id }
     })
   }
 
@@ -49,10 +54,10 @@ export default class Post extends Component{
     // set the post : postImg to the correct thing corresponding imgUrl
     this.db.edit({
       collection: 'posts',
-      doc: data.id,
+      docId: this.lastPostId,
       successHandler:()=>{console.log("Image Successfully handaled.")},
-      errorHandler: ()=>{console.log("Image did not upload.");},
-      data : { imageURL: data.id }
+      errorHandler: ()=>{console.log("Image did not upload.")},
+      data : { imageURL:  data }
     })
   }
 

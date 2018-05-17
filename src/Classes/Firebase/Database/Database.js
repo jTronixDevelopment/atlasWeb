@@ -3,7 +3,7 @@ export default class DB{
     this.firebase = firebase;
   }
 
-  add({ collection, data, successHandler, errorHandler, docId }){
+  add({ collection, data, successHandler, errorHandler, docId}){
     this.firebase.firestore().collection(collection).add(data)
       .then((doc)=>{
         successHandler(doc);
