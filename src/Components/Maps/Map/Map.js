@@ -239,7 +239,6 @@ export default class Maps extends Component{
       curPOS : { lat : 0, lng : 0 },
       isHidden : this.props.isHidden
     }
-    console.log(this.props)
   }
 
   getUserCurrentLocation(){
@@ -247,6 +246,14 @@ export default class Maps extends Component{
       this.setState({ curPOS : { lat: position.coords.latitude, lng: position.coords.longitude }})
     }
     navigator.geolocation.getCurrentPosition(setMap.bind(this),(error)=>{console.log(error)});
+  }
+
+  addMarker(){
+
+  }
+
+  setMarker(){
+    
   }
 
   //=== Component Life Cycle ===================================================

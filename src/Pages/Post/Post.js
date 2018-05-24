@@ -56,7 +56,7 @@ export default class Post extends Component{
       collection: 'posts',
       docId: this.lastPostId,
       successHandler:()=>{console.log("Image Successfully handaled.")},
-      errorHandler: ()=>{console.log("Image did not upload.")},
+      errorHandler: this.postErrorHandler.bind(this),
       data : { imageURL:  data }
     })
   }
@@ -100,7 +100,6 @@ export default class Post extends Component{
   }
 
   checkPostItems(){
-    console.log('testing')
   }
 
   getPostInfo(){
@@ -127,10 +126,7 @@ export default class Post extends Component{
   }
 
   showMapPreview(){
-    console.log(this.state.mapVisability)
-    this.setState({
-      mapVisability: this.state.mapVisability==='none'?'':'none'
-    })
+    this.setState({ mapVisability: this.state.mapVisability==='none'?'':'none' })
   }
 
   //=== Component Lifecycle ====================================================
