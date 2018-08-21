@@ -1,24 +1,30 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import './Modal.css';
 
-import { Modal, ModalBody, ModalHeader } from 'reactstrap'
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 export default class App extends Component {
-
   constructor(props) {
     super(props);
-    this.state = { modal: this.props.modalShown };
-    this.reset = this.props.reset.bind(this);
-    this.modalBody = this.props.modalBody;
-    console.log(this.props.modalTitle)
+    const {
+      reset,
+    } = this.props;
+    this.reset = reset.bind(this);
   }
+
   render() {
+    const {
+      modalShown,
+      className,
+      modalTitle,
+      modalBody,
+    } = this.props;
     return (
-      <Modal isOpen={this.props.modalShown} toggle={this.reset} className={this.props.className}>
-        <ModalHeader toggle={this.reset}>{(this.props.modalTitle)?this.props.modalTitle:(<div>Poo</div>)}</ModalHeader>
+      <Modal isOpen={modalShown} toggle={this.reset} className={className}>
+        <ModalHeader toggle={this.reset}>{modalTitle || (<div>Poo</div>)}</ModalHeader>
         <ModalBody>
-          { this.props.modalBody }
+          { modalBody }
         </ModalBody>
       </Modal>
     );

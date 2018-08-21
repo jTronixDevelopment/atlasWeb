@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropType from 'prop-types';
 
-import './Thumbnail.css'
+import './Thumbnail.css';
 
-export default class Thumbnail extends Component{
-  render(){
-    return(
-      <div className='thumbnail-container'>
-        <img alt='profilePic' className='thumbnail-image' src={ this.props.src }/>
-      </div>
-    )
-  }
-}
+export default (props) => {
+  const { src } = props;
+  return (
+    <div className="thumbnail-container">
+      <img alt="profilePic" className="thumbnail-image" src={src} />
+    </div>
+  );
+};

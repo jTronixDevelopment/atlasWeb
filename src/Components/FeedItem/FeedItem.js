@@ -1,90 +1,106 @@
 import React, { Component } from 'react';
-import { Card, Button, CardBody, CardImg  } from 'reactstrap';
+import {
+  Card, Button, CardBody, CardImg,
+} from 'reactstrap';
 
 import './FeedItem.css';
 
-import { LikeIcon } from './../../imgs/icons';
+import { LikeIcon } from '../../imgs/icons';
 
-import Storage from './../../Classes/Firebase/CloudStorage/CloudStorage';
+import Storage from '../../Classes/Firebase/CloudStorage/CloudStorage';
 
-import Thumbnail from './../../Components/Thumbnail/Thumbnail';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
 export default class FeedItem extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.storage = new Storage(this.props.firebase);
+    const {
+      firebase,
+    } = this.props;
+    this.storage = new Storage(firebase);
     this.state = {
-      thumbnailImg : 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
-      content : "...Loading",
-      ownerUser : "...Loading",
-      postImg : 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
-      likes : 0,
-      dislikes : 0,
-      comments : []
-    }
+      thumbnailImg: 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
+      content: '...Loading',
+      postImg: 'https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg',
+      likes: 0,
+      comments: [],
+    };
+  }
+
+  componentDidMount() {
+    const {
+      post,
+    } = this.props;
+    this.getThumbnail();
+    this.getPostImage();
+    this.setState({
+      content: post.data().content,
+    });
   }
 
   // Thumbnail
-  getThumbnail(){
+  getThumbnail() {
+    const {
+      post,
+    } = this.props;
     this.storage.getImgURL({
-      successHandler : this.showThumbnail.bind(this),
-      errorHandler : (err)=>{console.log(err)},
-      path : "profilePics",
-      id : this.props.post.data().ownerId
-    })
-  }
-
-  showThumbnail(url){
-    this.setState({ thumbnailImg: url })
+      successHandler: this.showThumbnail.bind(this),
+      errorHandler: (err) => { console.log(err); },
+      path: 'profilePics',
+      id: post.data().ownerId,
+    });
   }
 
   // Post Image
 
-  getPostImage(){
+  getPostImage() {
+    const {
+      post,
+    } = this.props;
     this.storage.getImgURL({
-      successHandler : this.showPostImg.bind(this),
-      errorHandler : (err)=>{ console.log(err) },
-      path : "postImages",
-      id : this.props.post.data().imageURL
-    })
+      successHandler: this.showPostImg.bind(this),
+      errorHandler: (err) => { console.log(err); },
+      path: 'postImages',
+      id: post.data().imageURL,
+    });
   }
 
-  showPostImg(url){
-    this.setState({ postImg: url })
+  showThumbnail(url) {
+    this.setState({ thumbnailImg: url });
   }
 
-  // Comments
-
-  getComments(){
-
-  }
-
-  // Component Lifecycle
-
-  componentDidMount(){
-    this.getThumbnail()
-    this.getPostImage()
-    this.setState({
-      content : this.props.post.data().content
-    })
+  showPostImg(url) {
+    this.setState({ postImg: url });
   }
 
   render() {
+    const {
+      thumbnailImg,
+      postImg,
+      comments,
+      content,
+      likes,
+    } = this.state;
     return (
-      <Card className='feed-item'>
-        <Thumbnail src ={ this.state.thumbnailImg }/>
-        <CardImg src={ this.state.postImg }/>
+      <Card className="feed-item">
+        <Thumbnail src={thumbnailImg} />
+        <CardImg src={postImg} />
         <CardBody>
-          <p>{ this.state.content }</p>
+          <p>{content}</p>
           <p>
-            <button className='blank-button'>
-              <img className='icon' src={ LikeIcon } alt='img'/>
+            <button type="button" className="blank-button">
+              <img className="icon" src={LikeIcon} alt="img" />
             </button>
-              { this.state.likes }
+            {likes}
           </p>
-          <p>There are { this.state.comments.length } comments</p>
-          <textarea placeholder="Comment"></textarea>
+          <p>
+            There are
+            {' '}
+            { comments.length }
+            {' '}
+            comments
+          </p>
+          <textarea placeholder="Comment" />
           <Button>Comment</Button>
         </CardBody>
       </Card>

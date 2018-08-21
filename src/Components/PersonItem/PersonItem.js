@@ -1,61 +1,55 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
-import Thumbnail from './../../Components/Thumbnail/Thumbnail'
-import {Redirect} from 'react-router-dom'
+// === Style ====================================================================
+import './PersonItem.css';
 
-//=== Style ====================================================================
-import './PersonItem.css'
-
-const SearchView = (props)=>{
-  let { profilePic, lastName, firstName , homeTown } = {...props.userInfo.userInfo}
-  return(
+const SearchView = (props) => {
+  const {
+    profilePic,
+    lastName,
+    firstName,
+    homeTown,
+  } = { ...props.userInfo.userInfo };
+  return (
     <div>
-      <Thumbnail src={ profilePic }/>
+      <Thumbnail src={profilePic} />
       <div>
-        { `${firstName} , ${lastName} / ${homeTown }`}
+        { `${firstName} , ${lastName} / ${homeTown}`}
       </div>
     </div>
-  )
-}
+  );
+};
 
-const RedirectView = (props)=>{
-  return (
-    <Redirect
-      to={{
-        pathname: "/viewprofile",
-        state: { from: props }
-      }}
-    />
-  )
-}
+const RedirectView = props => (
+  <Redirect
+    to={{
+      pathname: '/viewprofile',
+      state: { from: props },
+    }}
+  />
+);
 
-export default class PersonItem extends Component{
-
-  constructor(props){
+export default class PersonItem extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      componentInView: <SearchView userInfo={this.props}/>
-    }
-
+      componentInView: <SearchView userInfo={this.props} />,
+    };
   }
-  showProfile(){
-    console.log('in')
+
+  showProfile() {
     this.setState({
-      componentInView: <RedirectView props={this.props}/>
-    })
+      componentInView: <RedirectView props={this.props} />,
+    });
   }
 
-  //=== Component Life Cycle ===================================================
-
-  componentWillMount(){}
-
-  componentDidMount(){}
-
-  render(){
-    return(
-        <div className='flex-container flex-center flex-left search-person-item' onClick={this.showProfile.bind(this)}>
-          {this.state.componentInView}
-        </div>
-    )
+  render() {
+    return (
+      <div className="flex-container flex-center flex-left search-person-item" onClick={this.showProfile.bind(this)}>
+        {this.state.componentInView}
+      </div>
+    );
   }
 }

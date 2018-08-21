@@ -1,0 +1,13 @@
+.search-bar-icon{
+  width: 1em;
+}
+
+.search-bar{
+  margin-top: 15px;
+}
+
+.search-horizontal-scroll{
+  width: 100%;
+  overflow-x: scroll;
+  display: flex;
+}

@@ -1,51 +1,50 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 
-import FeedItem from './../../Components/FeedItem/FeedItem';
+import FeedItem from '../../Components/FeedItem/FeedItem';
 
-//== Classes ===================================================================
-import DB from './../../Classes/Firebase/Database/Database';
+// == Classes ===================================================================
+import DB from '../../Classes/Firebase/Database/Database';
 
-import './People.css'
+import './People.css';
 
 export default class App extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.db = new DB(this.props.firebase);
-    this.firebase = this.props.firebase;
+    const { firebase } = this.props;
+    this.db = new DB(firebase);
+    this.firebase = firebase;
     this.state = {
-      posts : []
-    }
+      posts: [],
+    };
+    console.log("People Props", this.props);
   }
 
-  //=== Get Post ===============================================================
-
-  getPosts(){
-    this.props.firebase.firestore().collection('posts')
-      .where('location.test','==','test').get()
-      .then((querySnapshot)=>{
-        var posts = querySnapshot.docs;
-        posts.postId = querySnapshot.id;
-        this.setState({ posts : posts})
-      })
-      .catch((error)=>{
-        console.log(error)
-      })
-  }
-
-  componentWillMount(){
-  }
+  // === Get Post ===============================================================
 
   componentDidMount() {
-    this.getPosts()
+    // this.getPosts();
+  }
+
+  getPosts() {
+    this.firebase.firestore().collection('posts')
+      .where('location.test', '==', 'test').get()
+      .then((querySnapshot) => {
+        const posts = querySnapshot.docs;
+        posts.postId = querySnapshot.id;
+        this.setState({ posts });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
+    const { posts } = this.state;
     return (
-      <Container className='feed-container'>
+      <Container className="feed-container">
         {
-          this.state.posts.map(post=> <FeedItem key={post.id} firebase={this.props.firebase} post={post}/> ) 
+          posts.map(post => <FeedItem key={post.id} firebase={this.firebase} post={post} />)
         }
       </Container>
     );

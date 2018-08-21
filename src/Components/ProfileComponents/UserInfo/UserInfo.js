@@ -1,21 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import { Jumbotron } from 'reactstrap';
 
-import './userinfo.css'
+import './userinfo.css';
 
 export default class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    console.log(this.props)
   }
 
   render() {
     return (
-        <Jumbotron fluid className='profile-jumbotron'>
-          <div className='flex-container flex-center'>
-            <img alt='profileIcon' className='profile-pic' src= { this.props.profileData.profilePic } />
-            <div className='profile-bio'>
+      <Jumbotron fluid className="profile-jumbotron">
+          <div className="flex-container flex-center">
+            <img alt="profileIcon" className="profile-pic" src={this.props.profileData.profilePic} />
+            <div className="profile-bio">
               <b>Bio</b>
               <p>{ `${this.props.profileData.firstName} ${this.props.profileData.lastName}` }</p>
               <b>About me</b>
