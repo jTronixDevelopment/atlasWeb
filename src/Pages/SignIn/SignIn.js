@@ -1,19 +1,15 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as EmailValidator from 'email-validator';
 import {
-  FormGroup,
-  Form,
-  FormFeedback,
-  Input,
-  Label,
-  Container,
   Card,
+  CardContent,
+  Input,
   Button,
-  CardHeader,
-  CardBody,
-  CardTitle,
-} from 'reactstrap';
+  Grid,
+  Typography,
+} from '@material-ui/core';
 
 import { Link, Redirect } from 'react-router-dom';
 import Auth from '../../Classes/Firebase/Auth/Auth';
@@ -23,124 +19,94 @@ import './SignIn.css';
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
-    const { firebase } = this.props;
+    const {
+      firebase,
+      showEmailError,
+      changeAuthStatus,
+    } = this.props;
     this.auth = new Auth(firebase);
     this.signInUser = this.signInUser.bind(this);
-    this.signInWithFacebook = this.signInWithFacebook.bind(this);
-  }
-
-  componentDidMount() {
-    this.signInEmail = document.getElementById('signInEmail');
+    this.showEmailError = showEmailError;
+    this.changeAuthStatus = changeAuthStatus;
+    // refs
+    this.emailInputRef = React.createRef();
+    this.passwordInputRef = React.createRef();
   }
 
   getSignInInfo() {
     const { firebase } = this.props;
     return {
-      email: document.getElementById('signInEmail').value,
-      password: document.getElementById('signInPassword').value,
-      errorHandler: this.errorHandler.bind(this),
-      successHandler: this.successHandler.bind(this),
+      email: this.emailInput,
+      password: this.passwordInput,
+      errorHandler: (err) => { console.log(err); },
+      successHandler: this.changeAuthStatus,
       firebase,
     };
   }
 
-  showEmailErrors(error) {
-    // this.setState({ emailError: error });
-    console.log(error);
-    this.signInEmail.classList.remove('is-valid');
-    this.signInEmail.classList.remove('is-invalid');
-    this.signInEmail.classList.add('is-invalid');
-  }
-
   signInUser() {
-    if (this.isValidEmail(this.signInEmail.value)) {
-      this.showEmailSucess();
+    if (EmailValidator.validate(this.emailInput)) {
       this.auth.signIn(this.getSignInInfo());
     } else {
-      this.showEmailErrors('Badly Formated Email.');
+      this.showEmailError();
     }
-  }
-
-  showEmailSucess() {
-    this.signInEmail.classList.remove('is-valid');
-    this.signInEmail.classList.remove('is-invalid');
-    this.signInEmail.classList.add('is-valid');
-  }
-
-  isValidEmail(email) {
-    // return !!new RegExp(/^\w+([-+.'] w+)*@\w+([-. ]\w+)*\.\w+([-. ]\w+)*$/).test(email);
-  }
-
-
-  errorHandler(error) {
-    this.showEmailErrors(error.message);
-  }
-
-  successHandler() {
-    const { changeAuthStatus } = this.props;
-    changeAuthStatus(true);
-  }
-
-  signInWithFacebook() {
-    const { firebase } = this.props;
-    this.auth.signInWithFacebook({
-      errorHandler: this.errorHandler.bind(this),
-      successHandler: this.successHandler.bind(this),
-      firebase,
-    });
   }
 
   render() {
     const {
       loggedIn,
       emailError,
+      passwordError,
     } = this.props;
     if (loggedIn === true) {
       return (<Redirect to="/profile" push />);
     }
     return (
-      <Container>
-        <Card className="sign-in-card">
-          <CardHeader>Logo</CardHeader>
-          <CardBody>
-            <CardTitle>Sign in</CardTitle>
-            <Form>
-              <FormGroup>
-                <Label for="exampleEmail">Email</Label>
-                <Input id="signInEmail" autoComplete="on" type="email" name="email" placeholder="Email" />
-                <FormFeedback invalid="">{ emailError }</FormFeedback>
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input id="signInPassword" autoComplete="on" type="password" name="password" placeholder="Password" />
-                <FormFeedback invalid="">Sweet! that name is available</FormFeedback>
-              </FormGroup>
-              <Button color="success" onClick={this.signInUser}>Submit</Button>
-            </Form>
-            <br />
-            <p className="text-center">
-            -or-
-            </p>
-            <div className="text-center">
-              <Button className="fb-icon" onClick={this.signInWithFacebook}>
-                <b> Login With Facebook</b>
-              </Button>
-            </div>
-            <hr />
-            <p>
+      <Grid container justify="center">
+        <Grid item className="sign-in-card">
+          <Card>
+            <CardContent>
+              <Typography variant="display1" component="h2">Sign In</Typography>
+              <Input
+                style={{ width: '100%', margin: '5px 0 5px 0' }}
+                inputRef={this.emailInputRef}
+                onChange={() => {
+                  this.emailInput = this.emailInputRef.current.value;
+                }}
+                autoComplete="on"
+                placeholder="Email"
+                error={emailError}
+              />
+              <Input
+                style={{ width: '100%', margin: '5px 0 5px 0' }}
+                inputRef={this.passwordInputRef}
+                onChange={() => {
+                  this.passwordInput = this.passwordInputRef.current.value;
+                }}
+                autoComplete="on"
+                placeholder="Password"
+                error={passwordError}
+              />
+              <br />
+              <Button variant="contained" color="primary" onClick={this.signInUser}>Submit</Button>
+              <br />
+              <p>
               Not a member?
-              <Link to="/signup">Click here!</Link>
-            </p>
-          </CardBody>
-        </Card>
-      </Container>
+                <Link to="/signup">Click here!</Link>
+              </p>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     );
   }
 }
 
 SignIn.propTypes = {
-  emailError: PropTypes.string.isRequired,
   loggedIn: PropTypes.bool.isRequired,
-  firebase: PropTypes.string.isRequired,
+  passwordError: PropTypes.bool.isRequired,
+  emailError: PropTypes.bool.isRequired,
+  firebase: PropTypes.shape.isRequired,
   changeAuthStatus: PropTypes.func.isRequired,
+  showEmailError: PropTypes.func.isRequired,
 };

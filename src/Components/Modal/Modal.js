@@ -4,7 +4,7 @@ import './Modal.css';
 
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
-export default class App extends Component {
+export default class ModalComp extends Component {
   constructor(props) {
     super(props);
     const {

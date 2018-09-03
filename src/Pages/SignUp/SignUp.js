@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as EmailValidator from 'email-validator';
 import {
-  FormGroup,
-  Form,
   Input,
-  Label,
-  Container,
   Card,
   Button,
-  CardHeader,
-  CardBody,
-  FormFeedback,
-} from 'reactstrap';
+  CardContent,
+} from '@material-ui/core';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Auth from '../../Classes/Firebase/Auth/Auth';
 import DB from '../../Classes/Firebase/Database/Database';
@@ -21,64 +16,59 @@ import DB from '../../Classes/Firebase/Database/Database';
 export default class SignUp extends Component {
   constructor(auth) {
     super(auth);
-    const { firebase } = this.props;
+    const {
+      firebase,
+      showPasswordNotEqual,
+      showPasswordEqual,
+      showEmailError,
+      showEmailSucess,
+      showPasswordIsNotStrong,
+      showPasswordIsStrong,
+    } = this.props;
+
     this.firebase = firebase;
     this.auth = new Auth(firebase);
     this.db = new DB(firebase);
-    this.state = {
-      signedUp: false,
-    };
+
+    // functions
     this.successHandler = this.successHandler.bind(this);
     this.createUser = this.createUser.bind(this);
-  }
-
-  componentDidMount() {
-    this.signUpPassword = document.getElementById('signUpPassword');
-    this.signUpPasswordConfirm = document.getElementById('signUpPasswordConfirm');
-    this.signUpEmail = document.getElementById('signUpEmail');
-    this.signUpFirstName = document.getElementById('signUpFirstName');
-    this.signUpLastName = document.getElementById('signUpLastName');
-    this.signUpBirthday = document.getElementById('signUpBirthday');
-    this.passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
+    this.showPasswordNotEqual = showPasswordNotEqual;
+    this.showPasswordEqual = showPasswordEqual;
+    this.showEmailError = showEmailError;
+    this.showEmailSucess = showEmailSucess;
+    this.showPasswordStrongEnough = showPasswordIsStrong;
+    this.showPasswordNotStrongEnough = showPasswordIsNotStrong;
+    // refs
+    this.emailInputRef = React.createRef();
+    this.firstNameRef = React.createRef();
+    this.lastNameRef = React.createRef();
+    this.birthdayRef = React.createRef();
+    this.password1Ref = React.createRef();
+    this.password2Ref = React.createRef();
   }
 
   getUserInfo() {
     return {
-      email: this.signUpEmail.value,
-      password: this.signUpPassword.value,
-      passwordConfirm: this.signUpPassword.value,
+      email: this.emailInput,
+      password: this.password1,
+      passwordConfirm: this.password2,
       errorHandler: (err) => { console.log(err); },
       successHandler: this.successHandler,
       firebase: this.firebase,
-      birthday: this.signUpBirthday.value,
-      firstName: this.signUpLastName.value,
-      lastName: this.signUpFirstName.value,
+      birthday: this.birthday,
+      firstName: this.lastName,
+      lastName: this.firstName,
     };
   }
   // Email verification
 
   checkEmail(email) {
-    if (!this.isValidEmail(email)) {
-      this.showEmailErrors();
-    } else {
+    if (EmailValidator.validate(email)) {
       this.showEmailSucess();
+    } else {
+      this.showEmailError();
     }
-  }
-
-  showEmailErrors() {
-    this.signUpEmail.classList.remove('is-valid');
-    this.signUpEmail.classList.remove('is-invalid');
-    this.signUpEmail.classList.add('is-invalid');
-  }
-
-  showEmailSucess() {
-    this.signUpEmail.classList.remove('is-valid');
-    this.signUpEmail.classList.remove('is-invalid');
-    this.signUpEmail.classList.add('is-valid');
-  }
-
-  isValidEmail(email) {
-    return !!/^\w+([-+.'] w+)*@\w+([-. ]\w+)*\.\w+([-. ]\w+)*$/.test(email);
   }
 
   // Password verification
@@ -91,34 +81,10 @@ export default class SignUp extends Component {
     }
 
     if (this.passwordRegex.test(p1)) {
-      this.showPasswordStrongEnough();
-    } else {
       this.showPasswordNotStrongEnough();
+    } else {
+      this.showPasswordStrongEnough();
     }
-  }
-
-  showPasswordNotEqual() {
-    this.signUpPasswordConfirm.classList.remove('is-valid');
-    this.signUpPasswordConfirm.classList.remove('is-invalid');
-    this.signUpPasswordConfirm.classList.add('is-invalid');
-  }
-
-  showPasswordEqual() {
-    this.signUpPasswordConfirm.classList.remove('is-valid');
-    this.signUpPasswordConfirm.classList.remove('is-invalid');
-    this.signUpPasswordConfirm.classList.add('is-valid');
-  }
-
-  showPasswordNotStrongEnough() {
-    this.signUpPassword.classList.remove('is-valid');
-    this.signUpPassword.classList.remove('is-invalid');
-    this.signUpPassword.classList.add('is-invalid');
-  }
-
-  showPasswordStrongEnough() {
-    this.signUpPassword.classList.remove('is-valid');
-    this.signUpPassword.classList.remove('is-invalid');
-    this.signUpPassword.classList.add('is-valid');
   }
 
   isValidPassword(p1, p2) {
@@ -158,74 +124,102 @@ export default class SignUp extends Component {
       collection: 'users',
       docId: this.firebase.auth().currentUser.uid,
     });
-    this.setState({ signedUp: true });
   }
 
   render() {
-    const { signedUp } = this.state;
-    if (signedUp) {
-      return (<Redirect to="/signin" push />);
-    }
+    const {
+      passwordNotEqual,
+      emailStatus,
+    } = this.props;
+
     return (
-      <Container>
+      <React.Fragment>
         <Card>
-          <CardHeader>Sign Up</CardHeader>
-          <CardBody>
-            <Form>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input id="signUpEmailsignUpEmail" type="email" autoComplete="on" name="email" placeholder="Email Address" />
-                <FormFeedback invalid="">Please check you email.</FormFeedback>
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-              </FormGroup>
+          <CardContent>
+            <Input
+              inputRef={this.emailInputRef}
+              onChange={() => {
+                this.emailInput = this.emailInputRef.current.value;
+              }}
+              autoComplete="on"
+              placeholder="Email Address"
+              error={emailStatus}
+            />
 
-              <FormGroup>
-                <Label for="firstName">FirstName</Label>
-                <Input id="signUpFirstName" type="text" autoComplete="on" name="firstName" placeholder="First Name" />
-                <FormFeedback invalid="">Please check you email.</FormFeedback>
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-              </FormGroup>
+            <Input
+              inputRef={this.firstNameRef}
+              onChange={() => {
+                this.firstName = this.firstNameRef.current.value;
+              }}
+              autoComplete="on"
+              placeholder="First Name"
+            />
 
-              <FormGroup>
-                <Label for="lastName">Last Last Name</Label>
-                <Input id="signUpLastName" type="text" autoComplete="on" name="lastName" placeholder="Last Name" />
-                <FormFeedback invalid="">Please check you email.</FormFeedback>
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-              </FormGroup>
+            <Input
+              inputRef={this.lastNameRef}
+              onChange={() => {
+                this.lastName = this.lastNameRef.current.value;
+              }}
+              autoComplete="on"
+              placeholder="Last Name"
+            />
 
-              <FormGroup>
-                <Label for="birthday">Birthday</Label>
-                <Input id="signUpBirthday" type="email" autoComplete="on" name="birthday" placeholder="Birthday" />
-                <FormFeedback invalid="">Please check you email.</FormFeedback>
-                <FormFeedback valid>Everything looks good.</FormFeedback>
-              </FormGroup>
+            <Input
+              inputRef={this.birthdayRef}
+              onChange={() => {
+                this.birthday = this.birthdayRef.current.value;
+              }}
+              autoComplete="on"
+              placeholder="Birthday"
+            />
 
-              <FormGroup>
-                <Label for="password1">Password</Label>
-                <Input id="signUpPassword" autoComplete="on" type="password" name="password1" placeholder="Enter password" />
-                <FormFeedback valid>Password fits criteria.</FormFeedback>
-                <FormFeedback invalid="">Password should be at least 7 letters, contain one special character, and atleast one upper and lower case letter.</FormFeedback>
-              </FormGroup>
+            <Input
+              inputRef={this.password1Ref}
+              onChange={() => {
+                this.password1 = this.password1Ref.current.value;
+              }}
+              autoComplete="on"
+              type="password"
+              placeholder="Enter password"
+              error={passwordNotEqual}
+            />
 
-              <FormGroup>
-                <Label for="password2">Confirm Password</Label>
-                <Input id="signUpPasswordConfirm" autoComplete="on" type="password" name="password2" placeholder="Confirm Password" />
-                <FormFeedback valid>Passwords are equal.</FormFeedback>
-                <FormFeedback invalid="">Passwords Do Not Match</FormFeedback>
-              </FormGroup>
-              <Button color="success" onClick={this.createUser}>Submit</Button>
-            </Form>
+            <Input
+              inputRef={this.password2Ref}
+              onChange={() => {
+                this.password2 = this.password2Ref.current.value;
+              }}
+              autoComplete="on"
+              type="password"
+              placeholder="Confirm Password"
+              error={passwordNotEqual}
+            />
+            <br />
+            <Button
+              variant="contained"
+              onClick={this.createUser}
+            >
+              Submit
+            </Button>
             <br />
             <p>
               Already a member?
               <Link to="/signin">Click here!</Link>
             </p>
-          </CardBody>
+          </CardContent>
         </Card>
-      </Container>
+      </React.Fragment>
     );
   }
 }
 SignUp.propTypes = {
-  firebase: PropTypes.string.isRequired,
+  firebase: PropTypes.shape.isRequired,
+  passwordNotEqual: PropTypes.bool.isRequired,
+  showPasswordNotEqual: PropTypes.func.isRequired,
+  showPasswordEqual: PropTypes.func.isRequired,
+  showEmailError: PropTypes.func.isRequired,
+  showEmailSucess: PropTypes.func.isRequired,
+  emailStatus: PropTypes.bool.isRequired,
+  showPasswordIsNotStrong: PropTypes.func.isRequired,
+  showPasswordIsStrong: PropTypes.func.isRequired,
 };

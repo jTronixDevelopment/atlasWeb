@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ViewProfile from './ViewProfile';
 import { changeAuthStatus } from './ViewProfileActions';
 
-const mapStateToProps = state => ({ ...state.viewprofile });
+const mapStateToProps = state => ({ ...state.viewprofile, ...state.app });
 
 
 const mapDispatchToProps = dispatch => ({

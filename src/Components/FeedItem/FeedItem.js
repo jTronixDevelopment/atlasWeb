@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Card, Button, CardBody, CardImg,
 } from 'reactstrap';
-
+import PropTypes from 'prop-types';
 import './FeedItem.css';
 
 import { LikeIcon } from '../../imgs/icons';
@@ -107,3 +107,8 @@ export default class FeedItem extends Component {
     );
   }
 }
+
+FeedItem.propTypes = {
+  post: PropTypes.string.isRequired,
+  firebase: PropTypes.func.isRequired,
+};

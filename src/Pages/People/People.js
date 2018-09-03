@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
 
 import FeedItem from '../../Components/FeedItem/FeedItem';
+
 
 // == Classes ===================================================================
 import DB from '../../Classes/Firebase/Database/Database';
 
 import './People.css';
 
-export default class App extends Component {
+export default class People extends Component {
   constructor(props) {
     super(props);
     const { firebase } = this.props;
@@ -17,7 +19,7 @@ export default class App extends Component {
     this.state = {
       posts: [],
     };
-    console.log("People Props", this.props);
+    console.log('People Props', this.props);
   }
 
   // === Get Post ===============================================================
@@ -50,3 +52,7 @@ export default class App extends Component {
     );
   }
 }
+
+People.propTypes = {
+  firebase: PropTypes.shape.isRequired,
+};

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
+
 import { Button, Input } from 'reactstrap';
 
 import DB from '../../Classes/Firebase/Database/Database';
@@ -94,6 +96,7 @@ export default class Settings extends Component {
       profilePicturePreview.src = e.target.result;
     };
     reader.readAsDataURL(input.files[0]);
+    console.log(this.props);
   }
 
   saveProfileData() {
@@ -146,3 +149,8 @@ export default class Settings extends Component {
     );
   }
 }
+
+Settings.propTypes = {
+  profileData: PropTypes.bool.isRequired,
+  firebase: PropTypes.shape.isRequired,
+};

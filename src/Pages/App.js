@@ -20,8 +20,6 @@ import Testing from './Testing/Testing';
 import Header from '../Components/Header/Header';
 import Navigation from '../Components/Navigation/Navigation';
 
-// === Database =================================================================
-
 // === Styles ===================================================================
 import './App.css';
 

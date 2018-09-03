@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Container } from 'reactstrap';
 
 import MessageThumbnail from './MessageThumbnail/MessageThumbnail';

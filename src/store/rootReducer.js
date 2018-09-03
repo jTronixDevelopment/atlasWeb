@@ -1,4 +1,6 @@
-import { combineReducers } from 'redux';
+import {
+  combineReducers,
+} from 'redux';
 import title from '../Components/Title/TitleReducer';
 import signIn from '../Pages/SignIn/SignInReducer';
 import signUp from '../Pages/SignUp/SignUpReducer';
@@ -10,8 +12,10 @@ import places from '../Pages/Places/PlacesReducer';
 import search from '../Pages/Search/SearchReducer';
 import settings from '../Pages/Settings/SettingsReducer';
 import viewprofile from '../Pages/ViewProfile/ViewProfileReducer';
+import app from '../Pages/AppReducer';
 
 export default combineReducers({
+  app,
   title,
   signIn,
   signUp,

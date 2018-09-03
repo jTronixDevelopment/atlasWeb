@@ -8,6 +8,7 @@ import {
   Marker,
   withGoogleMap,
 } from 'react-google-maps';
+
 import Storage from '../../Classes/Firebase/CloudStorage/CloudStorage';
 import DB from '../../Classes/Firebase/Database/Database';
 // === Components ===============================================================
@@ -19,8 +20,9 @@ import GeoChart from '../../Components/Maps/GeoChart/GeoChart';
 export default class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    const { firebase } = this.props;
-    console.log(this.props);
+    const {
+      firebase,
+    } = this.props;
     this.firebase = firebase;
     this.storage = new Storage(firebase);
     this.db = new DB(firebase);
@@ -362,5 +364,5 @@ export default class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
-  firebase: PropTypes.string.isRequired,
+  firebase: PropTypes.shape.isRequired,
 };

@@ -2,8 +2,7 @@ import { connect } from 'react-redux';
 import Profile from './Profile';
 import { changeAuthStatus } from './ProfileActions';
 
-const mapStateToProps = state => ({ ...state });
-
+const mapStateToProps = state => ({ ...state.profile, ...state.app });
 
 const mapDispatchToProps = dispatch => ({
   changeAuthStatus: status => dispatch(changeAuthStatus(status)),

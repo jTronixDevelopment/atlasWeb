@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Messages from './Messages';
 import { changeAuthStatus } from './MessagesActions';
 
-const mapStateToProps = state => ({ ...state.messages });
+const mapStateToProps = state => ({ ...state.messages, ...state.app });
 
 
 const mapDispatchToProps = dispatch => ({

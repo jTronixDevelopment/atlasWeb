@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
+
 import {
-  InputGroup,
-  Button,
   Row,
   Col,
   Container,
 } from 'reactstrap';
+
+import {
+  Button,
+} from '@material-ui/core';
 
 import MapComponent from '../../Components/Maps/Map/Map';
 
@@ -19,15 +23,17 @@ import './Post.css';
 export default class Post extends Component {
   constructor(props) {
     super(props);
-    const { firebase } = this.props;
+    const {
+      firebase,
+    } = this.props;
     this.firebase = firebase;
     this.db = new DB(firebase);
     this.storage = new Storage(firebase);
     this.state = {
       mapVisability: 'none',
     };
-
-    console.log(this.props);
+    this.pinLocation = this.pinLocation.bind(this);
+    this.postItem = this.postItem.bind(this);
   }
 
   //= == Checking for valid Inputs ==============================================
@@ -139,29 +145,48 @@ export default class Post extends Component {
   }
 
   render() {
+    const {
+      mapVisability,
+    } = this.state;
     return (
       <Container>
         <h4 className="text-center">Post New Item</h4>
         <div className="post-widget">
           <img alt="preview" id="postImagePreview" />
-          <InputGroup>
-            <textarea id="postContent" placeholder="Share" />
-            <Row className="full-width text-center">
-              <Col xs="6" sm="6">
-                <div className="upload-btn-wrapper">
-                  <button type="button" className="btn post-widget-button">Add Photo</button>
-                  <input id="postImageInput" type="file" name="myfile" onChange={this.showImgPreview.bind(this)} />
-                </div>
-              </Col>
-              <Col xs="6" sm="6">
-                <button type="button" className="btn post-widget-button" onClick={this.pinLocation.bind(this)}>Pin Location</button>
-              </Col>
-            </Row>
-          </InputGroup>
-          <MapComponent isHidden={this.state.mapVisability} />
-          <Button id="postButton" className="btn post-widget-button" onClick={this.postItem.bind(this)}>Post</Button>
+          <textarea
+            id="postContent"
+            placeholder="Share"
+          />
+          <Row className="full-width text-center">
+            <Col xs="6" sm="6">
+              <div className="upload-btn-wrapper">
+                <Button
+                  type="button"
+                  className="btn post-widget-button"
+                >
+                  Add Photo
+                </Button>
+                <input id="postImageInput" type="file" name="myfile" onChange={this.showImgPreview.bind(this)} />
+              </div>
+            </Col>
+            <Col xs="6" sm="6">
+              <Button
+                type="button"
+                className="btn post-widget-button"
+                onClick={this.pinLocation}
+              >
+                Pin Location
+              </Button>
+            </Col>
+          </Row>
+          <MapComponent isHidden={mapVisability} />
+          <Button id="postButton" className="btn post-widget-button" onClick={this.postItem}>Post</Button>
         </div>
       </Container>
     );
   }
 }
+
+Post.propTypes = {
+  firebase: PropTypes.shape.isRequired,
+};

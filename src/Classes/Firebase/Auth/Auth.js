@@ -1,60 +1,63 @@
-export default class Auth{
-  constructor(firebase){
+export default class Auth {
+  constructor(firebase) {
     this.firebase = firebase;
   }
 
-  signUp({ email, password, errorHandler, successHandler }) {
+  signUp({
+    email, password, errorHandler, successHandler,
+  }) {
     this.firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((success)=>{
-        successHandler(success)
-      }).then(()=>{
-        console.log("successfully added users")
+      .then((success) => {
+        successHandler(success);
+      }).then(() => {
+        console.log('successfully added users');
       })
-      .catch(function(error) {
-        if(error)
-          errorHandler(error)
+      .catch((error) => {
+        if (error) { errorHandler(error); }
       });
   }
 
-  signIn({email, password, errorHandler, successHandler}) {
+  signIn({
+    email, password, errorHandler, successHandler,
+  }) {
     this.firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(()=>{
-      successHandler();
-    })
-    .catch(function(error) {
-      if(error)
-        errorHandler(error)
-    })
-    this.firebase.auth().setPersistence(this.firebase.auth.Auth.Persistence.LOCAL)
+      .then((data) => {
+        console.log(data.user)
+        successHandler();
+      })
+      .catch((error) => {
+        if (error) { errorHandler(error) ;}
+      });
+    this.firebase.auth().setPersistence(this.firebase.auth.Auth.Persistence.LOCAL);
   }
 
-  signOut({sucessHandler , erroHandler}) {
+  signOut({ sucessHandler, erroHandler }) {
     this.firebase.auth().signOut()
-    .then(()=>{
-    })
-    .catch((error)=>{
-    });
+      .then(() => {
+      })
+      .catch((error) => {
+      });
   }
 
-  forgotPassword({ email }){
+  forgotPassword({ email }) {
     this.firebase.auth().sendPasswordResetEmail(
-    email, this.actionCodeSettings)
-    .then(function() {
+      email, this.actionCodeSettings,
+    )
+      .then(() => {
       // Password reset email sent.
-    })
-    .catch(function(error) {
+      })
+      .catch((error) => {
       // Error occurred. Inspect error.code.
-    });
+      });
   }
 
-  signInWithFacebook({ successHandler, errorHandler }){
-    var provider = new this.firebase.auth.FacebookAuthProvider();
-    this.firebase.auth().signInWithRedirect(provider).then(function() {
-      this.firebase.auth().getRedirectResult().then(function(result) {
-      }).catch(function(error) {
-        errorHandler(error)
+  signInWithFacebook({ successHandler, errorHandler }) {
+    const provider = new this.firebase.auth.FacebookAuthProvider();
+    this.firebase.auth().signInWithRedirect(provider).then(function () {
+      this.firebase.auth().getRedirectResult().then((result) => {
+      }).catch((error) => {
+        errorHandler(error);
       });
     });
   }
-
 }
